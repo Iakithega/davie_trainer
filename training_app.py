@@ -39,7 +39,10 @@ initial_data = load_raw_excel(path_to_excel)
 data = weight_reps_exctracter(initial_data)
 
 
+with st.expander("Raw Table"): 
+    st.dataframe(data)
 
+v_spacer(height=4, sb=False)
 
 
 
