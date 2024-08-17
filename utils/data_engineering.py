@@ -22,8 +22,8 @@ def weight_reps_exctracter(df):
     # Process each weighted column
     for col in weighted_columns:
         # Split the column
-        weight_col = f"{col} - Weight"
-        reps_col = f"{col} - Reps"
+        weight_col = f"{col} weight"
+        reps_col = f"{col} reps"
         
         df[[weight_col, reps_col]] = df[col].apply(split_value).apply(pd.Series)
         
