@@ -72,7 +72,7 @@ def pushup_plot(data):
     return fig
 
 
-def plk_plot(data):
+def plank_plot(data):
 
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
@@ -114,11 +114,84 @@ def plk_plot(data):
 
 
 
+def kniebeuge_plot(data):
+    plt.style.use('seaborn-v0_8')
+    fig, axs = plt.subplot_mosaic([
+                                ['KNBG', 'KNBG', 'KNBG', 'KNBG_REC'],
+                                ],
+                                figsize=(11, 3))
+    plt.subplots_adjust(wspace=.2)
+    plt.subplots_adjust(hspace=.6)
+
+    # fig.suptitle(f'''Training''', size=18)
+
+    axs['KNBG'].set_title(f"Progress Kniebeugen", size=14)
+    axs['KNBG'].set_xlabel(' ', size=14)
+    axs['KNBG'].set_ylabel('Value', size=12)
+    axs['KNBG'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['KNBG'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['KNBG'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['KNBG'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['KNBG'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['KNBG'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['KNBG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['KNBG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['KNBG'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    # Plotting the three sets next to each other
+    bar_width = 0.2
+    dates = data.index
+
+    axs['KNBG'].bar(dates - pd.Timedelta(hours=4), data["Kniebeugen set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['KNBG'].bar(dates, data["Kniebeugen set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    axs['KNBG'].bar(dates + pd.Timedelta(hours=4), data["Kniebeugen set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+    return fig
 
 
+def hamcurls_plot(data):
+    plt.style.use('seaborn-v0_8')
+    fig, axs = plt.subplot_mosaic([
+                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_REC'],
+                                ],
+                                figsize=(11, 3))
+    plt.subplots_adjust(wspace=.2)
+    plt.subplots_adjust(hspace=.6)
 
+    # fig.suptitle(f'''Training''', size=18)
 
+    axs['HMCRL'].set_title(f"Progress Hammer Curls", size=14)
+    axs['HMCRL'].set_xlabel(' ', size=14)
+    axs['HMCRL'].set_ylabel('Value', size=12)
+    axs['HMCRL'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    # axs['1'].set_ylim([0, 14])
 
+    # Set font size for major and minor ticks
+    axs['HMCRL'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['HMCRL'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['HMCRL'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['HMCRL'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['HMCRL'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['HMCRL'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['HMCRL'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['HMCRL'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    # Plotting the three sets next to each other
+    bar_width = 0.2
+    dates = data.index
+
+    axs['HMCRL'].bar(dates - pd.Timedelta(hours=4), data["Weighted Hammer Curls set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['HMCRL'].bar(dates, data["Weighted Hammer Curls set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    axs['HMCRL'].bar(dates + pd.Timedelta(hours=4), data["Weighted Hammer Curls set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
+
+    return fig
 
 
 
