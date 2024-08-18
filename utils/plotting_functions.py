@@ -17,7 +17,7 @@ import yaml
 import json
 
 from streamlit_extras.mandatory_date_range import date_range_picker 
-from toggle_button_set import toggle_button_set
+# from toggle_button_set import toggle_button_set
 
 from matplotlib.patches import Rectangle
 from matplotlib.patches import Polygon
@@ -27,6 +27,120 @@ import matplotlib.path as mpath
 
 from utils.utils import *
 from utils.data_engineering import *
+
+
+
+
+def pushup_plot(data):
+    plt.style.use('seaborn-v0_8')
+    fig, axs = plt.subplot_mosaic([
+                                ['LGSTZ', 'LGSTZ', 'LGSTZ','LGSTZ_REC'],
+                                ],
+                                figsize=(11, 3))
+
+    plt.subplots_adjust(wspace=.2)
+    plt.subplots_adjust(hspace=.6)
+
+    # fig.suptitle(f'''Training''', size=18)
+
+    axs['LGSTZ'].set_title(f"Progress Liegestütz", size=14)
+    axs['LGSTZ'].set_xlabel(' ', size=14)
+    axs['LGSTZ'].set_ylabel('Value', size=12)
+    axs['LGSTZ'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['LGSTZ'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['LGSTZ'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['LGSTZ'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['LGSTZ'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['LGSTZ'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['LGSTZ'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['LGSTZ'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['LGSTZ'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    # Plotting the three sets next to each other
+    bar_width = 0.2
+    dates = data.index
+
+    axs['LGSTZ'].bar(dates - pd.Timedelta(hours=4), data["Liegestütz set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['LGSTZ'].bar(dates, data["Liegestütz set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    axs['LGSTZ'].bar(dates + pd.Timedelta(hours=4), data["Liegestütz set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+    return fig
+
+
+def plk_plot(data):
+
+    plt.style.use('seaborn-v0_8')
+    fig, axs = plt.subplot_mosaic([
+                                ['PLK', 'PLK', 'PLK', 'PLK_REC'],
+                                ],
+                                figsize=(11, 3))
+    plt.subplots_adjust(wspace=.2)
+    plt.subplots_adjust(hspace=.6)
+
+    # fig.suptitle(f'''Training''', size=18)
+
+    axs['PLK'].set_title(f"Progress Planke", size=14)
+    axs['PLK'].set_xlabel(' ', size=14)
+    axs['PLK'].set_ylabel('Value', size=12)
+    axs['PLK'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['PLK'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['PLK'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['PLK'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['PLK'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['PLK'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['PLK'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['PLK'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['PLK'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    # Plotting the three sets next to each other
+    bar_width = 0.2
+    dates = data.index
+
+    axs['PLK'].bar(dates - pd.Timedelta(hours=4), data["Planke set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['PLK'].bar(dates, data["Planke set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    axs['PLK'].bar(dates + pd.Timedelta(hours=4), data["Planke set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+    return fig
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def plot_scatter_color_categories(df, name, ax, markersize=8):
