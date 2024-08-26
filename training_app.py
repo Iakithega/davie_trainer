@@ -87,7 +87,7 @@ plt.subplots_adjust(hspace=.6)
 axs['1'].set_title(f"Progress Weighted Turm Rudern", size=14)
 axs['1'].set_xlabel(' ', size=14)
 axs['1'].set_ylabel('Value', size=12)
-axs['1'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+axs['1'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.26")]), # TODAYS DATE 
 # axs['1'].set_ylim([0, 14])
 
 # Set font size for major and minor ticks
