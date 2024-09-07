@@ -29,9 +29,16 @@ from utils.utils import *
 from utils.data_engineering import *
 
 
+#Datum	
+# 
+# Weighted Bizeps Curls set 1	Weighted Bizeps Curls set 2	Weighted Bizeps Curls set 3	Weighted Bizeps Curls set 4	
+# Weighted Turm Rudern set 1	Weighted Turm Rudern set 2	Weighted Turm Rudern set 3	Weighted Turm Rudern set 4	
+# Weighted Turm Zug set 1	Weighted Turm Zug set 2	Weighted Turm Zug set 3	Weighted Turm Zug set 4	
+# Weighted Shoulder Press set 1	Weighted Shoulder Press set 2	Weighted Shoulder Press set 3	Weighted Shoulder Press set 4	
+# Waden set 1	Waden set 2	Waden set 3	Waden set 4
 
 
-def pushup_plot(data):
+def pushup_plot(data, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['LGSTZ', 'LGSTZ', 'LGSTZ','LGSTZ_REC'],
@@ -46,7 +53,7 @@ def pushup_plot(data):
     axs['LGSTZ'].set_title(f"Progress Liegestütz", size=14)
     axs['LGSTZ'].set_xlabel(' ', size=14)
     axs['LGSTZ'].set_ylabel('Value', size=12)
-    axs['LGSTZ'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    axs['LGSTZ'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -72,7 +79,7 @@ def pushup_plot(data):
     return fig
 
 
-def plank_plot(data):
+def plank_plot(data, current_date):
 
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
@@ -87,7 +94,7 @@ def plank_plot(data):
     axs['PLK'].set_title(f"Progress Planke", size=14)
     axs['PLK'].set_xlabel(' ', size=14)
     axs['PLK'].set_ylabel('Value', size=12)
-    axs['PLK'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    axs['PLK'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -114,7 +121,7 @@ def plank_plot(data):
 
 
 
-def kniebeuge_plot(data):
+def kniebeuge_plot(data, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['KNBG', 'KNBG', 'KNBG', 'KNBG_REC'],
@@ -128,7 +135,7 @@ def kniebeuge_plot(data):
     axs['KNBG'].set_title(f"Progress Kniebeugen", size=14)
     axs['KNBG'].set_xlabel(' ', size=14)
     axs['KNBG'].set_ylabel('Value', size=12)
-    axs['KNBG'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    axs['KNBG'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -154,7 +161,7 @@ def kniebeuge_plot(data):
     return fig
 
 
-def hamcurls_plot(data):
+def hamcurls_plot(data, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_REC'],
@@ -168,7 +175,7 @@ def hamcurls_plot(data):
     axs['HMCRL'].set_title(f"Progress Hammer Curls", size=14)
     axs['HMCRL'].set_xlabel(' ', size=14)
     axs['HMCRL'].set_ylabel('Value', size=12)
-    axs['HMCRL'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime("2024.08.20")]), 
+    axs['HMCRL'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -195,10 +202,85 @@ def hamcurls_plot(data):
 
 
 
+def hamcurls_plot(data, current_date):
+    plt.style.use('seaborn-v0_8')
+    fig, axs = plt.subplot_mosaic([
+                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_REC'],
+                                ],
+                                figsize=(11, 3))
+    plt.subplots_adjust(wspace=.2)
+    plt.subplots_adjust(hspace=.6)
+
+    # fig.suptitle(f'''Training''', size=18)
+
+    axs['HMCRL'].set_title(f"Progress Hammer Curls", size=14)
+    axs['HMCRL'].set_xlabel(' ', size=14)
+    axs['HMCRL'].set_ylabel('Value', size=12)
+    axs['HMCRL'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['HMCRL'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['HMCRL'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['HMCRL'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['HMCRL'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['HMCRL'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['HMCRL'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['HMCRL'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['HMCRL'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    # Plotting the three sets next to each other
+    bar_width = 0.2
+    dates = data.index
+
+    axs['HMCRL'].bar(dates - pd.Timedelta(hours=4), data["Weighted Hammer Curls set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['HMCRL'].bar(dates, data["Weighted Hammer Curls set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    axs['HMCRL'].bar(dates + pd.Timedelta(hours=4), data["Weighted Hammer Curls set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
+
+    return fig
 
 
 
+def turmrud_plot(data, current_date):
+    plt.style.use('seaborn-v0_8')
+    fig, axs = plt.subplot_mosaic([
+                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_REC'],
+                                ],
+                                figsize=(11, 3))
+    plt.subplots_adjust(wspace=.2)
+    plt.subplots_adjust(hspace=.6)
 
+    # fig.suptitle(f'''Training''', size=18)
+
+    axs['TRMRD'].set_title(f"Progress Turmrudern", size=14)
+    axs['TRMRD'].set_xlabel(' ', size=14)
+    axs['TRMRD'].set_ylabel('Value', size=12)
+    axs['TRMRD'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['TRMRD'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['TRMRD'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['TRMRD'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['TRMRD'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['TRMRD'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['TRMRD'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['TRMRD'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['TRMRD'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    # Plotting the three sets next to each other
+    bar_width = 0.2
+    dates = data.index
+
+    axs['TRMRD'].bar(dates - pd.Timedelta(hours=4), data["Weighted Turm Rudern set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['TRMRD'].bar(dates, data["Weighted Turm Rudern set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    axs['TRMRD'].bar(dates + pd.Timedelta(hours=4), data["Weighted Turm Rudern set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
+
+    return fig
 
 
 
