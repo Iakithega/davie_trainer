@@ -33,6 +33,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.title("David Train")
 
+
+start_date = "2024.08.10"
 # Get the current date
 current_date = datetime.today() + timedelta(days=1)
 # Format the date as 'YYYY-MM-DD'
@@ -61,22 +63,23 @@ with col1_params_normal_plot:
 
 
 
-fig_pushup = pushup_plot(data, current_date)
+fig_pushup = pushup_plot(data, start_date, current_date)
 st.pyplot(fig_pushup)
 
-fig_planke = plank_plot(data, current_date)
+fig_planke = plank_plot(data, start_date, current_date)
 st.pyplot(fig_planke)
 
-fig_kniebeuge = kniebeuge_plot(data, current_date)
+fig_kniebeuge = kniebeuge_plot(data, start_date, current_date)
 st.pyplot(fig_kniebeuge)
 
-fig_hammercurl = hamcurls_plot(data, current_date)
+fig_hammercurl = hamcurls_plot(data, start_date, current_date)
 st.pyplot(fig_hammercurl)
 
-fig_turmrud = turmrud_plot(data, current_date)
+fig_turmrud = turmrud_plot(data, start_date, current_date)
 st.pyplot(fig_turmrud)
 
-
+fig_turmzg = turmzg_plot(data, start_date, current_date)
+st.pyplot(fig_turmzg)
 
 
 
