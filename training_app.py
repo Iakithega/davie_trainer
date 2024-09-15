@@ -40,10 +40,15 @@ current_date = datetime.today() + timedelta(days=1)
 # Format the date as 'YYYY-MM-DD'
 current_date = current_date.strftime('%Y-%m-%d')
 
-
+# load the data
 initial_data = load_raw_excel(path_to_excel)
 
+# extract weights and reps and band strength
 data = weight_reps_exctracter(initial_data)
+
+
+# calculate no weight averages for liegestütze, planke and kniebeugen
+data = average_column(data)
 
 
 with st.expander("Raw Table"): 
@@ -60,7 +65,7 @@ with col1_params_normal_plot:
     selected_exersices = st.multiselect("Choose exersices", all_exersices)
 
 
-
+v_spacer(height=4, sb=False)
 
 
 fig_pushup = pushup_plot(data, start_date, current_date)

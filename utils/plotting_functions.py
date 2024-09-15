@@ -33,16 +33,18 @@ from utils.data_engineering import *
 def pushup_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['LGSTZ', 'LGSTZ', 'LGSTZ','LGSTZ_REC'],
+                                ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC'],
+                                ['LGSTZ', 'LGSTZ', 'LGSTZ'],
+                                ['LGSTZ', 'LGSTZ', 'LGSTZ']
                                 ],
-                                figsize=(11, 3))
+                                figsize=(10, 5))
 
-    plt.subplots_adjust(wspace=.2, hspace=.6)
+    plt.subplots_adjust(wspace=.2, hspace=.8)
     # plt.subplots_adjust()
 
     # fig.suptitle(f'''Training''', size=18)
 
-    axs['LGSTZ'].set_title(f"Progress Liegestütz", size=14)
+    axs['LGSTZ'].set_title(f"Progress Liegestütz", size=10)
     axs['LGSTZ'].set_xlabel(' ', size=14)
     axs['LGSTZ'].set_ylabel('Value', size=12)
     axs['LGSTZ'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -74,6 +76,30 @@ def pushup_plot(data, start_date, current_date):
                 axs['LGSTZ'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
 
 
+    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['LGSTZ_REC'].set_xlabel(' ', size=14)
+    axs['LGSTZ_REC'].set_ylabel('Value', size=12)
+    axs['LGSTZ_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['LGSTZ_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['LGSTZ_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['LGSTZ_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['LGSTZ_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['LGSTZ_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['LGSTZ_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['LGSTZ_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['LGSTZ_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average Reps"], alpha=1, width=bar_width, color="limegreen", label="Average")
+    axs['LGSTZ_REC'].bar(dates, data["Liegestütz Average Reps"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
+    axs['LGSTZ_REC'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz Average Reps"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
+
+
+
     return fig
 
 
@@ -88,7 +114,7 @@ def plank_plot(data, start_date, current_date):
 
     # fig.suptitle(f'''Training''', size=18)
 
-    axs['PLK'].set_title(f"Progress Planke", size=14)
+    axs['PLK'].set_title(f"Progress Planke", size=12)
     axs['PLK'].set_xlabel(' ', size=14)
     axs['PLK'].set_ylabel('Value', size=12)
     axs['PLK'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -135,7 +161,7 @@ def kniebeuge_plot(data, start_date, current_date):
 
     # fig.suptitle(f'''Training''', size=18)
 
-    axs['KNBG'].set_title(f"Progress Kniebeugen", size=14)
+    axs['KNBG'].set_title(f"Progress Kniebeugen", size=12)
     axs['KNBG'].set_xlabel(' ', size=14)
     axs['KNBG'].set_ylabel('Value', size=12)
     axs['KNBG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -181,7 +207,7 @@ def hamcurls_plot(data, start_date, current_date):
 
     # fig.suptitle(f'''Training''', size=18)
 
-    axs['HMCRL'].set_title(f"Progress Hammer Curls", size=14)
+    axs['HMCRL'].set_title(f"Progress Hammer Curls", size=12)
     axs['HMCRL'].set_xlabel(' ', size=14)
     axs['HMCRL'].set_ylabel('Value', size=12)
     axs['HMCRL'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -234,7 +260,7 @@ def turmrud_plot(data, start_date, current_date):
 
     # fig.suptitle(f'''Training''', size=18)
 
-    axs['TRMRD'].set_title(f"Progress Turmrudern", size=14)
+    axs['TRMRD'].set_title(f"Progress Turmrudern", size=12)
     axs['TRMRD'].set_xlabel(' ', size=14)
     axs['TRMRD'].set_ylabel('Value', size=12)
     axs['TRMRD'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -265,10 +291,15 @@ def turmrud_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMRD'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
-    for set_name, offset in zip(["Weighted Turm Rudern set 1 weight", "Weighted Turm Rudern set 2 weight", "Weighted Turm Rudern set 3 weight"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Weighted Turm Rudern set 1 band", "Weighted Turm Rudern set 2 band", "Weighted Turm Rudern set 3 band"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['TRMRD'].text(date + offset, value/10 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black') 
+    
+    for set_name, offset in zip(["Weighted Turm Rudern set 1 distance", "Weighted Turm Rudern set 2 distance", "Weighted Turm Rudern set 3 distance"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['TRMRD'].text(date + offset, value/6 + 0.5, f"{value}", va='center', ha='center', fontsize=5, color='black')
 
     return fig
 
@@ -288,7 +319,7 @@ def turmzg_plot(data, start_date, current_date):
 
     # fig.suptitle(f'''Training''', size=18)
 
-    axs['TRMZG'].set_title(f"Progress Turmzug", size=14)
+    axs['TRMZG'].set_title(f"Progress Turmzug", size=12)
     axs['TRMZG'].set_xlabel(' ', size=14)
     axs['TRMZG'].set_ylabel('Value', size=12)
     axs['TRMZG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
