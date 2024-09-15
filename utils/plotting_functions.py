@@ -30,12 +30,6 @@ from utils.data_engineering import *
 
 
 
-        # elif col.startswith('Weighted Turm Rudern'):
-        #     band_col = f"{col} band"
-        #     weight_col = f"{col} weight"
-        #     reps_col = f"{col} reps"
-
-
 def pushup_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
@@ -43,15 +37,15 @@ def pushup_plot(data, start_date, current_date):
                                 ],
                                 figsize=(11, 3))
 
-    plt.subplots_adjust(wspace=.2)
-    plt.subplots_adjust(hspace=.6)
+    plt.subplots_adjust(wspace=.2, hspace=.6)
+    # plt.subplots_adjust()
 
     # fig.suptitle(f'''Training''', size=18)
 
     axs['LGSTZ'].set_title(f"Progress Liegestütz", size=14)
     axs['LGSTZ'].set_xlabel(' ', size=14)
     axs['LGSTZ'].set_ylabel('Value', size=12)
-    axs['LGSTZ'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), # start_date  "2024.08.10"
+    axs['LGSTZ'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -67,16 +61,18 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
-    bar_width = 0.2
+    bar_width = 0.3
     dates = data.index
 
-    axs['LGSTZ'].bar(dates - pd.Timedelta(hours=4), data["Liegestütz set 1"], alpha=0.5, width=bar_width, color="limegreen", label="Set 1")
-    axs['LGSTZ'].bar(dates, data["Liegestütz set 2"], alpha=0.5, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['LGSTZ'].bar(dates + pd.Timedelta(hours=4), data["Liegestütz set 3"], alpha=0.5, color="darkviolet", width=bar_width, label="Set 3")
+    axs['LGSTZ'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['LGSTZ'].bar(dates, data["Liegestütz set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    axs['LGSTZ'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
 
-    for date, value in data["Liegestütz set 1"].loc[start_date:current_date].items():
-        if not pd.isna(value):
-            axs['LGSTZ'].text(date, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=9)
+    for set_name, offset in zip(["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['LGSTZ'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+
 
     return fig
 
@@ -88,15 +84,14 @@ def plank_plot(data, start_date, current_date):
                                 ['PLK', 'PLK', 'PLK', 'PLK_REC'],
                                 ],
                                 figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2)
-    plt.subplots_adjust(hspace=.6)
+    plt.subplots_adjust(wspace=.2, hspace=.6)
 
     # fig.suptitle(f'''Training''', size=18)
 
     axs['PLK'].set_title(f"Progress Planke", size=14)
     axs['PLK'].set_xlabel(' ', size=14)
     axs['PLK'].set_ylabel('Value', size=12)
-    axs['PLK'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
+    axs['PLK'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -112,12 +107,18 @@ def plank_plot(data, start_date, current_date):
     axs['PLK'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
-    bar_width = 0.2
+    bar_width = 0.3
     dates = data.index
 
-    axs['PLK'].bar(dates - pd.Timedelta(hours=4), data["Planke set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['PLK'].bar(dates - pd.Timedelta(hours=10), data["Planke set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
     axs['PLK'].bar(dates, data["Planke set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['PLK'].bar(dates + pd.Timedelta(hours=4), data["Planke set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+    axs['PLK'].bar(dates + pd.Timedelta(hours=10), data["Planke set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+
+    for set_name, offset in zip(["Planke set 1", "Planke set 2", "Planke set 3"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['PLK'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
 
     return fig
 
@@ -129,15 +130,15 @@ def kniebeuge_plot(data, start_date, current_date):
                                 ['KNBG', 'KNBG', 'KNBG', 'KNBG_REC'],
                                 ],
                                 figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2)
-    plt.subplots_adjust(hspace=.6)
+    
+    plt.subplots_adjust(wspace=.2, hspace=.6)
 
     # fig.suptitle(f'''Training''', size=18)
 
     axs['KNBG'].set_title(f"Progress Kniebeugen", size=14)
     axs['KNBG'].set_xlabel(' ', size=14)
     axs['KNBG'].set_ylabel('Value', size=12)
-    axs['KNBG'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
+    axs['KNBG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -153,12 +154,18 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
-    bar_width = 0.2
+    bar_width = 0.3
     dates = data.index
 
-    axs['KNBG'].bar(dates - pd.Timedelta(hours=4), data["Kniebeugen set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['KNBG'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
     axs['KNBG'].bar(dates, data["Kniebeugen set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['KNBG'].bar(dates + pd.Timedelta(hours=4), data["Kniebeugen set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+    axs['KNBG'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+
+    for set_name, offset in zip(["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['KNBG'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
 
     return fig
 
@@ -169,15 +176,15 @@ def hamcurls_plot(data, start_date, current_date):
                                 ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_REC'],
                                 ],
                                 figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2)
-    plt.subplots_adjust(hspace=.6)
+    
+    plt.subplots_adjust(wspace=.2, hspace=.6)
 
     # fig.suptitle(f'''Training''', size=18)
 
     axs['HMCRL'].set_title(f"Progress Hammer Curls", size=14)
     axs['HMCRL'].set_xlabel(' ', size=14)
     axs['HMCRL'].set_ylabel('Value', size=12)
-    axs['HMCRL'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
+    axs['HMCRL'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -193,55 +200,26 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
-    bar_width = 0.2
+    bar_width = 0.3
     dates = data.index
 
-    axs['HMCRL'].bar(dates - pd.Timedelta(hours=4), data["Weighted Hammer Curls set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['HMCRL'].bar(dates - pd.Timedelta(hours=10), data["Weighted Hammer Curls set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
     axs['HMCRL'].bar(dates, data["Weighted Hammer Curls set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['HMCRL'].bar(dates + pd.Timedelta(hours=4), data["Weighted Hammer Curls set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
+    axs['HMCRL'].bar(dates + pd.Timedelta(hours=10), data["Weighted Hammer Curls set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
+
+    for set_name, offset in zip(["Weighted Hammer Curls set 1 reps", "Weighted Hammer Curls set 2 reps", "Weighted Hammer Curls set 3 reps"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['HMCRL'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
+    for set_name, offset in zip(["Weighted Hammer Curls set 1 weight", "Weighted Hammer Curls set 2 weight", "Weighted Hammer Curls set 3 weight"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['HMCRL'].text(date + offset, value/2 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
 
     return fig
 
-
-
-def hamcurls_plot(data, start_date, current_date):
-    plt.style.use('seaborn-v0_8')
-    fig, axs = plt.subplot_mosaic([
-                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_REC'],
-                                ],
-                                figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2)
-    plt.subplots_adjust(hspace=.6)
-
-    # fig.suptitle(f'''Training''', size=18)
-
-    axs['HMCRL'].set_title(f"Progress Hammer Curls", size=14)
-    axs['HMCRL'].set_xlabel(' ', size=14)
-    axs['HMCRL'].set_ylabel('Value', size=12)
-    axs['HMCRL'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
-    # axs['1'].set_ylim([0, 14])
-
-    # Set font size for major and minor ticks
-    axs['HMCRL'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['HMCRL'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
-
-    axs['HMCRL'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['HMCRL'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
-    axs['HMCRL'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
-
-    axs['HMCRL'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['HMCRL'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
-    axs['HMCRL'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
-
-    # Plotting the three sets next to each other
-    bar_width = 0.2
-    dates = data.index
-
-    axs['HMCRL'].bar(dates - pd.Timedelta(hours=4), data["Weighted Hammer Curls set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
-    axs['HMCRL'].bar(dates, data["Weighted Hammer Curls set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['HMCRL'].bar(dates + pd.Timedelta(hours=4), data["Weighted Hammer Curls set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
-
-    return fig
 
 
 
@@ -251,15 +229,15 @@ def turmrud_plot(data, start_date, current_date):
                                 ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_REC'],
                                 ],
                                 figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2)
-    plt.subplots_adjust(hspace=.6)
+    
+    plt.subplots_adjust(wspace=.2, hspace=.6)
 
     # fig.suptitle(f'''Training''', size=18)
 
     axs['TRMRD'].set_title(f"Progress Turmrudern", size=14)
     axs['TRMRD'].set_xlabel(' ', size=14)
     axs['TRMRD'].set_ylabel('Value', size=12)
-    axs['TRMRD'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
+    axs['TRMRD'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -275,12 +253,22 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
-    bar_width = 0.2
+    bar_width = 0.3
     dates = data.index
 
-    axs['TRMRD'].bar(dates - pd.Timedelta(hours=4), data["Weighted Turm Rudern set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['TRMRD'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Rudern set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
     axs['TRMRD'].bar(dates, data["Weighted Turm Rudern set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['TRMRD'].bar(dates + pd.Timedelta(hours=4), data["Weighted Turm Rudern set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
+    axs['TRMRD'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Rudern set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+    for set_name, offset in zip(["Weighted Turm Rudern set 1 reps", "Weighted Turm Rudern set 2 reps", "Weighted Turm Rudern set 3 reps"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['TRMRD'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
+    for set_name, offset in zip(["Weighted Turm Rudern set 1 weight", "Weighted Turm Rudern set 2 weight", "Weighted Turm Rudern set 3 weight"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['TRMRD'].text(date + offset, value/10 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black') 
 
     return fig
 
@@ -290,21 +278,20 @@ def turmrud_plot(data, start_date, current_date):
 
 
 
-def turmzg_plot(data, current_date):
+def turmzg_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_REC'],
                                 ],
                                 figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2)
-    plt.subplots_adjust(hspace=.6)
+    plt.subplots_adjust(wspace=.2, hspace=.6)
 
     # fig.suptitle(f'''Training''', size=18)
 
     axs['TRMZG'].set_title(f"Progress Turmzug", size=14)
     axs['TRMZG'].set_xlabel(' ', size=14)
     axs['TRMZG'].set_ylabel('Value', size=12)
-    axs['TRMZG'].set_xlim([pd.to_datetime("2024.08.10"), pd.to_datetime(f"{current_date}")]), 
+    axs['TRMZG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
@@ -320,12 +307,23 @@ def turmzg_plot(data, current_date):
     axs['TRMZG'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
-    bar_width = 0.2
+    bar_width = 0.3
     dates = data.index
 
-    axs['TRMZG'].bar(dates - pd.Timedelta(hours=4), data["Weighted Turm Zug set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['TRMZG'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Zug set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
     axs['TRMZG'].bar(dates, data["Weighted Turm Zug set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['TRMZG'].bar(dates + pd.Timedelta(hours=4), data["Weighted Turm Zug set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
+    axs['TRMZG'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Zug set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+
+    for set_name, offset in zip(["Weighted Turm Zug set 1 reps", "Weighted Turm Zug set 2 reps", "Weighted Turm Zug set 3 reps"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['TRMZG'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
+    for set_name, offset in zip(["Weighted Turm Zug set 1 weight", "Weighted Turm Zug set 2 weight", "Weighted Turm Zug set 3 weight"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value):
+                axs['TRMZG'].text(date + offset, value/15 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')  
 
 
 
