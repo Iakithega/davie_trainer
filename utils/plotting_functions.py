@@ -94,9 +94,12 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
     axs['LGSTZ_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
-    axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="limegreen", label="Average")
-    axs['LGSTZ_REC'].bar(dates, data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
-    axs['LGSTZ_REC'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
+    axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['LGSTZ_REC'].bar(dates, data["Liegestütz Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['LGSTZ_REC'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
+    # Adding legend
+    axs['LGSTZ_REC'].legend(loc='best', fontsize=5)
 
 
 
@@ -167,9 +170,12 @@ def plank_plot(data, start_date, current_date):
     axs['PLK_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
     axs['PLK_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
-    axs['PLK_REC'].bar(dates - pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, width=bar_width, color="limegreen", label="Average")
-    axs['PLK_REC'].bar(dates, data["Planke Average all sets"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
-    axs['PLK_REC'].bar(dates + pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
+    axs['PLK_REC'].bar(dates - pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['PLK_REC'].bar(dates, data["Planke Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['PLK_REC'].bar(dates + pd.Timedelta(hours=10), data["Planke Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
+    # Adding legend
+    axs['PLK_REC'].legend(loc='best', fontsize=5)
 
     return fig
 
@@ -240,9 +246,12 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
     axs['KNBG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
-    axs['KNBG_REC'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="limegreen", label="Average")
-    axs['KNBG_REC'].bar(dates, data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
-    axs['KNBG_REC'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
+    axs['KNBG_REC'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['KNBG_REC'].bar(dates, data["Kniebeugen Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['KNBG_REC'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
+    # Adding legend
+    axs['KNBG_REC'].legend(loc='best', fontsize=5)
 
 
     return fig
