@@ -94,9 +94,9 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
     axs['LGSTZ_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
-    axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average Reps"], alpha=1, width=bar_width, color="limegreen", label="Average")
-    axs['LGSTZ_REC'].bar(dates, data["Liegestütz Average Reps"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
-    axs['LGSTZ_REC'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz Average Reps"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
+    axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="limegreen", label="Average")
+    axs['LGSTZ_REC'].bar(dates, data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
+    axs['LGSTZ_REC'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
 
 
 
@@ -107,10 +107,12 @@ def plank_plot(data, start_date, current_date):
 
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['PLK', 'PLK', 'PLK', 'PLK_REC'],
+                                ['PLK_REC', 'PLK_REC', 'PLK_REC'],
+                                ['PLK', 'PLK', 'PLK'],
+                                ['PLK', 'PLK', 'PLK'],
                                 ],
-                                figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2, hspace=.6)
+                                figsize=(10, 5))
+    plt.subplots_adjust(wspace=.2, hspace=.8)
 
     # fig.suptitle(f'''Training''', size=18)
 
@@ -145,6 +147,29 @@ def plank_plot(data, start_date, current_date):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['PLK'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
+    
+    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['PLK_REC'].set_xlabel(' ', size=14)
+    axs['PLK_REC'].set_ylabel('Value', size=12)
+    axs['PLK_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['PLK_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['PLK_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['PLK_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['PLK_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['PLK_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['PLK_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['PLK_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['PLK_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['PLK_REC'].bar(dates - pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, width=bar_width, color="limegreen", label="Average")
+    axs['PLK_REC'].bar(dates, data["Planke Average all sets"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
+    axs['PLK_REC'].bar(dates + pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
 
     return fig
 
@@ -153,11 +178,13 @@ def plank_plot(data, start_date, current_date):
 def kniebeuge_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['KNBG', 'KNBG', 'KNBG', 'KNBG_REC'],
+                                ['KNBG_REC', 'KNBG_REC', 'KNBG_REC'],
+                                ['KNBG', 'KNBG', 'KNBG'],
+                                ['KNBG', 'KNBG', 'KNBG'],
                                 ],
-                                figsize=(11, 3))
+                                figsize=(10, 5))
     
-    plt.subplots_adjust(wspace=.2, hspace=.6)
+    plt.subplots_adjust(wspace=.2, hspace=.8)
 
     # fig.suptitle(f'''Training''', size=18)
 
@@ -192,6 +219,31 @@ def kniebeuge_plot(data, start_date, current_date):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['KNBG'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
+
+
+    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['KNBG_REC'].set_xlabel(' ', size=14)
+    axs['KNBG_REC'].set_ylabel('Value', size=12)
+    axs['KNBG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['KNBG_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['KNBG_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['KNBG_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['KNBG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['KNBG_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['KNBG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['KNBG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['KNBG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['KNBG_REC'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="limegreen", label="Average")
+    axs['KNBG_REC'].bar(dates, data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="dodgerblue", label="Absolute Max")
+    axs['KNBG_REC'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, color="darkviolet", width=bar_width, label="Amount")
+
 
     return fig
 
@@ -199,11 +251,13 @@ def kniebeuge_plot(data, start_date, current_date):
 def hamcurls_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_REC'],
+                                ['HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC'],
+                                ['HMCRL', 'HMCRL', 'HMCRL'],
+                                ['HMCRL', 'HMCRL', 'HMCRL'],
                                 ],
-                                figsize=(11, 3))
+                                figsize=(10, 5))
     
-    plt.subplots_adjust(wspace=.2, hspace=.6)
+    plt.subplots_adjust(wspace=.2, hspace=.8)
 
     # fig.suptitle(f'''Training''', size=18)
 
@@ -252,11 +306,13 @@ def hamcurls_plot(data, start_date, current_date):
 def turmrud_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_REC'],
+                                ['TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC'],
+                                ['TRMRD', 'TRMRD', 'TRMRD'],
+                                ['TRMRD', 'TRMRD', 'TRMRD'],
                                 ],
-                                figsize=(11, 3))
+                                figsize=(10, 5))
     
-    plt.subplots_adjust(wspace=.2, hspace=.6)
+    plt.subplots_adjust(wspace=.2, hspace=.8)
 
     # fig.suptitle(f'''Training''', size=18)
 
@@ -291,7 +347,7 @@ def turmrud_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMRD'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
-    for set_name, offset in zip(["Weighted Turm Rudern set 1 band", "Weighted Turm Rudern set 2 band", "Weighted Turm Rudern set 3 band"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Weighted Turm Rudern set 1 band", "Weighted Turm Rudern set 2 band", "Weighted Turm Rudern set 3 band"], [-pd.Timedelta(hours=14), pd.Timedelta(0), pd.Timedelta(hours=14)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['TRMRD'].text(date + offset, value/10 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black') 
@@ -312,10 +368,12 @@ def turmrud_plot(data, start_date, current_date):
 def turmzg_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_REC'],
+                                ['TRMZG_REC', 'TRMZG_REC', 'TRMZG_REC'],
+                                ['TRMZG', 'TRMZG', 'TRMZG'],
+                                ['TRMZG', 'TRMZG', 'TRMZG'],
                                 ],
-                                figsize=(11, 3))
-    plt.subplots_adjust(wspace=.2, hspace=.6)
+                                figsize=(10, 5))
+    plt.subplots_adjust(wspace=.2, hspace=.8)
 
     # fig.suptitle(f'''Training''', size=18)
 
@@ -351,7 +409,7 @@ def turmzg_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMZG'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
-    for set_name, offset in zip(["Weighted Turm Zug set 1 weight", "Weighted Turm Zug set 2 weight", "Weighted Turm Zug set 3 weight"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Weighted Turm Zug set 1 weight", "Weighted Turm Zug set 2 weight", "Weighted Turm Zug set 3 weight"], [-pd.Timedelta(hours=14), pd.Timedelta(0), pd.Timedelta(hours=14)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['TRMZG'].text(date + offset, value/15 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')  

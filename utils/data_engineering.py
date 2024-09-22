@@ -64,17 +64,17 @@ def weight_reps_exctracter(df):
     return df
 
     
-def average_column(df):
+def average_all_reps_column(df):
     liegestuetze_columns = df.filter(regex="Liegestütz").columns
-    df['Liegestütz Average Reps'] = df[liegestuetze_columns].mean(axis=1, skipna=True)
+    df['Liegestütz Average all sets'] = df[liegestuetze_columns].mean(axis=1, skipna=True)
 
     # Calculate the average reps for Planke
     planke_columns = df.filter(regex="Planke").columns
-    df['Planke Average Reps'] = df[planke_columns].mean(axis=1, skipna=True)
+    df['Planke Average all sets'] = df[planke_columns].mean(axis=1, skipna=True)
 
     # Calculate the average reps for Kniebeuge
     kniebeuge_columns = df.filter(regex="Kniebeugen").columns
-    df['Kniebeugen Average Reps'] = df[kniebeuge_columns].mean(axis=1, skipna=True)
+    df['Kniebeugen Average all sets'] = df[kniebeuge_columns].mean(axis=1, skipna=True)
     
     return df
 

@@ -48,7 +48,7 @@ data = weight_reps_exctracter(initial_data)
 
 
 # calculate no weight averages for liegestütze, planke and kniebeugen
-data = average_column(data)
+data = average_all_reps_column(data)
 
 
 with st.expander("Raw Table"): 
