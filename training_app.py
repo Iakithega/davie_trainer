@@ -47,8 +47,14 @@ initial_data = load_raw_excel(path_to_excel)
 data = weight_reps_exctracter(initial_data)
 
 
-# calculate no weight averages for liegestütze, planke and kniebeugen
-data = average_all_reps_column(data)
+# calculate no weight averages, max and sum for liegestütze, planke and kniebeugen
+data = calc_sets_overview_no_weights(data)
+
+# calculate no weight averages, max and sum for weighted Hammer Curls, and Turm Zug
+data = calc_sets_overview_with_weights(data)
+
+# calculate no weight averages, max and sum for distanced Turm Rudern
+data = calc_sets_overview_with_weights_dstanced(data)
 
 
 with st.expander("Raw Table"): 

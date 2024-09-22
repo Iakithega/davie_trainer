@@ -64,7 +64,7 @@ def weight_reps_exctracter(df):
     return df
 
     
-def average_all_reps_column(df):
+def calc_sets_overview_no_weights(df):
     liegestuetze_columns = df.filter(regex="Liegestütz").columns
     df['Liegestütz Average all sets'] = df[liegestuetze_columns].mean(axis=1, skipna=True)
     df['Liegestütz Max all sets'] = df[liegestuetze_columns].max(axis=1, skipna=True)
@@ -84,3 +84,56 @@ def average_all_reps_column(df):
     
     return df
 
+
+def calc_sets_overview_with_weights(df, weight_factor=1):
+    # calculations and columns for weighted hammer curls
+    hammer_reps_columns = df.filter(regex="Weighted Hammer Curls.*reps").columns
+    hammer_weight_columns = df.filter(regex="Weighted Hammer Curls.*weight").columns
+
+    # Calculate average, max, and sum for the reps
+    df['Hammer Curls Average reps all sets'] = df[hammer_reps_columns].mean(axis=1, skipna=True)
+    df['Hammer Curls Max reps all sets'] = df[hammer_reps_columns].max(axis=1, skipna=True)
+    df['Hammer Curls Sum reps all sets'] = df[hammer_reps_columns].sum(axis=1, skipna=True)    
+
+    # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
+    df['Hammer Curls Weight Factored Sum all sets'] = (df[hammer_reps_columns] * df[hammer_weight_columns] * weight_factor).sum(axis=1)
+    df['Hammer Curls Weight Factored Average all sets'] = (df[hammer_reps_columns] * df[hammer_weight_columns] * weight_factor).mean(axis=1)
+    df['Hammer Curls Weight Factored Max all sets'] = (df[hammer_reps_columns] * df[hammer_weight_columns] * weight_factor).max(axis=1)
+
+
+    # calculations and columns for weighted Turm Zug
+    trmzg_reps_columns = df.filter(regex="Turm Zug.*reps").columns
+    trmzg_weight_columns = df.filter(regex="Turm Zug.*weight").columns
+
+    # Calculate average, max, and sum for the reps
+    df['Turm Zug Average reps all sets'] = df[trmzg_reps_columns].mean(axis=1, skipna=True)
+    df['Turm Zug Max reps all sets'] = df[trmzg_reps_columns].max(axis=1, skipna=True)
+    df['Turm Zug Sum reps all sets'] = df[trmzg_reps_columns].sum(axis=1, skipna=True)    
+
+    # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
+    df['Turm Zug Weight Factored Sum all sets'] = (df[trmzg_reps_columns] * df[trmzg_weight_columns] * weight_factor).sum(axis=1)
+    df['Turm Zug Weight Factored Average all sets'] = (df[trmzg_reps_columns] * df[trmzg_weight_columns] * weight_factor).mean(axis=1)
+    df['Turm Zug Weight Factored Max all sets'] = (df[trmzg_reps_columns] * df[trmzg_weight_columns] * weight_factor).max(axis=1)
+
+  
+    return df
+
+
+
+def calc_sets_overview_with_weights_dstanced(df, weight_factor=1):
+    # calculations and columns for weighted hammer curls
+    trmrd_reps_columns = df.filter(regex="Weighted Turm Rudern.*reps").columns
+    trmrd_distance_columns = df.filter(regex="Weighted Turm Rudern.*distance").columns
+    trmrd_weight_columns = df.filter(regex="Weighted Turm Rudern.*weight").columns
+
+    # Calculate average, max, and sum for the reps
+    df['Turm Rudern Average reps all sets'] = df[trmrd_reps_columns].mean(axis=1, skipna=True)
+    df['Turm Rudern Max reps all sets'] = df[trmrd_reps_columns].max(axis=1, skipna=True)
+    df['Turm Rudern Sum reps all sets'] = df[trmrd_reps_columns].sum(axis=1, skipna=True)    
+
+    # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
+    df['Turm Rudern Weight Factored Sum all sets'] = (df[trmrd_reps_columns] * df[trmrd_distance_columns] * df[trmrd_weight_columns] * weight_factor).sum(axis=1)
+    df['Turm Rudern Weight Factored Average all sets'] = (df[trmrd_reps_columns] * df[trmrd_distance_columns] * df[trmrd_weight_columns] * weight_factor).mean(axis=1)
+    df['Turm Rudern Weight Factored Max all sets'] = (df[trmrd_reps_columns] * df[trmrd_distance_columns] * df[trmrd_weight_columns] * weight_factor).max(axis=1)
+
+    return df

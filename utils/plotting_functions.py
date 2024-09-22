@@ -101,6 +101,12 @@ def pushup_plot(data, start_date, current_date):
     # Adding legend
     axs['LGSTZ_REC'].legend(loc='best', fontsize=5)
 
+    for set_name, offset in zip(["Liegestütz Average all sets", "Liegestütz Max all sets", "Liegestütz Sum all sets"], 
+                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value) and value != 0:
+                axs['LGSTZ_REC'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+
 
 
     return fig
@@ -141,12 +147,12 @@ def plank_plot(data, start_date, current_date):
     bar_width = 0.3
     dates = data.index
 
-    axs['PLK'].bar(dates - pd.Timedelta(hours=10), data["Planke set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    axs['PLK'].bar(dates - pd.Timedelta(hours=12), data["Planke set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
     axs['PLK'].bar(dates, data["Planke set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['PLK'].bar(dates + pd.Timedelta(hours=10), data["Planke set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+    axs['PLK'].bar(dates + pd.Timedelta(hours=12), data["Planke set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
 
 
-    for set_name, offset in zip(["Planke set 1", "Planke set 2", "Planke set 3"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Planke set 1", "Planke set 2", "Planke set 3"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['PLK'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
@@ -176,6 +182,13 @@ def plank_plot(data, start_date, current_date):
 
     # Adding legend
     axs['PLK_REC'].legend(loc='best', fontsize=5)
+
+
+    for set_name, offset in zip(["Planke Average all sets", "Planke Max all sets", "Planke Sum all sets"], 
+                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value) and value != 0:
+                axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
 
     return fig
 
@@ -254,6 +267,13 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG_REC'].legend(loc='best', fontsize=5)
 
 
+    for set_name, offset in zip(["Kniebeugen Average all sets", "Kniebeugen Max all sets", "Kniebeugen Sum all sets"], 
+                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value) and value != 0:
+                axs['KNBG_REC'].text(date + offset, value + 2, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+
+
     return fig
 
 
@@ -306,6 +326,39 @@ def hamcurls_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['HMCRL'].text(date + offset, value/2 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
+
+    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['HMCRL_REC'].set_xlabel(' ', size=14)
+    axs['HMCRL_REC'].set_ylabel('Value', size=12)
+    axs['HMCRL_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['HMCRL_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['HMCRL_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['HMCRL_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['HMCRL_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['HMCRL_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['HMCRL_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['HMCRL_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['HMCRL_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['HMCRL_REC'].bar(dates - pd.Timedelta(hours=10), data["Hammer Curls Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['HMCRL_REC'].bar(dates, data["Hammer Curls Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['HMCRL_REC'].bar(dates + pd.Timedelta(hours=10), data["Hammer Curls Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
+    # Adding legend
+    axs['HMCRL_REC'].legend(loc='best', fontsize=5)
+
+
+    for set_name, offset in zip(["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"], 
+                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value) and value != 0:
+                axs['HMCRL_REC'].text(date + offset, value + 1.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+
 
     return fig
 
@@ -366,11 +419,44 @@ def turmrud_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMRD'].text(date + offset, value/6 + 0.5, f"{value}", va='center', ha='center', fontsize=5, color='black')
 
+
+
+    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['TRMRD_REC'].set_xlabel(' ', size=14)
+    axs['TRMRD_REC'].set_ylabel('Value', size=12)
+    axs['TRMRD_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['TRMRD_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['TRMRD_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['TRMRD_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['TRMRD_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['TRMRD_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['TRMRD_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['TRMRD_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['TRMRD_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['TRMRD_REC'].bar(dates - pd.Timedelta(hours=10), data["Turm Rudern Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['TRMRD_REC'].bar(dates, data["Turm Rudern Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['TRMRD_REC'].bar(dates + pd.Timedelta(hours=10), data["Turm Rudern Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
+    # Adding legend
+    axs['TRMRD_REC'].legend(loc='best', fontsize=5)
+
+
+    for set_name, offset in zip(["Turm Rudern Average reps all sets", "Turm Rudern Max reps all sets", "Turm Rudern Sum reps all sets"], 
+                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value) and value != 0:
+                axs['TRMRD_REC'].text(date + offset, value + 2, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+
+
     return fig
 
 
-
-# Weighted Turm Zug set 1	Weighted Turm Zug set 2	Weighted Turm Zug set 3	Weighted Turm Zug set 4	
 
 
 
@@ -423,6 +509,40 @@ def turmzg_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMZG'].text(date + offset, value/15 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')  
 
+    
+
+    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['TRMZG_REC'].set_xlabel(' ', size=14)
+    axs['TRMZG_REC'].set_ylabel('Value', size=12)
+    axs['TRMZG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['1'].set_ylim([0, 14])
+
+    # Set font size for major and minor ticks
+    axs['TRMZG_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
+    axs['TRMZG_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+
+    axs['TRMZG_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
+    axs['TRMZG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['TRMZG_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['TRMZG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['TRMZG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['TRMZG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+
+    axs['TRMZG_REC'].bar(dates - pd.Timedelta(hours=10), data["Turm Zug Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['TRMZG_REC'].bar(dates, data["Turm Zug Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['TRMZG_REC'].bar(dates + pd.Timedelta(hours=10), data["Turm Zug Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
+    # Adding legend
+    axs['TRMZG_REC'].legend(loc='best', fontsize=5)
+
+
+
+    for set_name, offset in zip(["Turm Zug Average reps all sets", "Turm Zug Max reps all sets", "Turm Zug Sum reps all sets"], 
+                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            if not pd.isna(value) and value != 0:
+                axs['TRMZG_REC'].text(date + offset, value + 1.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
 
 
     return fig
