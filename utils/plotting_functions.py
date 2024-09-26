@@ -101,11 +101,34 @@ def pushup_plot(data, start_date, current_date):
     # Adding legend
     axs['LGSTZ_REC'].legend(loc='best', fontsize=5)
 
-    for set_name, offset in zip(["Liegestütz Average all sets", "Liegestütz Max all sets", "Liegestütz Sum all sets"], 
-                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+
+    # Initialize dictionaries to keep track of the maximum values for each set name
+    max_values = {
+        "Liegestütz Average all sets": -float('inf'),
+        "Liegestütz Max all sets": -float('inf'),
+        "Liegestütz Sum all sets": -float('inf')
+    }
+
+    # Iterate over the three metrics and add the annotation
+    for set_name, offset in zip(
+        ["Liegestütz Average all sets", "Liegestütz Max all sets", "Liegestütz Sum all sets"], 
+        [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+    ):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value) and value != 0:
-                axs['LGSTZ_REC'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+                # Check if the current value is a new record (higher than the previous maximum)
+                if value > max_values[set_name]:
+                    # Update the maximum value for this set_name
+                    max_values[set_name] = value
+                    
+                    # Highlight the record by adding a background color (e.g., yellow)
+                    axs['LGSTZ_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black', 
+                                        bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
+                else:
+                    # Regular annotation for non-record values (without background)
+                    axs['LGSTZ_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black')
 
 
 
@@ -184,11 +207,40 @@ def plank_plot(data, start_date, current_date):
     axs['PLK_REC'].legend(loc='best', fontsize=5)
 
 
-    for set_name, offset in zip(["Planke Average all sets", "Planke Max all sets", "Planke Sum all sets"], 
-                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+    # for set_name, offset in zip(["Planke Average all sets", "Planke Max all sets", "Planke Sum all sets"], 
+    #                         [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+    #     for date, value in data[set_name].loc[start_date:current_date].items():
+    #         if not pd.isna(value) and value != 0:
+    #             axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+
+    
+    # Initialize dictionaries to keep track of the maximum values for each set name
+    max_values = {
+        "Planke Average all sets": -float('inf'),
+        "Planke Max all sets": -float('inf'),
+        "Planke Sum all sets": -float('inf')
+    }
+
+    # Iterate over the three metrics and add the annotation
+    for set_name, offset in zip(
+        ["Planke Average all sets", "Planke Max all sets", "Planke Sum all sets"], 
+        [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+    ):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value) and value != 0:
-                axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+                # Check if the current value is a new record (higher than the previous maximum)
+                if value > max_values[set_name]:
+                    # Update the maximum value for this set_name
+                    max_values[set_name] = value
+                    
+                    # Highlight the record by adding a background color (e.g., yellow)
+                    axs['PLK_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black', 
+                                        bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
+                else:
+                    # Regular annotation for non-record values (without background)
+                    axs['PLK_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black')
 
     return fig
 
@@ -266,12 +318,34 @@ def kniebeuge_plot(data, start_date, current_date):
     # Adding legend
     axs['KNBG_REC'].legend(loc='best', fontsize=5)
 
+    
+    # Initialize dictionaries to keep track of the maximum values for each set name
+    max_values = {
+        "Kniebeugen Average all sets": -float('inf'),
+        "Kniebeugen Max all sets": -float('inf'),
+        "Kniebeugen Sum all sets": -float('inf')
+    }
 
-    for set_name, offset in zip(["Kniebeugen Average all sets", "Kniebeugen Max all sets", "Kniebeugen Sum all sets"], 
-                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+    # Iterate over the three metrics and add the annotation
+    for set_name, offset in zip(
+        ["Kniebeugen Average all sets", "Kniebeugen Max all sets", "Kniebeugen Sum all sets"], 
+        [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+    ):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value) and value != 0:
-                axs['KNBG_REC'].text(date + offset, value + 2, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+                # Check if the current value is a new record (higher than the previous maximum)
+                if value > max_values[set_name]:
+                    # Update the maximum value for this set_name
+                    max_values[set_name] = value
+                    
+                    # Highlight the record by adding a background color (e.g., yellow)
+                    axs['KNBG_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black', 
+                                        bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
+                else:
+                    # Regular annotation for non-record values (without background)
+                    axs['KNBG_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black')
 
 
     return fig
@@ -331,7 +405,7 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].set_xlabel(' ', size=14)
     axs['HMCRL_REC'].set_ylabel('Value', size=12)
     axs['HMCRL_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['HMCRL_REC'].set_ylim([0, 300])
 
     # Set font size for major and minor ticks
     axs['HMCRL_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
@@ -353,11 +427,87 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].legend(loc='best', fontsize=5)
 
 
-    for set_name, offset in zip(["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"], 
-                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+
+
+    # # Initialize dictionaries to keep track of the maximum values for each set name
+    # max_values = {
+    #     "Hammer Curls Average reps all sets": -float('inf'),
+    #     "Hammer Curls Max reps all sets": -float('inf'),
+    #     "Hammer Curls Sum reps all sets": -float('inf')
+    # }
+    
+    # # Iterate over the three metrics and add the annotation
+    # for set_name, offset in zip(
+    #     ["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"], 
+    #     [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+    # ):
+    #     for date, value in data[set_name].loc[start_date:current_date].items():
+    #         if not pd.isna(value) and value != 0:
+    #             # Check if the current value is a new record (higher than the previous maximum)
+    #             if value > max_values[set_name]:
+    #                 # Update the maximum value for this set_name
+    #                 max_values[set_name] = value
+                    
+    #                 # Highlight the record by adding a background color (e.g., yellow)
+    #                 axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+    #                                     va='center', ha='center', fontsize=4, color='black', 
+    #                                     bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
+    #             else:
+    #                 # Regular annotation for non-record values (without background)
+    #                 axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+    #                                     va='center', ha='center', fontsize=4, color='black')
+    
+
+
+
+    # Initialize dictionaries to keep track of the maximum values for each set name
+    max_values = {
+        "Hammer Curls Average reps all sets": -float('inf'),
+        "Hammer Curls Max reps all sets": -float('inf'),
+        "Hammer Curls Sum reps all sets": -float('inf'),
+        "Hammer Curls Weight Factored Average all sets": -float('inf'),
+        "Hammer Curls Weight Factored Max all sets": -float('inf'),
+        "Hammer Curls Weight Factored Sum all sets": -float('inf')
+    } 
+
+    # Iterate over the three metrics and add the annotation
+    for set_name, weight_factored_set_name, offset in zip(
+        ["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"], 
+        ["Hammer Curls Weight Factored Average all sets", "Hammer Curls Weight Factored Max all sets", "Hammer Curls Weight Factored Sum all sets"],
+        [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+    ):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value) and value != 0:
-                axs['HMCRL_REC'].text(date + offset, value + 1.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+                # Check if the current value is a new record (higher than the previous maximum)
+                if value > max_values[set_name]:
+                    # Update the maximum value for this set_name
+                    max_values[set_name] = value
+                    
+                    # Highlight the record by adding a background color (e.g., green)
+                    axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black', 
+                                        bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
+                else:
+                    # Regular annotation for non-record values (without background)
+                    axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                                        va='center', ha='center', fontsize=4, color='black')
+
+                # Retrieve the weight-factored value
+                if weight_factored_set_name in data.columns:
+                    weight_factored_value = data[weight_factored_set_name].loc[date]
+                    # Ensure the value is non-null and non-zero
+                    if not pd.isna(weight_factored_value) and weight_factored_value != 0:
+                        # Adjust the vertical position to avoid overlap
+                        axs['HMCRL_REC'].text(date + offset, value + 2.0, f"{round(weight_factored_value)}", 
+                                            va='center', ha='center', fontsize=4, color='blue')
+
+                else:
+                    # Debugging: Print a message if the column name is not found
+                    print(f"Weight factored column {weight_factored_set_name} not found in data.")
+
+
+
+
 
 
     return fig

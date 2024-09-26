@@ -85,7 +85,7 @@ def calc_sets_overview_no_weights(df):
     return df
 
 
-def calc_sets_overview_with_weights(df, weight_factor=1):
+def calc_sets_overview_with_weights(df, weight_factor=2):
     # calculations and columns for weighted hammer curls
     hammer_reps_columns = df.filter(regex="Weighted Hammer Curls.*reps").columns
     hammer_weight_columns = df.filter(regex="Weighted Hammer Curls.*weight").columns
@@ -95,10 +95,11 @@ def calc_sets_overview_with_weights(df, weight_factor=1):
     df['Hammer Curls Max reps all sets'] = df[hammer_reps_columns].max(axis=1, skipna=True)
     df['Hammer Curls Sum reps all sets'] = df[hammer_reps_columns].sum(axis=1, skipna=True)    
 
+
     # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
-    df['Hammer Curls Weight Factored Sum all sets'] = (df[hammer_reps_columns] * df[hammer_weight_columns] * weight_factor).sum(axis=1)
-    df['Hammer Curls Weight Factored Average all sets'] = (df[hammer_reps_columns] * df[hammer_weight_columns] * weight_factor).mean(axis=1)
-    df['Hammer Curls Weight Factored Max all sets'] = (df[hammer_reps_columns] * df[hammer_weight_columns] * weight_factor).max(axis=1)
+    df['Hammer Curls Weight Factored Sum all sets'] = (df[hammer_reps_columns] * (df[hammer_weight_columns])).sum(axis=1)
+    df['Hammer Curls Weight Factored Average all sets'] = (df[hammer_reps_columns] * (df[hammer_weight_columns])).mean(axis=1)
+    df['Hammer Curls Weight Factored Max all sets'] = (df[hammer_reps_columns] * (df[hammer_weight_columns])).max(axis=1)
 
 
     # calculations and columns for weighted Turm Zug
@@ -111,12 +112,13 @@ def calc_sets_overview_with_weights(df, weight_factor=1):
     df['Turm Zug Sum reps all sets'] = df[trmzg_reps_columns].sum(axis=1, skipna=True)    
 
     # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
-    df['Turm Zug Weight Factored Sum all sets'] = (df[trmzg_reps_columns] * df[trmzg_weight_columns] * weight_factor).sum(axis=1)
-    df['Turm Zug Weight Factored Average all sets'] = (df[trmzg_reps_columns] * df[trmzg_weight_columns] * weight_factor).mean(axis=1)
-    df['Turm Zug Weight Factored Max all sets'] = (df[trmzg_reps_columns] * df[trmzg_weight_columns] * weight_factor).max(axis=1)
+    df['Turm Zug Weight Factored Sum all sets'] = (df[trmzg_reps_columns] * (df[trmzg_weight_columns] ** weight_factor)).sum(axis=1)
+    df['Turm Zug Weight Factored Average all sets'] = (df[trmzg_reps_columns] * (df[trmzg_weight_columns] ** weight_factor)).mean(axis=1)
+    df['Turm Zug Weight Factored Max all sets'] = (df[trmzg_reps_columns] * (df[trmzg_weight_columns] ** weight_factor)).max(axis=1)
 
   
     return df
+    
 
 
 
