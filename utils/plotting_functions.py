@@ -46,20 +46,21 @@ def pushup_plot(data, start_date, current_date):
 
     axs['LGSTZ'].set_title(f"Progress Liegestütz", size=10)
     axs['LGSTZ'].set_xlabel(' ', size=14)
-    axs['LGSTZ'].set_ylabel('Value', size=12)
+    axs['LGSTZ'].set_ylabel('Reps', size=8)
     axs['LGSTZ'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['LGSTZ'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['LGSTZ'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['LGSTZ'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['LGSTZ'].tick_params(axis='x', which='minor', labelsize=5, rotation=45) 
+    axs['LGSTZ'].tick_params(axis='y', which='major', labelsize=6)
 
     axs['LGSTZ'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['LGSTZ'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['LGSTZ'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['LGSTZ'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['LGSTZ'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['LGSTZ'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['LGSTZ'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['LGSTZ'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
@@ -78,20 +79,21 @@ def pushup_plot(data, start_date, current_date):
 
     # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
     axs['LGSTZ_REC'].set_xlabel(' ', size=14)
-    axs['LGSTZ_REC'].set_ylabel('Value', size=12)
+    axs['LGSTZ_REC'].set_ylabel('Reps', size=8)
     axs['LGSTZ_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['LGSTZ_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['LGSTZ_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['LGSTZ_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['LGSTZ_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['LGSTZ_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['LGSTZ_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['LGSTZ_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['LGSTZ_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['LGSTZ_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['LGSTZ_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['LGSTZ_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['LGSTZ_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['LGSTZ_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
@@ -150,20 +152,22 @@ def plank_plot(data, start_date, current_date):
 
     axs['PLK'].set_title(f"Progress Planke", size=12)
     axs['PLK'].set_xlabel(' ', size=14)
-    axs['PLK'].set_ylabel('Value', size=12)
+    axs['PLK'].set_ylabel('Sec', size=8)
     axs['PLK'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['PLK'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['PLK'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['PLK'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['PLK'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['PLK'].tick_params(axis='y', which='major', labelsize=6)
+     
 
     axs['PLK'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['PLK'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['PLK'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['PLK'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['PLK'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['PLK'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['PLK'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['PLK'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
@@ -183,20 +187,21 @@ def plank_plot(data, start_date, current_date):
     
     # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
     axs['PLK_REC'].set_xlabel(' ', size=14)
-    axs['PLK_REC'].set_ylabel('Value', size=12)
+    axs['PLK_REC'].set_ylabel('Sec', size=8)
     axs['PLK_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['PLK_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['PLK_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['PLK_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['PLK_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['PLK_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['PLK_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['PLK_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['PLK_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['PLK_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['PLK_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['PLK_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['PLK_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['PLK_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     axs['PLK_REC'].bar(dates - pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
@@ -206,12 +211,6 @@ def plank_plot(data, start_date, current_date):
     # Adding legend
     axs['PLK_REC'].legend(loc='best', fontsize=5)
 
-
-    # for set_name, offset in zip(["Planke Average all sets", "Planke Max all sets", "Planke Sum all sets"], 
-    #                         [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
-    #     for date, value in data[set_name].loc[start_date:current_date].items():
-    #         if not pd.isna(value) and value != 0:
-    #             axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
 
     
     # Initialize dictionaries to keep track of the maximum values for each set name
@@ -224,7 +223,7 @@ def plank_plot(data, start_date, current_date):
     # Iterate over the three metrics and add the annotation
     for set_name, offset in zip(
         ["Planke Average all sets", "Planke Max all sets", "Planke Sum all sets"], 
-        [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+        [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]
     ):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value) and value != 0:
@@ -234,12 +233,12 @@ def plank_plot(data, start_date, current_date):
                     max_values[set_name] = value
                     
                     # Highlight the record by adding a background color (e.g., yellow)
-                    axs['PLK_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                    axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black', 
                                         bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
                 else:
                     # Regular annotation for non-record values (without background)
-                    axs['PLK_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                    axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
 
     return fig
@@ -261,20 +260,21 @@ def kniebeuge_plot(data, start_date, current_date):
 
     axs['KNBG'].set_title(f"Progress Kniebeugen", size=12)
     axs['KNBG'].set_xlabel(' ', size=14)
-    axs['KNBG'].set_ylabel('Value', size=12)
+    axs['KNBG'].set_ylabel('Reps', size=8)
     axs['KNBG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['KNBG'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['KNBG'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['KNBG'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['KNBG'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['KNBG'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['KNBG'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['KNBG'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['KNBG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['KNBG'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['KNBG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['KNBG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['KNBG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['KNBG'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
@@ -295,20 +295,21 @@ def kniebeuge_plot(data, start_date, current_date):
 
     # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
     axs['KNBG_REC'].set_xlabel(' ', size=14)
-    axs['KNBG_REC'].set_ylabel('Value', size=12)
+    axs['KNBG_REC'].set_ylabel('Reps', size=8)
     axs['KNBG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['KNBG_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['KNBG_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['KNBG_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['KNBG_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['KNBG_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['KNBG_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['KNBG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['KNBG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['KNBG_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['KNBG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['KNBG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['KNBG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['KNBG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     axs['KNBG_REC'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
@@ -366,20 +367,21 @@ def hamcurls_plot(data, start_date, current_date):
 
     axs['HMCRL'].set_title(f"Progress Hammer Curls", size=12)
     axs['HMCRL'].set_xlabel(' ', size=14)
-    axs['HMCRL'].set_ylabel('Value', size=12)
+    axs['HMCRL'].set_ylabel('Reps', size=8)
     axs['HMCRL'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['HMCRL'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['HMCRL'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['HMCRL'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['HMCRL'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['HMCRL'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['HMCRL'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['HMCRL'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['HMCRL'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['HMCRL'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['HMCRL'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['HMCRL'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['HMCRL'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['HMCRL'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
@@ -403,20 +405,21 @@ def hamcurls_plot(data, start_date, current_date):
 
     # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
     axs['HMCRL_REC'].set_xlabel(' ', size=14)
-    axs['HMCRL_REC'].set_ylabel('Value', size=12)
+    axs['HMCRL_REC'].set_ylabel('Reps', size=8)
     axs['HMCRL_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['HMCRL_REC'].set_ylim([0, 100])
 
     # Set font size for major and minor ticks
-    axs['HMCRL_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['HMCRL_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['HMCRL_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['HMCRL_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['HMCRL_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['HMCRL_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['HMCRL_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['HMCRL_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['HMCRL_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['HMCRL_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['HMCRL_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['HMCRL_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['HMCRL_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     axs['HMCRL_REC'].bar(dates - pd.Timedelta(hours=10), data["Hammer Curls Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
@@ -426,36 +429,6 @@ def hamcurls_plot(data, start_date, current_date):
     # Adding legend
     axs['HMCRL_REC'].legend(loc='best', fontsize=5)
 
-
-
-
-    # # Initialize dictionaries to keep track of the maximum values for each set name
-    # max_values = {
-    #     "Hammer Curls Average reps all sets": -float('inf'),
-    #     "Hammer Curls Max reps all sets": -float('inf'),
-    #     "Hammer Curls Sum reps all sets": -float('inf')
-    # }
-    
-    # # Iterate over the three metrics and add the annotation
-    # for set_name, offset in zip(
-    #     ["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"], 
-    #     [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
-    # ):
-    #     for date, value in data[set_name].loc[start_date:current_date].items():
-    #         if not pd.isna(value) and value != 0:
-    #             # Check if the current value is a new record (higher than the previous maximum)
-    #             if value > max_values[set_name]:
-    #                 # Update the maximum value for this set_name
-    #                 max_values[set_name] = value
-                    
-    #                 # Highlight the record by adding a background color (e.g., yellow)
-    #                 axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
-    #                                     va='center', ha='center', fontsize=4, color='black', 
-    #                                     bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
-    #             else:
-    #                 # Regular annotation for non-record values (without background)
-    #                 axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
-    #                                     va='center', ha='center', fontsize=4, color='black')
     
 
     # Initialize dictionaries to keep track of the maximum values for each metric
@@ -533,20 +506,21 @@ def turmrud_plot(data, start_date, current_date):
 
     axs['TRMRD'].set_title(f"Progress Turmrudern", size=12)
     axs['TRMRD'].set_xlabel(' ', size=14)
-    axs['TRMRD'].set_ylabel('Value', size=12)
+    axs['TRMRD'].set_ylabel('Reps', size=8)
     axs['TRMRD'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['TRMRD'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['TRMRD'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['TRMRD'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['TRMRD'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['TRMRD'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['TRMRD'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMRD'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['TRMRD'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['TRMRD'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMRD'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['TRMRD'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['TRMRD'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['TRMRD'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
@@ -576,20 +550,21 @@ def turmrud_plot(data, start_date, current_date):
 
     # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
     axs['TRMRD_REC'].set_xlabel(' ', size=14)
-    axs['TRMRD_REC'].set_ylabel('Value', size=12)
+    axs['TRMRD_REC'].set_ylabel('Reps', size=8)
     axs['TRMRD_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['TRMRD_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['TRMRD_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['TRMRD_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['TRMRD_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['TRMRD_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['TRMRD_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMRD_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['TRMRD_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['TRMRD_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMRD_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['TRMRD_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['TRMRD_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['TRMRD_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMRD_REC'].bar(dates - pd.Timedelta(hours=10), data["Turm Rudern Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
@@ -627,20 +602,21 @@ def turmzg_plot(data, start_date, current_date):
 
     axs['TRMZG'].set_title(f"Progress Turmzug", size=12)
     axs['TRMZG'].set_xlabel(' ', size=14)
-    axs['TRMZG'].set_ylabel('Value', size=12)
+    axs['TRMZG'].set_ylabel('Reps', size=8)
     axs['TRMZG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['TRMZG'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['TRMZG'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['TRMZG'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['TRMZG'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['TRMZG'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['TRMZG'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMZG'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['TRMZG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['TRMZG'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMZG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['TRMZG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['TRMZG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['TRMZG'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
@@ -666,20 +642,21 @@ def turmzg_plot(data, start_date, current_date):
 
     # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
     axs['TRMZG_REC'].set_xlabel(' ', size=14)
-    axs['TRMZG_REC'].set_ylabel('Value', size=12)
+    axs['TRMZG_REC'].set_ylabel('Reps', size=8)
     axs['TRMZG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     # axs['1'].set_ylim([0, 14])
 
     # Set font size for major and minor ticks
-    axs['TRMZG_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
-    axs['TRMZG_REC'].tick_params(axis='x', which='minor', labelsize=7, rotation=45) 
+    axs['TRMZG_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    axs['TRMZG_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    axs['TRMZG_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
     axs['TRMZG_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMZG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%d.%m'''))
+    axs['TRMZG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
     axs['TRMZG_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMZG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
-    axs['TRMZG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%d.%m''')) # \n %a'
+    axs['TRMZG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['TRMZG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMZG_REC'].bar(dates - pd.Timedelta(hours=10), data["Turm Zug Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
