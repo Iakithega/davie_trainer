@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import re
+
 
 
 
@@ -119,6 +121,38 @@ def calc_sets_overview_with_weights(df, weight_factor=2):
   
     return df
     
+
+
+def compute_hammer_curls_scores(df):
+    # List of sets for 'Weighted Hammer Curls'
+    sets = [1, 2, 3, 4]
+    
+    for set_num in sets:
+        # Define the column names for weight and reps
+        weight_col = f'Weighted Hammer Curls set {set_num} weight'
+        reps_col = f'Weighted Hammer Curls set {set_num} reps'
+        
+        # Check if both columns exist in the dataframe
+        if weight_col in df.columns and reps_col in df.columns:
+            # Convert weight and reps columns to numeric, handling errors
+            df[weight_col] = pd.to_numeric(df[weight_col], errors='coerce')
+            df[reps_col] = pd.to_numeric(df[reps_col], errors='coerce')
+            
+            # Compute the new score column using your formula
+            score_col = f'Weighted Hammer Curls set {set_num} score'
+            df[score_col] = df[reps_col] * 2 ** (df[weight_col] - 2)
+        else:
+            print(f"Columns for set {set_num} are missing in the dataframe.")
+    
+    return df
+
+def calc_hammer_curls_score_overview(df):
+    score_columns = df.filter(regex="Weighted Hammer Curls set \d+ score").columns
+    df['Hammer Curls Average score all sets'] = df[score_columns].mean(axis=1, skipna=True)
+    df['Hammer Curls Max score all sets'] = df[score_columns].max(axis=1, skipna=True)
+    df['Hammer Curls Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
+    return df
+
 
 
 

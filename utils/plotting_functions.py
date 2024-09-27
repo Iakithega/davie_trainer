@@ -405,7 +405,7 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].set_xlabel(' ', size=14)
     axs['HMCRL_REC'].set_ylabel('Value', size=12)
     axs['HMCRL_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    axs['HMCRL_REC'].set_ylim([0, 300])
+    axs['HMCRL_REC'].set_ylim([0, 100])
 
     # Set font size for major and minor ticks
     axs['HMCRL_REC'].tick_params(axis='x', labelsize=7, rotation=45)  
@@ -458,52 +458,55 @@ def hamcurls_plot(data, start_date, current_date):
     #                                     va='center', ha='center', fontsize=4, color='black')
     
 
-
-
-    # Initialize dictionaries to keep track of the maximum values for each set name
+    # Initialize dictionaries to keep track of the maximum values for each metric
     max_values = {
         "Hammer Curls Average reps all sets": -float('inf'),
         "Hammer Curls Max reps all sets": -float('inf'),
         "Hammer Curls Sum reps all sets": -float('inf'),
-        "Hammer Curls Weight Factored Average all sets": -float('inf'),
-        "Hammer Curls Weight Factored Max all sets": -float('inf'),
-        "Hammer Curls Weight Factored Sum all sets": -float('inf')
-    } 
+        "Hammer Curls Average score all sets": -float('inf'),
+        "Hammer Curls Max score all sets": -float('inf'),
+        "Hammer Curls Sum score all sets": -float('inf')
+    }
 
-    # Iterate over the three metrics and add the annotation
-    for set_name, weight_factored_set_name, offset in zip(
-        ["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"], 
-        ["Hammer Curls Weight Factored Average all sets", "Hammer Curls Weight Factored Max all sets", "Hammer Curls Weight Factored Sum all sets"],
+    # Iterate over the metrics and add the annotations
+    for reps_metric, score_metric, offset in zip(
+        ["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"],
+        ["Hammer Curls Average score all sets", "Hammer Curls Max score all sets", "Hammer Curls Sum score all sets"],
         [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
     ):
-        for date, value in data[set_name].loc[start_date:current_date].items():
-            if not pd.isna(value) and value != 0:
-                # Check if the current value is a new record (higher than the previous maximum)
-                if value > max_values[set_name]:
-                    # Update the maximum value for this set_name
-                    max_values[set_name] = value
-                    
-                    # Highlight the record by adding a background color (e.g., green)
-                    axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
-                                        va='center', ha='center', fontsize=4, color='black', 
+        for date, reps_value in data[reps_metric].loc[start_date:current_date].items():
+            if not pd.isna(reps_value) and reps_value != 0:
+                # Get the corresponding score value
+                score_value = data.loc[date, score_metric]
+
+                # Check for new record in reps
+                if reps_value > max_values[reps_metric]:
+                    max_values[reps_metric] = reps_value
+                    # Highlight the record for reps
+                    axs['HMCRL_REC'].text(date + offset, reps_value + 0.5, f"{round(reps_value)}",
+                                        va='center', ha='center', fontsize=4, color='black',
                                         bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
                 else:
-                    # Regular annotation for non-record values (without background)
-                    axs['HMCRL_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+                    # Regular annotation for reps
+                    axs['HMCRL_REC'].text(date + offset, reps_value + 0.5, f"{round(reps_value)}",
                                         va='center', ha='center', fontsize=4, color='black')
 
-                # Retrieve the weight-factored value
-                if weight_factored_set_name in data.columns:
-                    weight_factored_value = data[weight_factored_set_name].loc[date]
-                    # Ensure the value is non-null and non-zero
-                    if not pd.isna(weight_factored_value) and weight_factored_value != 0:
-                        # Adjust the vertical position to avoid overlap
-                        axs['HMCRL_REC'].text(date + offset, value + 2.0, f"{round(weight_factored_value)}", 
-                                            va='center', ha='center', fontsize=4, color='blue')
+                # Now, annotate the score above the reps annotation
+                # Adjust the y-position by adding an additional offset
+                score_y = reps_value + 10  # Adjust this value as needed to position the score annotation above
+                if not pd.isna(score_value) and score_value != 0:
+                    # Check for new record in score
+                    if score_value > max_values[score_metric]:
+                        max_values[score_metric] = score_value
+                        # Highlight the record for score
+                        axs['HMCRL_REC'].text(date + offset, score_y, f"{round(score_value)}",
+                                            va='center', ha='center', fontsize=4, color='black',
+                                            bbox=dict(facecolor='yellow', alpha=0.5, edgecolor='none', pad=0.15))
+                    else:
+                        # Regular annotation for score
+                        axs['HMCRL_REC'].text(date + offset, score_y, f"{round(score_value)}",
+                                            va='center', ha='center', fontsize=4, color='black')
 
-                else:
-                    # Debugging: Print a message if the column name is not found
-                    print(f"Weight factored column {weight_factored_set_name} not found in data.")
 
 
 
