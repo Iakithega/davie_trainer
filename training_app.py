@@ -55,9 +55,10 @@ data = calc_sets_overview_with_weights(data)
 
 # implements weight factored column
 data = compute_hammer_curls_scores(data)
-
-# Apply the function to your dataframe
 data = calc_hammer_curls_score_overview(data)
+
+data = compute_trmrd_scores(data)
+data = calc_trmrd_score_overview(data)
 
 # calculate no weight averages, max and sum for distanced Turm Rudern
 data = calc_sets_overview_with_weights_dstanced(data)

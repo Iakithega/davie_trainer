@@ -97,13 +97,6 @@ def calc_sets_overview_with_weights(df, weight_factor=2):
     df['Hammer Curls Max reps all sets'] = df[hammer_reps_columns].max(axis=1, skipna=True)
     df['Hammer Curls Sum reps all sets'] = df[hammer_reps_columns].sum(axis=1, skipna=True)    
 
-
-    # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
-    df['Hammer Curls Weight Factored Sum all sets'] = (df[hammer_reps_columns] * (df[hammer_weight_columns])).sum(axis=1)
-    df['Hammer Curls Weight Factored Average all sets'] = (df[hammer_reps_columns] * (df[hammer_weight_columns])).mean(axis=1)
-    df['Hammer Curls Weight Factored Max all sets'] = (df[hammer_reps_columns] * (df[hammer_weight_columns])).max(axis=1)
-
-
     # calculations and columns for weighted Turm Zug
     trmzg_reps_columns = df.filter(regex="Turm Zug.*reps").columns
     trmzg_weight_columns = df.filter(regex="Turm Zug.*weight").columns
@@ -113,10 +106,7 @@ def calc_sets_overview_with_weights(df, weight_factor=2):
     df['Turm Zug Max reps all sets'] = df[trmzg_reps_columns].max(axis=1, skipna=True)
     df['Turm Zug Sum reps all sets'] = df[trmzg_reps_columns].sum(axis=1, skipna=True)    
 
-    # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
-    df['Turm Zug Weight Factored Sum all sets'] = (df[trmzg_reps_columns] * (df[trmzg_weight_columns] ** weight_factor)).sum(axis=1)
-    df['Turm Zug Weight Factored Average all sets'] = (df[trmzg_reps_columns] * (df[trmzg_weight_columns] ** weight_factor)).mean(axis=1)
-    df['Turm Zug Weight Factored Max all sets'] = (df[trmzg_reps_columns] * (df[trmzg_weight_columns] ** weight_factor)).max(axis=1)
+
 
   
     return df
@@ -147,14 +137,44 @@ def compute_hammer_curls_scores(df):
     return df
 
 def calc_hammer_curls_score_overview(df):
-    score_columns = df.filter(regex="Weighted Hammer Curls set \d+ score").columns
+    score_columns = df.filter(regex=r"Weighted Hammer Curls set \d+ score").columns
     df['Hammer Curls Average score all sets'] = df[score_columns].mean(axis=1, skipna=True)
     df['Hammer Curls Max score all sets'] = df[score_columns].max(axis=1, skipna=True)
     df['Hammer Curls Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
     return df
 
 
+def compute_trmrd_scores(df):
+    # List of sets for 'Weighted Hammer Curls'
+    sets = [1, 2, 3, 4]
+    
+    for set_num in sets:
+        # Define the column names for weight and reps
+        reps_col = f'Weighted Turm Rudern set {set_num} reps'
+        band_col = f'Weighted Turm Rudern set {set_num} band'
+        distance_col = f'Weighted Turm Rudern set {set_num} distance'
+        
+        # Check if both columns exist in the dataframe
+        if reps_col in df.columns and band_col in df.columns and distance_col in df.columns: 
+            # Convert weight and reps columns to numeric, handling errors
+            df[reps_col] = pd.to_numeric(df[reps_col], errors='coerce')
+            df[band_col] = pd.to_numeric(df[band_col], errors='coerce')
+            df[distance_col] = pd.to_numeric(df[distance_col], errors='coerce')
+            
+            # Compute the new score column using your formula
+            score_col = f'Weighted Turm Rudern set {set_num} score'
+            df[score_col] = df[reps_col] * df[distance_col]**1.5
+        else:
+            print(f"Columns for set {set_num} are missing in the dataframe.")
+    
+    return df
 
+def calc_trmrd_score_overview(df):
+    score_columns = df.filter(regex=r"Weighted Turm Rudern set \d+ score").columns
+    df['Weighted Turm Rudern Average score all sets'] = df[score_columns].mean(axis=1, skipna=True)
+    df['Weighted Turm Rudern Max score all sets'] = df[score_columns].max(axis=1, skipna=True)
+    df['Weighted Turm Rudern Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
+    return df
 
 def calc_sets_overview_with_weights_dstanced(df, weight_factor=1):
     # calculations and columns for weighted hammer curls
@@ -163,13 +183,8 @@ def calc_sets_overview_with_weights_dstanced(df, weight_factor=1):
     trmrd_weight_columns = df.filter(regex="Weighted Turm Rudern.*weight").columns
 
     # Calculate average, max, and sum for the reps
-    df['Turm Rudern Average reps all sets'] = df[trmrd_reps_columns].mean(axis=1, skipna=True)
-    df['Turm Rudern Max reps all sets'] = df[trmrd_reps_columns].max(axis=1, skipna=True)
-    df['Turm Rudern Sum reps all sets'] = df[trmrd_reps_columns].sum(axis=1, skipna=True)    
-
-    # Multiply the reps by their corresponding weight for each set to give more value to reps with heavier weight
-    df['Turm Rudern Weight Factored Sum all sets'] = (df[trmrd_reps_columns] * df[trmrd_distance_columns] * df[trmrd_weight_columns] * weight_factor).sum(axis=1)
-    df['Turm Rudern Weight Factored Average all sets'] = (df[trmrd_reps_columns] * df[trmrd_distance_columns] * df[trmrd_weight_columns] * weight_factor).mean(axis=1)
-    df['Turm Rudern Weight Factored Max all sets'] = (df[trmrd_reps_columns] * df[trmrd_distance_columns] * df[trmrd_weight_columns] * weight_factor).max(axis=1)
+    df['Weighted Turm Rudern Average reps all sets'] = df[trmrd_reps_columns].mean(axis=1, skipna=True)
+    df['Weighted Turm Rudern Max reps all sets'] = df[trmrd_reps_columns].max(axis=1, skipna=True)
+    df['Weighted Turm Rudern Sum reps all sets'] = df[trmrd_reps_columns].sum(axis=1, skipna=True)    
 
     return df
