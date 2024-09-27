@@ -38,12 +38,15 @@ def pushup_plot(data, start_date, current_date):
                                 ['LGSTZ', 'LGSTZ', 'LGSTZ']
                                 ],
                                 figsize=(10, 5))
+    
+    fig.patch.set_alpha(0.5)
 
     plt.subplots_adjust(wspace=.2, hspace=.8)
     # plt.subplots_adjust()
 
     # fig.suptitle(f'''Training''', size=18)
-
+    axs['LGSTZ'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+    
     axs['LGSTZ'].set_title(f"Progress Liegestütz", size=10)
     axs['LGSTZ'].set_xlabel(' ', size=14)
     axs['LGSTZ'].set_ylabel('Reps', size=8)
@@ -78,6 +81,8 @@ def pushup_plot(data, start_date, current_date):
 
 
     # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['LGSTZ_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+    
     axs['LGSTZ_REC'].set_xlabel(' ', size=14)
     axs['LGSTZ_REC'].set_ylabel('Reps', size=8)
     axs['LGSTZ_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
