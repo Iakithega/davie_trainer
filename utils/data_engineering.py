@@ -93,18 +93,18 @@ def calc_sets_overview_with_weights(df, weight_factor=2):
     hammer_weight_columns = df.filter(regex="Weighted Hammer Curls.*weight").columns
 
     # Calculate average, max, and sum for the reps
-    df['Hammer Curls Average reps all sets'] = df[hammer_reps_columns].mean(axis=1, skipna=True)
-    df['Hammer Curls Max reps all sets'] = df[hammer_reps_columns].max(axis=1, skipna=True)
-    df['Hammer Curls Sum reps all sets'] = df[hammer_reps_columns].sum(axis=1, skipna=True)    
+    df['Weighted Hammer Curls Average reps all sets'] = df[hammer_reps_columns].mean(axis=1, skipna=True)
+    df['Weighted Hammer Curls Max reps all sets'] = df[hammer_reps_columns].max(axis=1, skipna=True)
+    df['Weighted Hammer Curls Sum reps all sets'] = df[hammer_reps_columns].sum(axis=1, skipna=True)    
 
     # calculations and columns for weighted Turm Zug
     trmzg_reps_columns = df.filter(regex="Turm Zug.*reps").columns
     trmzg_weight_columns = df.filter(regex="Turm Zug.*weight").columns
 
     # Calculate average, max, and sum for the reps
-    df['Turm Zug Average reps all sets'] = df[trmzg_reps_columns].mean(axis=1, skipna=True)
-    df['Turm Zug Max reps all sets'] = df[trmzg_reps_columns].max(axis=1, skipna=True)
-    df['Turm Zug Sum reps all sets'] = df[trmzg_reps_columns].sum(axis=1, skipna=True)    
+    df['Weighted Turm Zug Average reps all sets'] = df[trmzg_reps_columns].mean(axis=1, skipna=True)
+    df['Weighted Turm Zug Max reps all sets'] = df[trmzg_reps_columns].max(axis=1, skipna=True)
+    df['Weighted Turm Zug Sum reps all sets'] = df[trmzg_reps_columns].sum(axis=1, skipna=True)    
 
 
 
@@ -138,14 +138,14 @@ def compute_hammer_curls_scores(df):
 
 def calc_hammer_curls_score_overview(df):
     score_columns = df.filter(regex=r"Weighted Hammer Curls set \d+ score").columns
-    df['Hammer Curls Average score all sets'] = df[score_columns].mean(axis=1, skipna=True)
-    df['Hammer Curls Max score all sets'] = df[score_columns].max(axis=1, skipna=True)
-    df['Hammer Curls Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
+    df['Weighted Hammer Curls Average score all sets'] = df[score_columns].mean(axis=1, skipna=True)
+    df['Weighted Hammer Curls Max score all sets'] = df[score_columns].max(axis=1, skipna=True)
+    df['Weighted Hammer Curls Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
     return df
 
 
 def compute_trmrd_scores(df):
-    # List of sets for 'Weighted Hammer Curls'
+    # List of sets for 'Weighted Turm Rudern'
     sets = [1, 2, 3, 4]
     
     for set_num in sets:
@@ -188,3 +188,36 @@ def calc_sets_overview_with_weights_dstanced(df, weight_factor=1):
     df['Weighted Turm Rudern Sum reps all sets'] = df[trmrd_reps_columns].sum(axis=1, skipna=True)    
 
     return df
+
+
+def compute_trmzg_scores(df):
+    # List of sets for 'Weighted Turm Zug'
+    sets = [1, 2, 3, 4]
+    
+    for set_num in sets:
+        # Define the column names for weight and reps
+        weight_col = f'Weighted Turm Zug set {set_num} weight'
+        reps_col = f'Weighted Turm Zug set {set_num} reps'
+        
+        # Check if both columns exist in the dataframe
+        if weight_col in df.columns and reps_col in df.columns:
+            # Convert weight and reps columns to numeric, handling errors
+            df[weight_col] = pd.to_numeric(df[weight_col], errors='coerce')
+            df[reps_col] = pd.to_numeric(df[reps_col], errors='coerce')
+            
+            # Compute the new score column using your formula
+            score_col = f'Weighted Turm Zug set {set_num} score'
+            df[score_col] = df[reps_col] * 2 ** (df[weight_col] - 30)
+        else:
+            print(f"Columns for set {set_num} are missing in the dataframe.")
+    
+    return df
+
+def calc_trmzg_score_overview(df):
+    score_columns = df.filter(regex=r"Weighted Turm Zug set \d+ score").columns
+    df['Weighted Turm Zug Average score all sets'] = df[score_columns].mean(axis=1, skipna=True)
+    df['Weighted Turm Zug Max score all sets'] = df[score_columns].max(axis=1, skipna=True)
+    df['Weighted Turm Zug Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
+    return df
+
+    

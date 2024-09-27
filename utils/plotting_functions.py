@@ -223,7 +223,7 @@ def plank_plot(data, start_date, current_date):
     # Iterate over the three metrics and add the annotation
     for set_name, offset in zip(
         ["Planke Average all sets", "Planke Max all sets", "Planke Sum all sets"], 
-        [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]
+        [-pd.Timedelta(hours=14), pd.Timedelta(0), pd.Timedelta(hours=14)]
     ):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value) and value != 0:
@@ -422,9 +422,9 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['HMCRL_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
-    axs['HMCRL_REC'].bar(dates - pd.Timedelta(hours=10), data["Hammer Curls Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
-    axs['HMCRL_REC'].bar(dates, data["Hammer Curls Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
-    axs['HMCRL_REC'].bar(dates + pd.Timedelta(hours=10), data["Hammer Curls Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+    axs['HMCRL_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Hammer Curls Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['HMCRL_REC'].bar(dates, data["Weighted Hammer Curls Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['HMCRL_REC'].bar(dates + pd.Timedelta(hours=10), data["Weighted Hammer Curls Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
 
     # Adding legend
     axs['HMCRL_REC'].legend(loc='best', fontsize=5)
@@ -433,18 +433,18 @@ def hamcurls_plot(data, start_date, current_date):
 
     # Initialize dictionaries to keep track of the maximum values for each metric
     max_values = {
-        "Hammer Curls Average reps all sets": -float('inf'),
-        "Hammer Curls Max reps all sets": -float('inf'),
-        "Hammer Curls Sum reps all sets": -float('inf'),
-        "Hammer Curls Average score all sets": -float('inf'),
-        "Hammer Curls Max score all sets": -float('inf'),
-        "Hammer Curls Sum score all sets": -float('inf')
+        "Weighted Hammer Curls Average reps all sets": -float('inf'),
+        "Weighted Hammer Curls Max reps all sets": -float('inf'),
+        "Weighted Hammer Curls Sum reps all sets": -float('inf'),
+        "Weighted Hammer Curls Average score all sets": -float('inf'),
+        "Weighted Hammer Curls Max score all sets": -float('inf'),
+        "Weighted Hammer Curls Sum score all sets": -float('inf')
     }
 
     # Iterate over the metrics and add the annotations
     for reps_metric, score_metric, offset in zip(
-        ["Hammer Curls Average reps all sets", "Hammer Curls Max reps all sets", "Hammer Curls Sum reps all sets"],
-        ["Hammer Curls Average score all sets", "Hammer Curls Max score all sets", "Hammer Curls Sum score all sets"],
+        ["Weighted Hammer Curls Average reps all sets", "Weighted Hammer Curls Max reps all sets", "Weighted Hammer Curls Sum reps all sets"],
+        ["Weighted Hammer Curls Average score all sets", "Weighted Hammer Curls Max score all sets", "Weighted Hammer Curls Sum score all sets"],
         [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
     ):
         for date, reps_value in data[reps_metric].loc[start_date:current_date].items():
@@ -690,7 +690,7 @@ def turmzg_plot(data, start_date, current_date):
     axs['TRMZG_REC'].set_xlabel(' ', size=14)
     axs['TRMZG_REC'].set_ylabel('Reps', size=8)
     axs['TRMZG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['TRMZG_REC'].set_ylim([0, 80])
 
     # Set font size for major and minor ticks
     axs['TRMZG_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -705,21 +705,70 @@ def turmzg_plot(data, start_date, current_date):
     axs['TRMZG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['TRMZG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 
-    axs['TRMZG_REC'].bar(dates - pd.Timedelta(hours=10), data["Turm Zug Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
-    axs['TRMZG_REC'].bar(dates, data["Turm Zug Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
-    axs['TRMZG_REC'].bar(dates + pd.Timedelta(hours=10), data["Turm Zug Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+    axs['TRMZG_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Zug Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    axs['TRMZG_REC'].bar(dates, data["Weighted Turm Zug Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    axs['TRMZG_REC'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Zug Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
 
     # Adding legend
     axs['TRMZG_REC'].legend(loc='best', fontsize=5)
 
 
 
-    for set_name, offset in zip(["Turm Zug Average reps all sets", "Turm Zug Max reps all sets", "Turm Zug Sum reps all sets"], 
-                            [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
-        for date, value in data[set_name].loc[start_date:current_date].items():
-            if not pd.isna(value) and value != 0:
-                axs['TRMZG_REC'].text(date + offset, value + 1.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
+    # for set_name, offset in zip(["Weighted Turm Zug Average reps all sets", "Weighted Turm Zug Max reps all sets", "Weighted Turm Zug Sum reps all sets"], 
+    #                         [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
+    #     for date, value in data[set_name].loc[start_date:current_date].items():
+    #         if not pd.isna(value) and value != 0:
+    #             axs['TRMZG_REC'].text(date + offset, value + 1.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
 
+
+    # Initialize dictionaries to keep track of the maximum values for each metric
+    max_values = {
+        "Weighted Turm Zug Average reps all sets": -float('inf'),
+        "Weighted Turm Zug Max reps all sets": -float('inf'),
+        "Weighted Turm Zug Sum reps all sets": -float('inf'),
+        "Weighted Turm Zug Average score all sets": -float('inf'),
+        "Weighted Turm Zug Max score all sets": -float('inf'),
+        "Weighted Turm Zug Sum score all sets": -float('inf')
+    }
+
+    # Iterate over the metrics and add the annotations
+    for reps_metric, score_metric, offset in zip(
+        ["Weighted Turm Zug Average reps all sets", "Weighted Turm Zug Max reps all sets", "Weighted Turm Zug Sum reps all sets"],
+        ["Weighted Turm Zug Average score all sets", "Weighted Turm Zug Max score all sets", "Weighted Turm Zug Sum score all sets"],
+        [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+    ):
+        for date, reps_value in data[reps_metric].loc[start_date:current_date].items():
+            if not pd.isna(reps_value) and reps_value != 0:
+                # Get the corresponding score value
+                score_value = data.loc[date, score_metric]
+
+                # Check for new record in reps
+                if reps_value > max_values[reps_metric]:
+                    max_values[reps_metric] = reps_value
+                    # Highlight the record for reps
+                    axs['TRMZG_REC'].text(date + offset, reps_value + 0.5, f"{round(reps_value)}",
+                                        va='center', ha='center', fontsize=4, color='black',
+                                        bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
+                else:
+                    # Regular annotation for reps
+                    axs['TRMZG_REC'].text(date + offset, reps_value + 0.5, f"{round(reps_value)}",
+                                        va='center', ha='center', fontsize=4, color='black')
+
+                # Now, annotate the score above the reps annotation
+                # Adjust the y-position by adding an additional offset
+                score_y = reps_value + 10  # Adjust this value as needed to position the score annotation above
+                if not pd.isna(score_value) and score_value != 0:
+                    # Check for new record in score
+                    if score_value > max_values[score_metric]:
+                        max_values[score_metric] = score_value
+                        # Highlight the record for score
+                        axs['TRMZG_REC'].text(date + offset, score_y, f"{round(score_value)}",
+                                            va='center', ha='center', fontsize=4, color='black',
+                                            bbox=dict(facecolor='yellow', alpha=0.5, edgecolor='none', pad=0.15))
+                    else:
+                        # Regular annotation for score
+                        axs['TRMZG_REC'].text(date + offset, score_y, f"{round(score_value)}",
+                                            va='center', ha='center', fontsize=4, color='black')
 
     return fig
 
