@@ -38,16 +38,14 @@ def pushup_plot(data, start_date, current_date):
                                 ['LGSTZ', 'LGSTZ', 'LGSTZ']
                                 ],
                                 figsize=(10, 5))
-    
+    fig.suptitle(f'''Push Ups''', size=10)
     fig.patch.set_alpha(0.5)
 
     plt.subplots_adjust(wspace=.2, hspace=.8)
-    # plt.subplots_adjust()
-
-    # fig.suptitle(f'''Training''', size=18)
-    axs['LGSTZ'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     
-    axs['LGSTZ'].set_title(f"Progress Liegestütz", size=10)
+    axs['LGSTZ'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['LGSTZ'].set_title(f"Progress Push Ups", size=7)
     axs['LGSTZ'].set_xlabel(' ', size=14)
     axs['LGSTZ'].set_ylabel('Reps', size=8)
     axs['LGSTZ'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -80,9 +78,9 @@ def pushup_plot(data, start_date, current_date):
                 axs['LGSTZ'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
 
 
-    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['LGSTZ_REC'].set_title(f"Records Push Ups", size=7)
     axs['LGSTZ_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
-    
+
     axs['LGSTZ_REC'].set_xlabel(' ', size=14)
     axs['LGSTZ_REC'].set_ylabel('Reps', size=8)
     axs['LGSTZ_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -151,11 +149,15 @@ def plank_plot(data, start_date, current_date):
                                 ['PLK', 'PLK', 'PLK'],
                                 ],
                                 figsize=(10, 5))
+    fig.patch.set_alpha(0.5)
+    fig.suptitle(f'''Planke''', size=10)
+
     plt.subplots_adjust(wspace=.2, hspace=.8)
 
-    # fig.suptitle(f'''Training''', size=18)
 
-    axs['PLK'].set_title(f"Progress Planke", size=12)
+    axs['PLK'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['PLK'].set_title(f"Progress Planke", size=7)
     axs['PLK'].set_xlabel(' ', size=14)
     axs['PLK'].set_ylabel('Sec', size=8)
     axs['PLK'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -190,7 +192,8 @@ def plank_plot(data, start_date, current_date):
                 axs['PLK'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
     
-    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['PLK_REC'].set_title(f"Records Planke", size=7)
+    axs['PLK_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['PLK_REC'].set_xlabel(' ', size=14)
     axs['PLK_REC'].set_ylabel('Sec', size=8)
     axs['PLK_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -258,12 +261,15 @@ def kniebeuge_plot(data, start_date, current_date):
                                 ['KNBG', 'KNBG', 'KNBG'],
                                 ],
                                 figsize=(10, 5))
+    fig.patch.set_alpha(0.5)
+    fig.suptitle(f'''Kniebeugen''', size=10)
     
     plt.subplots_adjust(wspace=.2, hspace=.8)
 
-    # fig.suptitle(f'''Training''', size=18)
+    
+    axs['KNBG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
-    axs['KNBG'].set_title(f"Progress Kniebeugen", size=12)
+    axs['KNBG'].set_title(f"Progress Kniebeugen", size=7)
     axs['KNBG'].set_xlabel(' ', size=14)
     axs['KNBG'].set_ylabel('Reps', size=8)
     axs['KNBG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -298,7 +304,8 @@ def kniebeuge_plot(data, start_date, current_date):
     
 
 
-    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['KNBG_REC'].set_title(f"Records Kniebeugen", size=7)
+    axs['KNBG_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['KNBG_REC'].set_xlabel(' ', size=14)
     axs['KNBG_REC'].set_ylabel('Reps', size=8)
     axs['KNBG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -365,12 +372,16 @@ def hamcurls_plot(data, start_date, current_date):
                                 ['HMCRL', 'HMCRL', 'HMCRL'],
                                 ],
                                 figsize=(10, 5))
+    fig.suptitle(f'''Hammer Curls''', size=10) 
+    fig.patch.set_alpha(0.5)
     
     plt.subplots_adjust(wspace=.2, hspace=.8)
 
-    # fig.suptitle(f'''Training''', size=18)
+    
 
-    axs['HMCRL'].set_title(f"Progress Hammer Curls", size=12)
+    axs['HMCRL'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['HMCRL'].set_title(f"Progress Hammer Curls", size=7)
     axs['HMCRL'].set_xlabel(' ', size=14)
     axs['HMCRL'].set_ylabel('Reps', size=8)
     axs['HMCRL'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -408,7 +419,8 @@ def hamcurls_plot(data, start_date, current_date):
                 axs['HMCRL'].text(date + offset, value/2 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
 
-    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['HMCRL_REC'].set_title(f"Records Hammer Curls", size=7)
+    axs['HMCRL_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['HMCRL_REC'].set_xlabel(' ', size=14)
     axs['HMCRL_REC'].set_ylabel('Reps', size=8)
     axs['HMCRL_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -500,12 +512,13 @@ def turmrud_plot(data, start_date, current_date):
                                 ['TRMRD', 'TRMRD', 'TRMRD'],
                                 ],
                                 figsize=(10, 5))
+    fig.suptitle(f'''Turm Rudern''', size=10)
+    fig.patch.set_alpha(0.5)
     
     plt.subplots_adjust(wspace=.2, hspace=.8)
 
-    # fig.suptitle(f'''Training''', size=18)
-
-    axs['TRMRD'].set_title(f"Progress Turmrudern", size=12)
+    axs['TRMRD'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+    axs['TRMRD'].set_title(f"Progress Turm Rudern", size=7)
     axs['TRMRD'].set_xlabel(' ', size=14)
     axs['TRMRD'].set_ylabel('Reps', size=8)
     axs['TRMRD'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -549,7 +562,8 @@ def turmrud_plot(data, start_date, current_date):
 
 
 
-    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['TRMRD_REC'].set_title(f"Records Turm Rudern", size=7)
+    axs['TRMRD_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['TRMRD_REC'].set_xlabel(' ', size=14)
     axs['TRMRD_REC'].set_ylabel('Reps', size=8)
     axs['TRMRD_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -575,13 +589,6 @@ def turmrud_plot(data, start_date, current_date):
     # Adding legend
     axs['TRMRD_REC'].legend(loc='best', fontsize=5)
 
-
-    # for set_name, offset in zip(["Weighted Turm Rudern Average reps all sets", "Weighted Turm Rudern Max reps all sets", "Weighted Turm Rudern Sum reps all sets"], 
-    #                         [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
-    #     for date, value in data[set_name].loc[start_date:current_date].items():
-    #         if not pd.isna(value) and value != 0:
-    #             axs['TRMRD_REC'].text(date + offset, value + 2, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
-    
 
     # Initialize dictionaries to keep track of the maximum values for each metric
     max_values = {
@@ -647,11 +654,13 @@ def turmzg_plot(data, start_date, current_date):
                                 ['TRMZG', 'TRMZG', 'TRMZG'],
                                 ],
                                 figsize=(10, 5))
+    fig.suptitle(f'''Turm Zug''', size=10)
+    fig.patch.set_alpha(0.5)
+
     plt.subplots_adjust(wspace=.2, hspace=.8)
 
-    # fig.suptitle(f'''Training''', size=18)
-
-    axs['TRMZG'].set_title(f"Progress Turmzug", size=12)
+    axs['TRMZG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+    axs['TRMZG'].set_title(f"Progress Turm Zug", size=7)
     axs['TRMZG'].set_xlabel(' ', size=14)
     axs['TRMZG'].set_ylabel('Reps', size=8)
     axs['TRMZG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -691,7 +700,8 @@ def turmzg_plot(data, start_date, current_date):
 
     
 
-    # axs['LGSTZ_REC'].set_title(f"Progress Liegestütz", size=10)
+    axs['TRMZG_REC'].set_title(f"Records Turm Zug", size=7)
+    axs['TRMZG_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['TRMZG_REC'].set_xlabel(' ', size=14)
     axs['TRMZG_REC'].set_ylabel('Reps', size=8)
     axs['TRMZG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
@@ -716,14 +726,6 @@ def turmzg_plot(data, start_date, current_date):
 
     # Adding legend
     axs['TRMZG_REC'].legend(loc='best', fontsize=5)
-
-
-
-    # for set_name, offset in zip(["Weighted Turm Zug Average reps all sets", "Weighted Turm Zug Max reps all sets", "Weighted Turm Zug Sum reps all sets"], 
-    #                         [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]):
-    #     for date, value in data[set_name].loc[start_date:current_date].items():
-    #         if not pd.isna(value) and value != 0:
-    #             axs['TRMZG_REC'].text(date + offset, value + 1.5, f"{round(value)}", va='center', ha='center', fontsize=4, color='black')
 
 
     # Initialize dictionaries to keep track of the maximum values for each metric
