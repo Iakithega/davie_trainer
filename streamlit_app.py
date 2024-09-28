@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 st.set_page_config(
     #  page_title="RHEALIZER!",
     #  page_icon="🤖", 
@@ -12,6 +13,10 @@ st.set_page_config(
      }
  )
 
+# def wide_space_default():
+#     st.set_page_config(layout="wide")
+
+# wide_space_default()
 
 st.logo(
     r"media\veeery_lomng.png",
@@ -61,10 +66,11 @@ st.markdown(background_image, unsafe_allow_html=True)
 
 
 # Define the main navigation
-pg0 = st.Page(r"streamlit_app.py", title="Start", default=True, icon=":material/home:")
-pg1 = st.Page(r"1_Progress.py", title="Progress", default=False, icon=":material/bar_chart_4_bars:")
+pg0 = st.Page(r"streamlit_app.py", title="Start", default=False, icon=":material/home:")
+pg1 = st.Page(r"1_Progress.py", title="Progress", default=True, icon=":material/bar_chart_4_bars:")
 pg2 = st.Page(r"views\3_Rewards.py", title="Rewards", icon=":material/emoji_events:")
 pg3 = st.Page(r"views\2_Stories.py", title="Strories", icon=":material/sword_rose:")
+
 
 
 pg = st.navigation({
@@ -72,10 +78,15 @@ pg = st.navigation({
     "Adventure": [pg3],
 })
 
+
+
+
 try:
     pg.run()
 except Exception as e:
     st.error(f"Something went wrong: {str(e)}")
+
+
 
 
 
