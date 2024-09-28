@@ -12,6 +12,7 @@ st.set_page_config(
      }
  )
 
+
 st.logo(
     r"media\veeery_lomng.png",
     link="https://streamlit.io/gallery",
@@ -74,7 +75,7 @@ pg = st.navigation({
 try:
     pg.run()
 except Exception as e:
-    st.error(f"Something went wrong: {str(e)}", icon=":material/error:")
+    st.error(f"Something went wrong: {str(e)}")
 
 
 
