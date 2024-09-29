@@ -45,19 +45,21 @@ st.markdown(background_image, unsafe_allow_html=True)
 st.title("David Train")
 
 
-
+# calculate the current date for plots
 start_date = "2024.08.10"
 # Get the current date
 current_date = datetime.today() + timedelta(days=3)
 # Format the date as 'YYYY-MM-DD'
 current_date = current_date.strftime('%Y-%m-%d')
 
+
 # load the data
 initial_data = load_raw_excel(path_to_excel)
-
+# run all the data wrangeling files
 data = complete_data_wrangeling(initial_data)
 
 
+# overview of the datas in a dataframe after Data Wrangeling
 with st.expander("Raw Table"): 
     st.dataframe(data)
 
