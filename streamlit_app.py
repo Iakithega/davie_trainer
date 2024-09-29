@@ -66,7 +66,7 @@ st.markdown(background_image, unsafe_allow_html=True)
 
 # Define the main navigation
 pg0 = st.Page(r"streamlit_app.py", title=" ", default=False) # icon=":material/home:"
-pg1 = st.Page(r"1_Progress.py", title="Progress", default=True, icon=":material/bar_chart_4_bars:")
+pg1 = st.Page(r"views\1_Progress.py", title="Progress", default=True, icon=":material/bar_chart_4_bars:")
 pg2 = st.Page(r"views\3_Rewards.py", title="Rewards", icon=":material/emoji_events:")
 pg3 = st.Page(r"views\2_Stories.py", title="Strories", icon=":material/sword_rose:")
 
