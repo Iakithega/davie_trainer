@@ -5,12 +5,18 @@ st.set_page_config(
     #  page_icon="🤖", 
      layout="wide",
      initial_sidebar_state="expanded",
-    #  menu_items={
-    #      'Get Help': 'https://www.bulabula.com/help',
-    #      'Report a bug': 'https://www.bulabula.com/help',
-    #      'About': "# We are thinkering with ChatGPT here!"
-    #  }
+     menu_items={
+         'Get Help': None,
+         'Report a bug': None,
+         'About': None
+     }
  )
+
+# menu_items={
+#          'Get Help': None,
+#          'Report a bug': None,
+#          'About': None
+#      }
 
 # def wide_space_default():
 #     st.set_page_config(layout="wide")
