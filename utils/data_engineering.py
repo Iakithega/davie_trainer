@@ -220,4 +220,31 @@ def calc_trmzg_score_overview(df):
     df['Weighted Turm Zug Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
     return df
 
-    
+
+def complete_data_wrangeling(initial_data):
+
+    # extract weights and reps and band strength
+    data = weight_reps_exctracter(initial_data)
+
+    # calculate no weight averages, max and sum for liegestütze, planke and kniebeugen
+    data = calc_sets_overview_no_weights(data)
+
+    # calculate no weight averages, max and sum for weighted Hammer Curls, and Turm Zug
+    data = calc_sets_overview_with_weights(data)
+
+    # implements weight factored score column for hammer curls
+    data = compute_hammer_curls_scores(data)
+    data = calc_hammer_curls_score_overview(data)
+
+    # implements weight factored score column for Turm Rudern
+    data = compute_trmrd_scores(data)
+    data = calc_trmrd_score_overview(data)
+
+    # implements weight factored score column for Turm Zug
+    data = compute_trmzg_scores(data)
+    data = calc_trmzg_score_overview(data)
+
+    # calculate no weight averages, max and sum for distanced Turm Rudern
+    data = calc_sets_overview_with_weights_dstanced(data)
+
+    return data

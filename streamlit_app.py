@@ -1,16 +1,15 @@
 import streamlit as st
 
-
 st.set_page_config(
     #  page_title="RHEALIZER!",
     #  page_icon="🤖", 
      layout="wide",
      initial_sidebar_state="expanded",
-     menu_items={
-         'Get Help': 'https://www.bulabula.com/help',
-         'Report a bug': 'https://www.bulabula.com/help',
-         'About': "# We are thinkering with ChatGPT here!"
-     }
+    #  menu_items={
+    #      'Get Help': 'https://www.bulabula.com/help',
+    #      'Report a bug': 'https://www.bulabula.com/help',
+    #      'About': "# We are thinkering with ChatGPT here!"
+    #  }
  )
 
 # def wide_space_default():
@@ -66,7 +65,7 @@ st.markdown(background_image, unsafe_allow_html=True)
 
 
 # Define the main navigation
-pg0 = st.Page(r"streamlit_app.py", title="Start", default=False, icon=":material/home:")
+pg0 = st.Page(r"streamlit_app.py", title=" ", default=False) # icon=":material/home:"
 pg1 = st.Page(r"1_Progress.py", title="Progress", default=True, icon=":material/bar_chart_4_bars:")
 pg2 = st.Page(r"views\3_Rewards.py", title="Rewards", icon=":material/emoji_events:")
 pg3 = st.Page(r"views\2_Stories.py", title="Strories", icon=":material/sword_rose:")

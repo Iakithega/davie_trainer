@@ -23,26 +23,7 @@ background_image = """
 }
 </style>
 """
-
 st.markdown(background_image, unsafe_allow_html=True)
-
-# st.text_input("", placeholder="Streamlit CSS ")
-
-# input_style = """
-# <style>
-# input[type="text"] {
-#     background-color: transparent;
-#     color: #a19eae;  // This changes the text color inside the input box
-# }
-# div[data-baseweb="base-input"] {
-#     background-color: transparent !important;
-# }
-# [data-testid="stAppViewContainer"] {
-#     background-color: transparent !important;
-# }
-# </style>
-# """
-# st.markdown(input_style, unsafe_allow_html=True)
 
 
 #######################################################################################################################
@@ -74,30 +55,7 @@ current_date = current_date.strftime('%Y-%m-%d')
 # load the data
 initial_data = load_raw_excel(path_to_excel)
 
-# extract weights and reps and band strength
-data = weight_reps_exctracter(initial_data)
-
-
-# calculate no weight averages, max and sum for liegestütze, planke and kniebeugen
-data = calc_sets_overview_no_weights(data)
-
-# calculate no weight averages, max and sum for weighted Hammer Curls, and Turm Zug
-data = calc_sets_overview_with_weights(data)
-
-# implements weight factored score column for hammer curls
-data = compute_hammer_curls_scores(data)
-data = calc_hammer_curls_score_overview(data)
-
-# implements weight factored score column for Turm Rudern
-data = compute_trmrd_scores(data)
-data = calc_trmrd_score_overview(data)
-
-# implements weight factored score column for Turm Zug
-data = compute_trmzg_scores(data)
-data = calc_trmzg_score_overview(data)
-
-# calculate no weight averages, max and sum for distanced Turm Rudern
-data = calc_sets_overview_with_weights_dstanced(data)
+data = complete_data_wrangeling(initial_data)
 
 
 with st.expander("Raw Table"): 
@@ -120,17 +78,27 @@ v_spacer(height=4, sb=False)
 fig_pushup = pushup_plot(data, start_date, current_date)
 st.pyplot(fig_pushup)
 
+v_spacer(height=2, sb=False)
+
 fig_planke = plank_plot(data, start_date, current_date)
 st.pyplot(fig_planke)
+
+v_spacer(height=2, sb=False)
 
 fig_kniebeuge = kniebeuge_plot(data, start_date, current_date)
 st.pyplot(fig_kniebeuge)
 
+v_spacer(height=2, sb=False)
+
 fig_hammercurl = hamcurls_plot(data, start_date, current_date)
 st.pyplot(fig_hammercurl)
 
+v_spacer(height=2, sb=False)
+
 fig_turmrud = turmrud_plot(data, start_date, current_date)
 st.pyplot(fig_turmrud)
+
+v_spacer(height=2, sb=False)
 
 fig_turmzg = turmzg_plot(data, start_date, current_date)
 st.pyplot(fig_turmzg)
