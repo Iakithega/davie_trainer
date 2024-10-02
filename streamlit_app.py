@@ -87,7 +87,7 @@ image_path = random.choice(image_paths)
 background_image = f"""
 <style>
 [data-testid="stAppViewContainer"] > .main {{
-    background-image: url("file://{image_path}"); 
+    background-image: url("media/wallpaper/transformers6.jpg"); 
     background-size: 100vw 100vh;  /* This sets the size to cover 100% of the viewport width and height */
     background-position: center;  
     background-repeat: no-repeat;

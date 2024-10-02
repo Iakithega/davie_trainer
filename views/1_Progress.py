@@ -2,6 +2,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import os
 
 import matplotlib.dates as mdates
 from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
@@ -11,12 +12,13 @@ from utils.utils import *
 from utils.data_engineering import *
 from utils.plotting_functions import *
 
+papath = os.path.join("..", "media", "wallpaper", "transformers1.png")
 
-# Set the background image
+# Set the background image   ### https://images.unsplash.com/photo-1542281286-9e0a16bb7366
 background_image = """
 <style>
 [data-testid="stAppViewContainer"] > .main {
-    background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
+    background-image: url(papath); 
     background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
     background-position: center;  
     background-repeat: no-repeat;
