@@ -1,4 +1,6 @@
 import streamlit as st
+import os
+import random
 
 st.set_page_config(
     #  page_title="RHEALIZER!",
@@ -37,19 +39,62 @@ st.logo(
 #             """
 # st.markdown(hide_st_style, unsafe_allow_html=True) 
 
-# Set the background image
-background_image = """
+
+# Path to your local folder containing images
+image_folder = r'media\wallpaper'
+
+# Get the list of image files from the folder
+
+image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(('png', 'jpg', 'jpeg'))]
+
+
+# Select a random image from the folder
+def get_random_image():
+    return random.choice(image_paths)
+
+image_path = random.choice(image_paths)
+
+# Function to create background CSS with dynamic image URL (local path handling)
+# def set_background_image(image_path):
+#     background_image = f"""
+#     <style>
+#     [data-testid="stAppViewContainer"] > .main {{
+#         background-image: url("file://{image_path}");
+#         background-size: 100vw 100vh;
+#         background-position: center;
+#         background-repeat: no-repeat;
+#     }}
+#     </style>
+#     """
+#     st.markdown(background_image, unsafe_allow_html=True)
+
+# # Set the background image with a random selection
+# set_background_image(get_random_image())
+
+
+#Set the background image    url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366")
+# background_image = """
+# <style>
+# [data-testid="stAppViewContainer"] > .main {
+#     background-image: url("file://{image_path}"; 
+#     background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
+#     background-position: center;  
+#     background-repeat: no-repeat;
+# }
+# </style>
+# """
+
+background_image = f"""
 <style>
-[data-testid="stAppViewContainer"] > .main {
-    background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
-    background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
+[data-testid="stAppViewContainer"] > .main {{
+    background-image: url("file://{image_path}"); 
+    background-size: 100vw 100vh;  /* This sets the size to cover 100% of the viewport width and height */
     background-position: center;  
     background-repeat: no-repeat;
-}
+}}
 </style>
 """
-
-st.markdown(background_image, unsafe_allow_html=True)
+# st.markdown(background_image, unsafe_allow_html=True)
 
 # st.text_input("", placeholder="Streamlit CSS ")
 
