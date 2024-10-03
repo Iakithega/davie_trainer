@@ -14,11 +14,25 @@ from utils.plotting_functions import *
 
 papath = os.path.join("..", "media", "wallpaper", "transformers1.png")
 
-# Set the background image   ### https://images.unsplash.com/photo-1542281286-9e0a16bb7366
+
+# Path to your local folder containing images
+# image_folder = r'media\wallpaper'
+
+# # Get the list of image files from the folder
+# image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(('png', 'jpg', 'jpeg'))]
+
+# # Select a random image from the folder
+# def get_random_image():
+#     return random.choice(image_paths)
+
+# image_path = random.choice(image_paths)
+
+
+# Set the background image  ###https://images.unsplash.com/photo-1542281286-9e0a16bb7366
 background_image = """
 <style>
 [data-testid="stAppViewContainer"] > .main {
-    background-image: url(papath); 
+    background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
     background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
     background-position: center;  
     background-repeat: no-repeat;
@@ -28,12 +42,6 @@ background_image = """
 st.markdown(background_image, unsafe_allow_html=True)
 
 
-#######################################################################################################################
-
-# original_title = '<h1 style="font-family: serif; color:white; font-size: 20px;">Streamlit CSS Styling✨ </h1>'
-# st.markdown(original_title, unsafe_allow_html=True)
-
-#############################################################################################################################
 
 # hides the header - also possible to hide the footer: footer {visibility: hidden;}  /* Hides the footer */
 hide_st_style ="""
@@ -46,7 +54,6 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 st.title("David Train")
-
 
 # calculate the current date for plots
 start_date = "2024.08.10"
@@ -66,18 +73,8 @@ data = complete_data_wrangeling(initial_data)
 with st.expander("Raw Table"): 
     st.dataframe(data)
 
-v_spacer(height=4, sb=False)
+v_spacer(height=7, sb=False)
 
-
-
-# col1_params_normal_plot, col2_params_normal_plot = st.columns([3, 2], gap="large")
-# #show here the elements with columns for normal plot
-# with col1_params_normal_plot:
-#     all_exersices = [column_name for column_name in data.columns]
-#     selected_exersices = st.multiselect("Choose exersices", all_exersices)
-
-
-v_spacer(height=4, sb=False)
 
 
 fig_pushup = pushup_plot(data, start_date, current_date)
