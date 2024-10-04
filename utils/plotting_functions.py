@@ -56,11 +56,12 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ'].tick_params(axis='x', which='minor', labelsize=5, rotation=45) 
     axs['LGSTZ'].tick_params(axis='y', which='major', labelsize=6)
 
-    axs['LGSTZ'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['LGSTZ'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['LGSTZ'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['LGSTZ'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['LGSTZ'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))  #
+    axs['LGSTZ'].grid(visible=True, which='major', color='black', axis='x', linestyle='-', linewidth=0.5)  
 
-    axs['LGSTZ'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['LGSTZ'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=())) # MO, TU, WE, TH, FR, SA, SU
     axs['LGSTZ'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
     axs['LGSTZ'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
 

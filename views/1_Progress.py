@@ -5,7 +5,6 @@ import pandas as pd
 import os
 
 import matplotlib.dates as mdates
-from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
 from datetime import datetime
 
 from utils.utils import *
