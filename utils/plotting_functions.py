@@ -17,7 +17,7 @@ import yaml
 import json
 
 from streamlit_extras.mandatory_date_range import date_range_picker 
-# from toggle_button_set import toggle_button_set
+
 
 from matplotlib.patches import Rectangle
 from matplotlib.patches import Polygon
@@ -58,12 +58,12 @@ def pushup_plot(data, start_date, current_date):
 
     # Set major ticks and thick lines to be placed on the first of every month
     axs['LGSTZ'].xaxis.set_major_locator(mdates.MonthLocator())  
-    axs['LGSTZ'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))  #
-    axs['LGSTZ'].grid(visible=True, which='major', color='black', axis='x', linestyle='-', linewidth=0.5)  
+    axs['LGSTZ'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['LGSTZ'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
 
     axs['LGSTZ'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=())) # MO, TU, WE, TH, FR, SA, SU
-    axs['LGSTZ'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['LGSTZ'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['LGSTZ'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['LGSTZ'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
     bar_width = 0.3
@@ -92,13 +92,14 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['LGSTZ_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['LGSTZ_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['LGSTZ_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['LGSTZ_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['LGSTZ_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['LGSTZ_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['LGSTZ_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
 
-    axs['LGSTZ_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['LGSTZ_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['LGSTZ_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['LGSTZ_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['LGSTZ_REC'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['LGSTZ_REC'].bar(dates, data["Liegestütz Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
@@ -170,13 +171,14 @@ def plank_plot(data, start_date, current_date):
     axs['PLK'].tick_params(axis='y', which='major', labelsize=6)
      
 
-    axs['PLK'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['PLK'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['PLK'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['PLK'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['PLK'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['PLK'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
 
-    axs['PLK'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['PLK'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['PLK'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['PLK'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['PLK'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
     bar_width = 0.3
@@ -205,13 +207,15 @@ def plank_plot(data, start_date, current_date):
     axs['PLK_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['PLK_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['PLK_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['PLK_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['PLK_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
 
-    axs['PLK_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['PLK_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['PLK_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['PLK_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+
+    axs['PLK_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['PLK_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['PLK_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['PLK_REC'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     axs['PLK_REC'].bar(dates - pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['PLK_REC'].bar(dates, data["Planke Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
@@ -281,13 +285,14 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['KNBG'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['KNBG'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['KNBG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['KNBG'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['KNBG'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['KNBG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['KNBG'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)
 
-    axs['KNBG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['KNBG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['KNBG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['KNBG'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['KNBG'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
     bar_width = 0.3
@@ -317,13 +322,14 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['KNBG_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['KNBG_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['KNBG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['KNBG_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['KNBG_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['KNBG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['KNBG_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)
 
-    axs['KNBG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['KNBG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['KNBG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['KNBG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['KNBG_REC'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     axs['KNBG_REC'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['KNBG_REC'].bar(dates, data["Kniebeugen Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
@@ -393,13 +399,14 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['HMCRL'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['HMCRL'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['HMCRL'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['HMCRL'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['HMCRL'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['HMCRL'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['HMCRL'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
 
-    axs['HMCRL'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['HMCRL'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['HMCRL'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['HMCRL'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['HMCRL'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
     bar_width = 0.3
@@ -432,13 +439,14 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['HMCRL_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['HMCRL_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['HMCRL_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['HMCRL_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['HMCRL_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['HMCRL_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['HMCRL_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)
 
-    axs['HMCRL_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['HMCRL_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['HMCRL_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['HMCRL_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['HMCRL_REC'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     axs['HMCRL_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Hammer Curls Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['HMCRL_REC'].bar(dates, data["Weighted Hammer Curls Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
@@ -530,13 +538,14 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['TRMRD'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['TRMRD'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMRD'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['TRMRD'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['TRMRD'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['TRMRD'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['TRMRD'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5) 
 
-    axs['TRMRD'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['TRMRD'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['TRMRD'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['TRMRD'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['TRMRD'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
     bar_width = 0.3
@@ -575,13 +584,14 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['TRMRD_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['TRMRD_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMRD_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['TRMRD_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['TRMRD_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['TRMRD_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['TRMRD_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5) 
 
-    axs['TRMRD_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['TRMRD_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['TRMRD_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['TRMRD_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['TRMRD_REC'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMRD_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Rudern Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['TRMRD_REC'].bar(dates, data["Weighted Turm Rudern Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
@@ -672,13 +682,14 @@ def turmzg_plot(data, start_date, current_date):
     axs['TRMZG'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['TRMZG'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['TRMZG'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMZG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['TRMZG'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['TRMZG'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['TRMZG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['TRMZG'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5) 
 
-    axs['TRMZG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['TRMZG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['TRMZG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['TRMZG'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['TRMZG'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     # Plotting the three sets next to each other
     bar_width = 0.3
@@ -713,13 +724,14 @@ def turmzg_plot(data, start_date, current_date):
     axs['TRMZG_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
     axs['TRMZG_REC'].tick_params(axis='y', which='major', labelsize=6) 
 
-    axs['TRMZG_REC'].xaxis.set_major_locator(mdates.WeekdayLocator(byweekday=(TU, WE, TH, FR, SA, SU)))
-    axs['TRMZG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m'''))
-    axs['TRMZG_REC'].grid(visible=True, which='major', color='grey', axis='x', linestyle='--', linewidth=0.3)
+    # Set major ticks and thick lines to be placed on the first of every month
+    axs['TRMZG_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
+    axs['TRMZG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    axs['TRMZG_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5) 
 
-    axs['TRMZG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=(MO)))
+    axs['TRMZG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['TRMZG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    axs['TRMZG_REC'].grid(visible=True, which='minor', color='black', axis='x', linestyle='--', linewidth=0.3)
+    axs['TRMZG_REC'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
     axs['TRMZG_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Zug Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['TRMZG_REC'].bar(dates, data["Weighted Turm Zug Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
