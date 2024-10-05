@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 import random
-import elevenlabs
+import datetime
 import time
 from utils.utils import *
 # from IPython.display import display, Markdown
@@ -9,11 +9,28 @@ from openai import OpenAI
 # import openai
 from utils.llm_utils import *
 
+from elevenlabs.client import ElevenLabs
+from elevenlabs import play, stream, save
+
+import ffmpeg
+
+from datetime import date
+
+today = date.today()
+
+# Month abbreviation, day and year	
+today_clean = today.strftime("%b_%d_%Y")
+
+
 st.write("# Story")
 
 # OTHER PARAMS AND OPENAI
 cwd = os.getcwd()
+current_time = datetime.time()
+
 client = OpenAI(api_key=st.secrets.openai_credentials.api_key)
+
+client_elabs = ElevenLabs(api_key=st.secrets.elevenlabs_credentials.api_key)
 
 # initialization of chat history
 if "openai_model" not in st.session_state:
@@ -46,8 +63,8 @@ if 'extra_personality_option' not in st.session_state:
 if 'user_input' not in st.session_state: 
     st.session_state['user_input'] = " "  
 
-list_of_personalities = ['Select', 'Donald Trump', 'Richard David Precht', 'Joe Rogan', 
-                         'Elon Musk', 'Franz Kafka', 'Фёдор Достоевский', 'Arthur Schopenhauer', 
+list_of_personalities = ['Select', 'Bekannte Persönlichkeit aus Eldrador', 'Bekannte Persönlichkeit aus Ninjago', 'Joe Rogan', 
+                         'Bekannte Persönlichkeit aus Harry Potter', 'Bekannte Persönlichkeit aus Pokemon', 'Фёдор Достоевский', 'Arthur Schopenhauer', 
                          'Friedrich Nietzsche', 'Рамзан Кадыров', 'Dan Pena']
 
 ###################################APP########################################
@@ -57,7 +74,7 @@ list_of_personalities = ['Select', 'Donald Trump', 'Richard David Precht', 'Joe 
 #Title of the Page
 _, col_title, _ = st.columns(3)
 with col_title:
-    app_coloured_title = st.write("<h1><span style='color:#40E761'>Impersonator</span></h1>",
+    app_coloured_title = st.write("<h1><span style='color:#40E761'>Story Teller</span></h1>",
                                     unsafe_allow_html=True)
     v_spacer(height=4, sb=False) 
 
@@ -75,20 +92,20 @@ else:
     st.sidebar.write(f"<h4><span style='color:#40E761'>{personality_selector}</span></h4>",
                         unsafe_allow_html=True)
 
-if 'Donald Trump' in personality_selector:
-    selected_personality = "Donald Trump"
+if 'Bekannte Persönlichkeit aus Eldrador' in personality_selector:
+    selected_personality = "Bekannte Persönlichkeit aus Eldrador"
     # picture = picture_trump
 
-if 'Richard David Precht' in personality_selector:
-    selected_personality = "Richard David Precht"
+if 'Bekannte Persönlichkeit aus Ninjago' in personality_selector:
+    selected_personality = "Bekannte Persönlichkeit aus Ninjago"
 
             
-if 'Joe Rogan' in personality_selector:
-    selected_personality = "Joe Rogan"
+if 'Bekannte Persönlichkeit aus Harry Potter' in personality_selector:
+    selected_personality = "Bekannte Persönlichkeit aus Harry Potter"
 
             
-if 'Meister Yoda' in personality_selector:
-    selected_personality = "Meister Yoda"
+if 'Bekannte Persönlichkeit aus Pokemon' in personality_selector:
+    selected_personality = "Bekannte Persönlichkeit aus Pokemon"
 
 
 if 'Elon Musk' in personality_selector:
@@ -207,12 +224,12 @@ if st.session_state['person_chosen'] != 'Select':
                 model=st.session_state["selected_model"],
                 messages=[
                     {"role": "system", 
-                     "content": f'''Du bist {selected_personality}, und deine Aufgabe ist es Texte die du bekommst im Stil von {selected_personality} umzuformulieren.
-                                    Das bedeutet du redest wie {selected_personality} und du integrierst häufig typische {selected_personality} Phrasen wenn du redest. 
-                                    Bitte formuliere einen Text im Stil von {selected_personality} um und rede dabei {st.session_state['selected_language']}.
+                     "content": f'''Du bist {selected_personality}, und du erzählst Geschichten die lehrreich aber auch witzig sind. Die Geschichten sind für einen Jungen der David heißt und 9 Jahre alt ist.
+                                    Der junge David mag es zu trainieren um stärker zu werden. Er übt auch fließig tricks und Übungen auf Reck und Barren und möchte stark wie ein Titan sein. 
+                                    Bitte formuliere einen Text im Stil von {selected_personality} um und rede dabei {st.session_state['selected_language']}. 
                                     {st.session_state['extra_metapher_option']} 
                                     {st.session_state['extra_personality_option']}
-                                    Hier ist der Text die du umformulieren musst - der Text: "{st.session_state['user_input']}"
+                                    Hier sind weitere Ereignisse oder Sachen die du in die geschichte für 9 jährigen David mit einbauen solltest: "{st.session_state['user_input']}"
                                 '''},
                         ],
                 temperature = chosen_temperature
@@ -220,11 +237,52 @@ if st.session_state['person_chosen'] != 'Select':
 
         answer_raw = show_result_new(result_raw)
 
+
+
+
+
+        
+
         v_spacer(height=5, sb=False) 
         st.text_area("You said: ", {st.session_state['user_input']} , key="input") #height=220 #answer_raw
 
         v_spacer(height=3, sb=False) 
         st.text_area(f"{selected_personality} said:" , answer_raw , key="output") #height=
+
+
+        v_spacer(height=3, sb=False) 
+        print("0. gelich generiere ich was")
+        audio = client_elabs.generate(
+                            text=f"{answer_raw}",
+                            voice="Rachel",
+                            model="eleven_multilingual_v2"
+                            )
+        
+        print("1. habe was generiert")
+        
+        path_audio = f"{selected_personality}_audio_{today}.mp3"
+        print(f"2. werde es gleich speichern unter dem pfad: {path_audio}")
+        save(audio, path_audio)
+        print("3. habs gespeicher ")
+
+   
+        # print("3. gleich spiele ich es ab ")
+        # play(audio)
+        # print("4. elevenlabs hat abgespielt ")
+
+        
+        
+        # saves audio to file
+        
+     
+        
+    
+        print("4. gleich spuielt es streamlit ab ")
+        st.audio(path_audio, format="audio/mpeg", loop=True)
+        
+        
+
+
 
 
 
@@ -273,11 +331,7 @@ if st.session_state['person_chosen'] != 'Select':
 # answer_raw = show_result_new(result_raw)
 
 
-# audio = elevenlabs.generate(
-#     text = "Hello my dear frien!",
-#     voice = "Bella"
 
-# )
 
 # elevenlabs.play(audio)
 
