@@ -47,13 +47,13 @@ if prompt := st.chat_input(placeholder="What do you want to know?"):
 
 
 
-audio = elevenlabs.generate(
-    text = "Hello my dear frien!",
-    voice = "Bella"
+# audio = elevenlabs.generate(
+#     text = "Hello my dear frien!",
+#     voice = "Bella"
 
-)
+# )
 
-elevenlabs.play(audio)
+# elevenlabs.play(audio)
 
 # result_raw = client.chat.completions.create(
 #                 model=st.session_state["selected_model"],
