@@ -177,17 +177,17 @@ if st.session_state['person_chosen'] != 'Select':
     
   
     if extra_metapher_toggle:
-        st.session_state['extra_metapher_option'] = "Sei sehr Sarkastisch in deiner Ausdrucksweise und integriere sehr häufig lustige oder sarkastische Metapher."
+        st.session_state['extra_metapher_option'] = "Sei extra witzig und baue viele Witze und lustige Metapher in die Geschichte ein"
     else:
         st.session_state['extra_metapher_option'] = "Sei freundlich und uplifting is deiner Ausdrucksweise." 
 
     if model_toggle:
-        st.session_state['selected_model'] = "gpt-4"
+        st.session_state['selected_model'] = "gpt-3.5-turbo"
     else:
-        st.session_state['selected_model'] = "gpt-3.5-turbo" 
+        st.session_state['selected_model'] = "gpt-4o" 
             
     if extra_personality_toggle:
-        st.session_state['extra_personality_option'] = f"Es muss sehr stark nach {selected_personality} klingen, sodass die Leute leicht erkennen dass es von {selected_personality} kommt."
+        st.session_state['extra_personality_option'] = f"Es muss sehr stark nach {selected_personality} die du für die Geschichte ausgesucht hast klingen, sodass die Leute leicht erkennen dass es von {selected_personality} kommt."
     else:
         st.session_state['extra_personality_option'] = " " 
 
@@ -224,12 +224,18 @@ if st.session_state['person_chosen'] != 'Select':
                 model=st.session_state["selected_model"],
                 messages=[
                     {"role": "system", 
-                     "content": f'''Du bist {selected_personality}, und du erzählst Geschichten die lehrreich aber auch witzig sind. Die Geschichten sind für einen Jungen der David heißt und 9 Jahre alt ist.
+                     "content": f'''Deine Aufgabe besteht darin Geschichten für den 9 jährigen David zu erzählen. Du musste die Geschichten aus der Perspektive eines bekannten Characters erzählen, die dir vorgegeben wird.
+                                    Die Geschichten müssen so aufgebaut sein, dass David darin die Hauptrolle darin spielt und viele Details über ihn mit eingebaut werden. Die Geschichten sollen so sein dass die für einen 9 Jährigen witzig und intetessant sind.
+                                    David is 9 Jahre alt und mag es zu trainieren um stärker zu werden. Er mag es die Show Titans zu schauen und möchte auch stark werden wie ein kleiner Titan.
                                     Der junge David mag es zu trainieren um stärker zu werden. Er übt auch fließig tricks und Übungen auf Reck und Barren und möchte stark wie ein Titan sein. 
-                                    Bitte formuliere einen Text im Stil von {selected_personality} um und rede dabei {st.session_state['selected_language']}. 
+                                    Zusätzlich wird werden dir weitere Details und Ereignisse genannt die du in die Geschichte mit einabuen solltest.
+                                    Dir wir dauch eine Anweisung gegeben in welche Sprache die Geschichte sein soll.
+                                    Die Persönlichekit die dir für diese Geschichte vorgegeben wird ist: [{selected_personality}].              
+                                    Du bist {selected_personality}, und du erzählst Geschichten die lehrreich aber auch witzig sind. 
+                                    Bitte formuliere eine spannende und witzige Geschichte im Stil von {selected_personality} um und rede dabei {st.session_state['selected_language']}. 
                                     {st.session_state['extra_metapher_option']} 
                                     {st.session_state['extra_personality_option']}
-                                    Hier sind weitere Ereignisse oder Sachen die du in die geschichte für 9 jährigen David mit einbauen solltest: "{st.session_state['user_input']}"
+                                    Hier sind weitere Ereignisse oder Deatils die du in die geschichte für 9 jährigen David mit einbauen solltest: "{st.session_state['user_input']}"
                                 '''},
                         ],
                 temperature = chosen_temperature
