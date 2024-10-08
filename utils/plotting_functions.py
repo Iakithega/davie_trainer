@@ -29,6 +29,44 @@ from utils.utils import *
 from utils.data_engineering import *
 
 
+def moving_average_plot(ax, df, name, date_start, date_end, window=3):
+    df[f'{name} moving_avg {window}'] = df[name].rolling(window=window).mean()
+
+
+    sns.lineplot(data=df[f'{name} moving_avg {window}'], label= f"{window}D MA {name.title()}", linestyle='-', linewidth=2, ax=ax)     
+    for i, (x, y) in enumerate(zip(df.index, df[f'{name} moving_avg {window}'])):
+
+        if 0 <= y <= 1:
+            color_dot = "#01FFAA "     
+        elif 1.01 <= y <= 2:
+            color_dot = "#007C03"
+        elif 2.01 <= y <= 3:
+            color_dot = "#19AF01"
+        elif 3.01 <= y <= 4:
+            color_dot = "#23FE01"
+        elif 4.01 <= y <= 5:
+            color_dot = "#E4FE00"
+        elif 5.01 <= y <= 6:
+            color_dot = "#FFB703"
+        elif 6.01 <= y <= 7:
+            color_dot = "#FE8A00"
+        elif 7.01 <= y <= 8:
+            color_dot = "#FF2E01"
+        elif 8.01 <= y <= 9:
+            color_dot = "#CC4637"
+        elif 9.01 <= y <= 10:
+            color_dot = "#A3231A"
+        elif 10.01 <= y <= 11:
+            color_dot = "#670001"
+        else:
+            color_dot = "grey"  
+
+        ax.scatter(x, y, color=color_dot, s=30)
+    
+   
+
+
+
 
 def pushup_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
