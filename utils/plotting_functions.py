@@ -29,43 +29,28 @@ from utils.utils import *
 from utils.data_engineering import *
 
 
-def moving_average_plot(ax, df, name, date_start, date_end, window=3):
-    df[f'{name} moving_avg {window}'] = df[name].rolling(window=window).mean()
 
-
-    sns.lineplot(data=df[f'{name} moving_avg {window}'], label= f"{window}D MA {name.title()}", linestyle='-', linewidth=2, ax=ax)     
-    for i, (x, y) in enumerate(zip(df.index, df[f'{name} moving_avg {window}'])):
-
-        if 0 <= y <= 1:
-            color_dot = "#01FFAA "     
-        elif 1.01 <= y <= 2:
-            color_dot = "#007C03"
-        elif 2.01 <= y <= 3:
-            color_dot = "#19AF01"
-        elif 3.01 <= y <= 4:
-            color_dot = "#23FE01"
-        elif 4.01 <= y <= 5:
-            color_dot = "#E4FE00"
-        elif 5.01 <= y <= 6:
-            color_dot = "#FFB703"
-        elif 6.01 <= y <= 7:
-            color_dot = "#FE8A00"
-        elif 7.01 <= y <= 8:
-            color_dot = "#FF2E01"
-        elif 8.01 <= y <= 9:
-            color_dot = "#CC4637"
-        elif 9.01 <= y <= 10:
-            color_dot = "#A3231A"
-        elif 10.01 <= y <= 11:
-            color_dot = "#670001"
-        else:
-            color_dot = "grey"  
-
-        ax.scatter(x, y, color=color_dot, s=30)
+def moving_average_plot(ax, data, name, window=3):
+    # Filter out non-training days (where 'Liegestütz Average all sets' is not NaN)
+    training_data = data.dropna(subset=[name])
     
-   
-
-
+    # Calculate moving average based on training days only
+    ma_column = f'{name} MA{window}'
+    training_data[ma_column] = training_data[name].rolling(window=window).mean()
+    
+    # Plot the moving average line
+    sns.lineplot(
+        data=training_data, 
+        x=training_data.index, 
+        y=ma_column, 
+        linestyle='--', 
+        linewidth=0.5,
+        color="gray", 
+        ax=ax
+    )
+    
+    # Add scatter points for the moving average
+    ax.scatter(training_data.index, training_data[ma_column], color="gray", s=10)
 
 
 def pushup_plot(data, start_date, current_date):
@@ -87,7 +72,7 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ'].set_xlabel(' ', size=14)
     axs['LGSTZ'].set_ylabel('Reps', size=8)
     axs['LGSTZ'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['LGSTZ'].set_ylim([0, 40])
 
     # Set font size for major and minor ticks
     axs['LGSTZ'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -103,6 +88,7 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) 
     axs['LGSTZ'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
+
     # Plotting the three sets next to each other
     bar_width = 0.3
     dates = data.index
@@ -111,11 +97,15 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ'].bar(dates, data["Liegestütz set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
     axs['LGSTZ'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
 
-    for set_name, offset in zip(["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"], [-pd.Timedelta(hours=14), pd.Timedelta(0), pd.Timedelta(hours=14)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['LGSTZ'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
 
+
+    #Moving Average Plot
+    moving_average_plot(ax=axs['LGSTZ'], data=data, name="Liegestütz Average all sets", window=3)
+    
 
     axs['LGSTZ_REC'].set_title(f"Records Push Ups", size=7)
     axs['LGSTZ_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -201,7 +191,7 @@ def plank_plot(data, start_date, current_date):
     axs['PLK'].set_xlabel(' ', size=14)
     axs['PLK'].set_ylabel('Sec', size=8)
     axs['PLK'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['PLK'].set_ylim([0, 150])
 
     # Set font size for major and minor ticks
     axs['PLK'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -231,6 +221,9 @@ def plank_plot(data, start_date, current_date):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['PLK'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
+    # Moving Average Plot
+    moving_average_plot(ax=axs['PLK'], data=data, name="Planke Average all sets", window=3)
     
     
     axs['PLK_REC'].set_title(f"Records Planke", size=7)
@@ -316,7 +309,7 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG'].set_xlabel(' ', size=14)
     axs['KNBG'].set_ylabel('Reps', size=8)
     axs['KNBG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['KNBG'].set_ylim([0, 60])
 
     # Set font size for major and minor ticks
     axs['KNBG'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -347,6 +340,9 @@ def kniebeuge_plot(data, start_date, current_date):
                 axs['KNBG'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
 
+    # Moving Average Plot
+    moving_average_plot(ax=axs['KNBG'], data=data, name="Kniebeugen Average all sets", window=3)
+    
 
     axs['KNBG_REC'].set_title(f"Records Kniebeugen", size=7)
     axs['KNBG_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -430,7 +426,7 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL'].set_xlabel(' ', size=14)
     axs['HMCRL'].set_ylabel('Reps', size=8)
     axs['HMCRL'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['HMCRL'].set_ylim([0, 35])
 
     # Set font size for major and minor ticks
     axs['HMCRL'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -464,6 +460,10 @@ def hamcurls_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['HMCRL'].text(date + offset, value/2 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
+
+    # Moving Average Plot
+    moving_average_plot(ax=axs['HMCRL'], data=data, name="Weighted Hammer Curls Average reps all sets", window=3)
+
 
     axs['HMCRL_REC'].set_title(f"Records Hammer Curls", size=7)
     axs['HMCRL_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -569,7 +569,7 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD'].set_xlabel(' ', size=14)
     axs['TRMRD'].set_ylabel('Reps', size=8)
     axs['TRMRD'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['TRMRD'].set_ylim([0, 40])
 
     # Set font size for major and minor ticks
     axs['TRMRD'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -608,7 +608,8 @@ def turmrud_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMRD'].text(date + offset, value/6 + 0.5, f"{value}", va='center', ha='center', fontsize=5, color='black')
 
-
+    # Moving Average Plot
+    moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average reps all sets", window=3)
 
     axs['TRMRD_REC'].set_title(f"Records Turm Rudern", size=7)
     axs['TRMRD_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -713,7 +714,7 @@ def turmzg_plot(data, start_date, current_date):
     axs['TRMZG'].set_xlabel(' ', size=14)
     axs['TRMZG'].set_ylabel('Reps', size=8)
     axs['TRMZG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['TRMZG'].set_ylim([0, 40])
 
     # Set font size for major and minor ticks
     axs['TRMZG'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -748,7 +749,9 @@ def turmzg_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMZG'].text(date + offset, value/15 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')  
 
-    
+    # Moving Average Plot
+    moving_average_plot(ax=axs['TRMZG'], data=data, name="Weighted Turm Zug Average reps all sets", window=3)
+
 
     axs['TRMZG_REC'].set_title(f"Records Turm Zug", size=7)
     axs['TRMZG_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
