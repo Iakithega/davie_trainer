@@ -66,6 +66,7 @@ def pushup_plot(data, start_date, current_date):
 
     plt.subplots_adjust(wspace=.2, hspace=.8)
     
+    
     axs['LGSTZ'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
     axs['LGSTZ'].set_title(f"Progress Push Ups", size=7)
@@ -97,7 +98,7 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ'].bar(dates, data["Liegestütz set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
     axs['LGSTZ'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
 
-    for set_name, offset in zip(["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"], [-pd.Timedelta(hours=14), pd.Timedelta(0), pd.Timedelta(hours=14)]):
+    for set_name, offset in zip(["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['LGSTZ'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
@@ -106,6 +107,7 @@ def pushup_plot(data, start_date, current_date):
     #Moving Average Plot
     moving_average_plot(ax=axs['LGSTZ'], data=data, name="Liegestütz Average all sets", window=3)
     
+    axs['LGSTZ'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
 
     axs['LGSTZ_REC'].set_title(f"Records Push Ups", size=7)
     axs['LGSTZ_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -164,7 +166,8 @@ def pushup_plot(data, start_date, current_date):
                     # Regular annotation for non-record values (without background)
                     axs['LGSTZ_REC'].text(date + offset, value + 3, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
-
+                    
+    axs['LGSTZ_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
 
 
     return fig
@@ -183,7 +186,6 @@ def plank_plot(data, start_date, current_date):
     fig.suptitle(f'''Planke''', size=10)
 
     plt.subplots_adjust(wspace=.2, hspace=.8)
-
 
     axs['PLK'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -217,13 +219,16 @@ def plank_plot(data, start_date, current_date):
     axs['PLK'].bar(dates + pd.Timedelta(hours=12), data["Planke set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
 
 
-    for set_name, offset in zip(["Planke set 1", "Planke set 2", "Planke set 3"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
+    for set_name, offset in zip(["Planke set 1", "Planke set 2", "Planke set 3"], [-pd.Timedelta(hours=22), pd.Timedelta(0), pd.Timedelta(hours=22)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['PLK'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
     # Moving Average Plot
     moving_average_plot(ax=axs['PLK'], data=data, name="Planke Average all sets", window=3)
+
+    axs['PLK'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
+    
     
     
     axs['PLK_REC'].set_title(f"Records Planke", size=7)
@@ -284,6 +289,8 @@ def plank_plot(data, start_date, current_date):
                     # Regular annotation for non-record values (without background)
                     axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
+    
+    axs['PLK_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
 
     return fig
 
@@ -342,6 +349,8 @@ def kniebeuge_plot(data, start_date, current_date):
 
     # Moving Average Plot
     moving_average_plot(ax=axs['KNBG'], data=data, name="Kniebeugen Average all sets", window=3)
+
+    axs['KNBG'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
     
 
     axs['KNBG_REC'].set_title(f"Records Kniebeugen", size=7)
@@ -401,6 +410,7 @@ def kniebeuge_plot(data, start_date, current_date):
                     axs['KNBG_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
 
+    axs['KNBG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
 
     return fig
 
@@ -463,6 +473,8 @@ def hamcurls_plot(data, start_date, current_date):
 
     # Moving Average Plot
     moving_average_plot(ax=axs['HMCRL'], data=data, name="Weighted Hammer Curls Average reps all sets", window=3)
+
+    axs['HMCRL'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
 
 
     axs['HMCRL_REC'].set_title(f"Records Hammer Curls", size=7)
@@ -544,7 +556,7 @@ def hamcurls_plot(data, start_date, current_date):
                         axs['HMCRL_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
 
-
+    axs['HMCRL_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
 
     return fig
 
@@ -608,8 +620,12 @@ def turmrud_plot(data, start_date, current_date):
             if not pd.isna(value):
                 axs['TRMRD'].text(date + offset, value/6 + 0.5, f"{value}", va='center', ha='center', fontsize=5, color='black')
 
-    # Moving Average Plot
-    moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average reps all sets", window=3)
+    # # Moving Average Plot
+    # moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average reps all sets", window=3)
+    # Moving Average Plot scored
+    moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average score all sets", window=3)
+
+    axs['TRMRD'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
 
     axs['TRMRD_REC'].set_title(f"Records Turm Rudern", size=7)
     axs['TRMRD_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -689,6 +705,7 @@ def turmrud_plot(data, start_date, current_date):
                         axs['TRMRD_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
 
+    axs['TRMRD_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
 
     return fig
 
@@ -751,6 +768,8 @@ def turmzg_plot(data, start_date, current_date):
 
     # Moving Average Plot
     moving_average_plot(ax=axs['TRMZG'], data=data, name="Weighted Turm Zug Average reps all sets", window=3)
+
+    axs['TRMZG'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
 
 
     axs['TRMZG_REC'].set_title(f"Records Turm Zug", size=7)
@@ -830,6 +849,8 @@ def turmzg_plot(data, start_date, current_date):
                         # Regular annotation for score
                         axs['TRMZG_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
+    
+    axs['TRMZG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
 
     return fig
 
