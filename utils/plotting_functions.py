@@ -341,7 +341,7 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
 
 
-    for set_name, offset in zip(["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['KNBG'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
@@ -604,6 +604,12 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Rudern set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
     axs['TRMRD'].bar(dates, data["Weighted Turm Rudern set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
     axs['TRMRD'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Rudern set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+    # Testing weighscoring bar
+    axs['TRMRD'].bar(dates + pd.Timedelta(hours=30), data["Weightscore diff Turm Rudern set 1 reps"], alpha=0.3, width=bar_width, color="red", label="weightscore Set 1")
+    axs['TRMRD'].bar(dates + pd.Timedelta(hours=40), data["Weightscore diff Turm Rudern set 2 reps"], alpha=0.3, width=bar_width, color="red", label="weightscore Set 2")
+    axs['TRMRD'].bar(dates + pd.Timedelta(hours=60), data["Weightscore diff Turm Rudern set 3 reps"], alpha=0.3, color="red", width=bar_width, label="weightscore Set 3")
+    
 
     for set_name, offset in zip(["Weighted Turm Rudern set 1 reps", "Weighted Turm Rudern set 2 reps", "Weighted Turm Rudern set 3 reps"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
         for date, value in data[set_name].loc[start_date:current_date].items():

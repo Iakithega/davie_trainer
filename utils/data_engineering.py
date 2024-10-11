@@ -176,6 +176,7 @@ def calc_trmrd_score_overview(df):
     df['Weighted Turm Rudern Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
     return df
 
+
 def calc_sets_overview_with_weights_dstanced(df, weight_factor=1):
     # calculations and columns for weighted hammer curls
     trmrd_reps_columns = df.filter(regex="Weighted Turm Rudern.*reps").columns
@@ -187,6 +188,19 @@ def calc_sets_overview_with_weights_dstanced(df, weight_factor=1):
     df['Weighted Turm Rudern Max reps all sets'] = df[trmrd_reps_columns].max(axis=1, skipna=True)
     df['Weighted Turm Rudern Sum reps all sets'] = df[trmrd_reps_columns].sum(axis=1, skipna=True)    
 
+    return df
+
+def calc_weightscore_diff_trmrd(df):
+    # List of sets for 'Weighted Turm Rudern'
+    sets = [1, 2, 3, 4]
+
+    # Calculate the difference between original reps column and the scored reps column
+    for set_num in sets:
+        orig_reps_col_name = f'Weighted Turm Rudern set {set_num} reps'
+        score_col_name = f'Weighted Turm Rudern set {set_num} score'
+        diff_col_name = f'Weightscore diff Turm Rudern set {set_num} reps'
+        df[diff_col_name] = df[score_col_name] - df[orig_reps_col_name]
+    
     return df
 
 
@@ -239,6 +253,7 @@ def complete_data_wrangeling(initial_data):
     # implements weight factored score column for Turm Rudern
     data = compute_trmrd_scores(data)
     data = calc_trmrd_score_overview(data)
+    data = calc_weightscore_diff_trmrd(data)
 
     # implements weight factored score column for Turm Zug
     data = compute_trmzg_scores(data)
