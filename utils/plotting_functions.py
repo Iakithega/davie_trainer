@@ -581,7 +581,7 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD'].set_xlabel(' ', size=14)
     axs['TRMRD'].set_ylabel('Reps', size=8)
     axs['TRMRD'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    axs['TRMRD'].set_ylim([0, 40])
+    axs['TRMRD'].set_ylim([0, 70])
 
     # Set font size for major and minor ticks
     axs['TRMRD'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -601,30 +601,40 @@ def turmrud_plot(data, start_date, current_date):
     bar_width = 0.3
     dates = data.index
 
-    axs['TRMRD'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Rudern set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
-    axs['TRMRD'].bar(dates, data["Weighted Turm Rudern set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
-    axs['TRMRD'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Rudern set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+    # weighscoring bar
+    axs['TRMRD'].bar(dates - pd.Timedelta(hours=10), data["Weightscore diff Turm Rudern set 1 reps"], alpha=0.3, width=bar_width, color="red", label="weightscoring")
+    axs['TRMRD'].bar(dates, data["Weightscore diff Turm Rudern set 2 reps"], alpha=0.3, width=bar_width, color="red")
+    axs['TRMRD'].bar(dates + pd.Timedelta(hours=10), data["Weightscore diff Turm Rudern set 3 reps"], alpha=0.3, color="red", width=bar_width)
 
-    # Testing weighscoring bar
-    axs['TRMRD'].bar(dates + pd.Timedelta(hours=30), data["Weightscore diff Turm Rudern set 1 reps"], alpha=0.3, width=bar_width, color="red", label="weightscore Set 1")
-    axs['TRMRD'].bar(dates + pd.Timedelta(hours=40), data["Weightscore diff Turm Rudern set 2 reps"], alpha=0.3, width=bar_width, color="red", label="weightscore Set 2")
-    axs['TRMRD'].bar(dates + pd.Timedelta(hours=60), data["Weightscore diff Turm Rudern set 3 reps"], alpha=0.3, color="red", width=bar_width, label="weightscore Set 3")
+    # Now plot the regular set bars on top of the weightscore bars using the `bottom` parameter
+    axs['TRMRD'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Rudern set 1 reps"], alpha=1, width=bar_width, color="limegreen", label="Set 1", 
+                    bottom=data["Weightscore diff Turm Rudern set 1 reps"])  # Stacked on weightscore bars
+    axs['TRMRD'].bar(dates, data["Weighted Turm Rudern set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2", 
+                    bottom=data["Weightscore diff Turm Rudern set 2 reps"])  # Stacked on weightscore bars
+    axs['TRMRD'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Rudern set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3", 
+                    bottom=data["Weightscore diff Turm Rudern set 3 reps"])  # Stacked on weightscore bars
+
+
+    # Adjust the text labels to be placed at the top of the combined bars (reps + weightscore)
+    for set_name, score_name, offset in zip(["Weighted Turm Rudern set 1 reps", "Weighted Turm Rudern set 2 reps", "Weighted Turm Rudern set 3 reps"],
+                                            ["Weightscore diff Turm Rudern set 1 reps", "Weightscore diff Turm Rudern set 2 reps", "Weightscore diff Turm Rudern set 3 reps"],
+                                            [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
+        for date, value in data[set_name].loc[start_date:current_date].items():
+            score_value = data[score_name].loc[date]  # Get weightscore value for the same date
+            combined_value = value + score_value  # Combine reps + weightscore to determine text height
+            if not pd.isna(value):
+                axs['TRMRD'].text(date + offset, combined_value + 1.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')  # Text remains reps but height is adjusted
     
-
-    for set_name, offset in zip(["Weighted Turm Rudern set 1 reps", "Weighted Turm Rudern set 2 reps", "Weighted Turm Rudern set 3 reps"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Weighted Turm Rudern set 1 band", "Weighted Turm Rudern set 2 band", "Weighted Turm Rudern set 3 band"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
-                axs['TRMRD'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
-    
-    for set_name, offset in zip(["Weighted Turm Rudern set 1 band", "Weighted Turm Rudern set 2 band", "Weighted Turm Rudern set 3 band"], [-pd.Timedelta(hours=14), pd.Timedelta(0), pd.Timedelta(hours=14)]):
-        for date, value in data[set_name].loc[start_date:current_date].items():
-            if not pd.isna(value):
-                axs['TRMRD'].text(date + offset, value/10 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black') 
+                axs['TRMRD'].text(date + offset, value/10 + 3, f"{round(value)}", va='center', ha='center', fontsize=4.5, color='black') 
     
     for set_name, offset in zip(["Weighted Turm Rudern set 1 distance", "Weighted Turm Rudern set 2 distance", "Weighted Turm Rudern set 3 distance"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
-                axs['TRMRD'].text(date + offset, value/6 + 0.5, f"{value}", va='center', ha='center', fontsize=5, color='black')
+                axs['TRMRD'].text(date + offset, value/6 + 1, f"{value}", va='center', ha='center', fontsize=4, color='black')
+
 
     # # Moving Average Plot
     # moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average reps all sets", window=3)
@@ -632,6 +642,11 @@ def turmrud_plot(data, start_date, current_date):
     moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average score all sets", window=3)
 
     axs['TRMRD'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
+
+
+
+
+
 
     axs['TRMRD_REC'].set_title(f"Records Turm Rudern", size=7)
     axs['TRMRD_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency

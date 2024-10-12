@@ -163,7 +163,7 @@ def compute_trmrd_scores(df):
             
             # Compute the new score column using your formula
             score_col = f'Weighted Turm Rudern set {set_num} score'
-            df[score_col] = df[reps_col] * (df[distance_col])**1.2
+            df[score_col] = df[reps_col] * (df[distance_col])**1.0
         else:
             print(f"Columns for set {set_num} are missing in the dataframe.")
     
