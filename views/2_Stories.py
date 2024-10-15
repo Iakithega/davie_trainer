@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 import random
-import datetime
 import time
 from utils.utils import *
 # from IPython.display import display, Markdown
@@ -14,19 +13,21 @@ from elevenlabs import play, stream, save
 
 import ffmpeg
 
-from datetime import date
+from datetime import datetime
 
-today = date.today()
+today = datetime.now()
 
-# Month abbreviation, day and year	
-today_clean = today.strftime("%b_%d_%Y")
+# Day, month, year, hour, and minutes
+today_clean = today.strftime("%d%m%Y_%H_%M") 
+
+
+
 
 
 st.write("# Story")
 
 # OTHER PARAMS AND OPENAI
 cwd = os.getcwd()
-current_time = datetime.time()
 
 client = OpenAI(api_key=st.secrets.openai_credentials.api_key)
 
@@ -44,6 +45,9 @@ if "openai_model" not in st.session_state:
 # Initializing session states for Criteria matcher
 if 'person_chosen' not in st.session_state:
     st.session_state['person_chosen'] = 'Select'
+
+if 'voice' not in st.session_state:
+    st.session_state['voice'] = " "
 
 if 'input_submitted' not in st.session_state: 
     st.session_state['input_submitted'] = False
@@ -143,6 +147,11 @@ v_spacer(height=4, sb=True)
 output_language = st.sidebar.radio('Chose language', ["deutsch", "русский", "english" ])
 st.session_state['selected_language'] = output_language
 
+if st.session_state['selected_language'] == "русский":
+    st.session_state['voice'] = "8PCccElp0PQGRfTFCu0p"
+
+
+
 v_spacer(height=4, sb=True)
 input_temperature = st.sidebar.slider("Chose temperature", step=0.1, value=(0.7), key="temperature_input", min_value=0.1, max_value=1.5)
 chosen_temperature = input_temperature
@@ -179,7 +188,7 @@ if st.session_state['person_chosen'] != 'Select':
     if extra_metapher_toggle:
         st.session_state['extra_metapher_option'] = "Sei extra witzig und baue viele Witze und lustige Metapher in die Geschichte ein"
     else:
-        st.session_state['extra_metapher_option'] = "Sei freundlich und uplifting is deiner Ausdrucksweise." 
+        st.session_state['extra_metapher_option'] = "" 
 
     if model_toggle:
         st.session_state['selected_model'] = "gpt-3.5-turbo"
@@ -187,7 +196,7 @@ if st.session_state['person_chosen'] != 'Select':
         st.session_state['selected_model'] = "gpt-4o" 
             
     if extra_personality_toggle:
-        st.session_state['extra_personality_option'] = f"Es muss sehr stark nach {selected_personality} die du für die Geschichte ausgesucht hast klingen, sodass die Leute leicht erkennen dass es von {selected_personality} kommt."
+        st.session_state['extra_personality_option'] = f"Es muss sehr stark nach {selected_personality} die du für die Geschichte ausgesucht hast klingen, sodass die Leute leicht erkennen dass es von {selected_personality} kommt baue viele Details aus der zugehörigen thematik ein."
     else:
         st.session_state['extra_personality_option'] = " " 
 
@@ -224,15 +233,16 @@ if st.session_state['person_chosen'] != 'Select':
                 model=st.session_state["selected_model"],
                 messages=[
                     {"role": "system", 
-                     "content": f'''Deine Aufgabe besteht darin Geschichten für den 9 jährigen David zu erzählen. Du musste die Geschichten aus der Perspektive eines bekannten Characters erzählen, die dir vorgegeben wird.
-                                    Die Geschichten müssen so aufgebaut sein, dass David darin die Hauptrolle darin spielt und viele Details über ihn mit eingebaut werden. Die Geschichten sollen so sein dass die für einen 9 Jährigen witzig und intetessant sind.
+                     "content": f'''Deine Aufgabe besteht darin Geschichten für den 9 jährigen David zu erzählen. Du musste die Geschichten aus der Perspektive eines bekannten Characters erzählen, der dir vorgegeben wird.
+                                    Die Geschichten müssen so aufgebaut sein, dass David darin die Hauptrolle spielt und viele Details über ihn mit in die Geschichte eingebaut werden. 
+                                    Die Geschichten sollen so sein dass die für einen 9 Jährigen witzig und intetessant sind.
                                     David is 9 Jahre alt und mag es zu trainieren um stärker zu werden. Er mag es die Show Titans zu schauen und möchte auch stark werden wie ein kleiner Titan.
-                                    Der junge David mag es zu trainieren um stärker zu werden. Er übt auch fließig tricks und Übungen auf Reck und Barren und möchte stark wie ein Titan sein. 
-                                    Zusätzlich wird werden dir weitere Details und Ereignisse genannt die du in die Geschichte mit einabuen solltest.
-                                    Dir wir dauch eine Anweisung gegeben in welche Sprache die Geschichte sein soll.
-                                    Die Persönlichekit die dir für diese Geschichte vorgegeben wird ist: [{selected_personality}].              
-                                    Du bist {selected_personality}, und du erzählst Geschichten die lehrreich aber auch witzig sind. 
-                                    Bitte formuliere eine spannende und witzige Geschichte im Stil von {selected_personality} um und rede dabei {st.session_state['selected_language']}. 
+                                    Der junge David mag es zu trainieren um stärker zu werden. Er übt auch fleißig tricks und Übungen auf dem Reck und den Barren und möchte stark wie ein Titan sein. 
+                                    Zusätzlich werden dir weitere Details und Ereignisse genannt die du in die Geschichte mit einabuen solltest.
+                                    Dir wir auch eine Anweisung gegeben in welche Sprache die Geschichte sein soll.
+
+                                    Die Persönlichekit die dir für diese Geschichte vorgegeben wird ist: [{selected_personality}]. Das heißt Du bist {selected_personality}, und du erzählst Geschichten die lehrreich aber auch witzig sind. 
+                                    Bitte formuliere eine spannende und witzige Geschichte im Stil von {selected_personality} um und rede dabei diese Sprache: {st.session_state['selected_language']}. 
                                     {st.session_state['extra_metapher_option']} 
                                     {st.session_state['extra_personality_option']}
                                     Hier sind weitere Ereignisse oder Deatils die du in die geschichte für 9 jährigen David mit einbauen solltest: "{st.session_state['user_input']}"
@@ -259,14 +269,14 @@ if st.session_state['person_chosen'] != 'Select':
         v_spacer(height=3, sb=False) 
         print("0. gelich generiere ich was")
         audio = client_elabs.generate(
-                            text=f"{answer_raw}",
-                            voice="Rachel",
+                            text=f"{answer_raw}",   # oWJ0GSUjVyxG4cvdzY5t    # RUS 8PCccElp0PQGRfTFCu0p  # Rachel
+                            voice=st.session_state['voice'],
                             model="eleven_multilingual_v2"
                             )
         
         print("1. habe was generiert")
         
-        path_audio = f"{selected_personality}_audio_{today}.mp3"
+        path_audio = f"{selected_personality}_audio_{today_clean}.mp3"
         print(f"2. werde es gleich speichern unter dem pfad: {path_audio}")
         save(audio, path_audio)
         print("3. habs gespeicher ")
