@@ -148,7 +148,11 @@ output_language = st.sidebar.radio('Chose language', ["deutsch", "русский
 st.session_state['selected_language'] = output_language
 
 if st.session_state['selected_language'] == "русский":
-    st.session_state['voice'] = "8PCccElp0PQGRfTFCu0p"
+    st.session_state['voice'] = "8PCccElp0PQGRfTFCu0p" # srN6rA7HPBQZ1WEO6tDP
+
+if st.session_state['selected_language'] == "deutsch":
+    st.session_state['voice'] = "fiRQs1f3h1NvmrcmdYpo" # 67cBenwxpAxMOamZ0RaE # MHOybJN5BsVS5H8m3mru
+
 
 
 
