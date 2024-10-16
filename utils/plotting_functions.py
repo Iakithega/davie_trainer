@@ -236,7 +236,7 @@ def plank_plot(data, start_date, current_date):
     axs['PLK_REC'].set_xlabel(' ', size=14)
     axs['PLK_REC'].set_ylabel('Sec', size=8)
     axs['PLK_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['PLK_REC'].set_ylim([0, 500])
 
     # Set font size for major and minor ticks
     axs['PLK_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -358,7 +358,7 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG_REC'].set_xlabel(' ', size=14)
     axs['KNBG_REC'].set_ylabel('Reps', size=8)
     axs['KNBG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['1'].set_ylim([0, 14])
+    axs['KNBG_REC'].set_ylim([0, 120])
 
     # Set font size for major and minor ticks
     axs['KNBG_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -482,7 +482,7 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].set_xlabel(' ', size=14)
     axs['HMCRL_REC'].set_ylabel('Reps', size=8)
     axs['HMCRL_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    axs['HMCRL_REC'].set_ylim([0, 100])
+    axs['HMCRL_REC'].set_ylim([0, 120])
 
     # Set font size for major and minor ticks
     axs['HMCRL_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -653,7 +653,7 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD_REC'].set_xlabel(' ', size=14)
     axs['TRMRD_REC'].set_ylabel('Reps', size=8)
     axs['TRMRD_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    axs['TRMRD_REC'].set_ylim([0, 80])
+    axs['TRMRD_REC'].set_ylim([0, 100])
 
     # Set font size for major and minor ticks
     axs['TRMRD_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -798,7 +798,7 @@ def turmzg_plot(data, start_date, current_date):
     axs['TRMZG_REC'].set_xlabel(' ', size=14)
     axs['TRMZG_REC'].set_ylabel('Reps', size=8)
     axs['TRMZG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    axs['TRMZG_REC'].set_ylim([0, 80])
+    axs['TRMZG_REC'].set_ylim([0, 100])
 
     # Set font size for major and minor ticks
     axs['TRMZG_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
