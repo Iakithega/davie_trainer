@@ -15,6 +15,17 @@ import ffmpeg
 
 from datetime import datetime
 
+
+
+# hides the header - also possible to hide the footer: footer {visibility: hidden;}  /* Hides the footer */
+hide_st_style ="""
+    <style>
+        header.st-emotion-cache-1n4a2v9 {visibility: hidden;}  /* Hides the Streamlit header element identified in the console */ 
+    </style>
+    """
+st.markdown(hide_st_style, unsafe_allow_html=True)  
+
+
 today = datetime.now()
 
 # Day, month, year, hour, and minutes
@@ -22,9 +33,6 @@ today_clean = today.strftime("%d%m%Y_%H_%M")
 
 
 
-
-
-st.write("# Story")
 
 # OTHER PARAMS AND OPENAI
 cwd = os.getcwd()
@@ -78,7 +86,7 @@ list_of_personalities = ['Select', 'Bekannte Persönlichkeit aus Eldrador', 'Bek
 #Title of the Page
 _, col_title, _ = st.columns(3)
 with col_title:
-    app_coloured_title = st.write("<h1><span style='color:#40E761'>Story Teller</span></h1>",
+    app_coloured_title = st.write("<h1><span style='color:#D3D2D2'>Story Teller</span></h1>",
                                     unsafe_allow_html=True)
     v_spacer(height=4, sb=False) 
 
@@ -90,51 +98,42 @@ v_spacer(height=4, sb=True)
 
 personality_selector = st.sidebar.selectbox(label='Select Personality', options=list_of_personalities, label_visibility='hidden')
 if personality_selector == 'Select':
-    st.sidebar.write("<h4><span style='color:#40E761'>Select Personality</span></h4>",
+    st.sidebar.write("<h4><span style='color:#192DF1'>Select Personality</span></h4>",
                         unsafe_allow_html=True)
 else:
-    st.sidebar.write(f"<h4><span style='color:#40E761'>{personality_selector}</span></h4>",
+    st.sidebar.write(f"<h4><span style='color:#192DF1'>{personality_selector}</span></h4>",
                         unsafe_allow_html=True)
+
 
 if 'Bekannte Persönlichkeit aus Eldrador' in personality_selector:
     selected_personality = "Bekannte Persönlichkeit aus Eldrador"
-    # picture = picture_trump
 
 if 'Bekannte Persönlichkeit aus Ninjago' in personality_selector:
     selected_personality = "Bekannte Persönlichkeit aus Ninjago"
-
-            
+      
 if 'Bekannte Persönlichkeit aus Harry Potter' in personality_selector:
     selected_personality = "Bekannte Persönlichkeit aus Harry Potter"
-
-            
+       
 if 'Bekannte Persönlichkeit aus Pokemon' in personality_selector:
     selected_personality = "Bekannte Persönlichkeit aus Pokemon"
-
 
 if 'Elon Musk' in personality_selector:
     selected_personality = "Elon Musk"
 
-
 if 'Franz Kafka' in personality_selector:
     selected_personality = "Franz Kafka"
-
 
 if 'Фёдор Достоевский' in personality_selector:
     selected_personality = "Фёдор Достоевский"
 
-
 if 'Friedrich Nietzsche' in personality_selector:
     selected_personality = "Friedrich Nietzsche"
-
 
 if 'Arthur Schopenhauer' in personality_selector:
     selected_personality = "Arthur Schopenhauer"
 
-
 if 'Рамзан Кадыров' in personality_selector:
     selected_personality = "Рамзан Кадыров"
-
 
 if 'Dan Pena' in personality_selector:
     selected_personality = "Dan Pena"

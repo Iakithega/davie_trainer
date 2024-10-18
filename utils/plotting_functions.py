@@ -56,9 +56,9 @@ def moving_average_plot(ax, data, name, window=3):
 def pushup_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC'],
-                                ['LGSTZ', 'LGSTZ', 'LGSTZ'],
-                                ['LGSTZ', 'LGSTZ', 'LGSTZ']
+                                ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_RECS'],
+                                ['LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ_BX'],
+                                ['LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ_BX']
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Push Ups''', size=10)
@@ -167,6 +167,107 @@ def pushup_plot(data, start_date, current_date):
                                         va='center', ha='center', fontsize=4, color='black')
                     
     axs['LGSTZ_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+
+
+
+    # Statistics Plot
+
+    
+    # # Combine data for all 3 sets into a format suitable for Seaborn
+    # # Using dropna() to skip missing values in case Set 2 or Set 3 are not available on some days
+    # lgstz_all_sets = pd.DataFrame({
+    # 'Reps': pd.concat([data["Liegestütz set 1"].reset_index(drop=True), 
+    #                    data["Liegestütz set 2"].dropna().reset_index(drop=True), 
+    #                    data["Liegestütz set 3"].dropna().reset_index(drop=True)], axis=0, ignore_index=True),
+    # 'Set': (['Set 1'] * len(data["Liegestütz set 1"])) +
+    #        (['Set 2'] * len(data["Liegestütz set 2"].dropna())) +
+    #        (['Set 3'] * len(data["Liegestütz set 3"].dropna()))
+    #                             })
+
+    # Reshape the data using pd.melt
+    sets_columns = ["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"]
+    lgstz_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
+
+    # Clean up the 'Set' labels
+    lgstz_all_sets['Set'] = lgstz_all_sets['Set'].str.replace('Liegestütz set ', 'Set ')
+
+    # Add a constant column for x-axis grouping
+    lgstz_all_sets['All Sets'] = 'All Sets'
+    
+    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+
+
+    axs['LGSTZ_BX'].set_title(f"Push Ups Stats", size=7)
+    axs['LGSTZ_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    # axs['LGSTZ_BX'].set_xlabel('Sets', size=14)
+    # axs['LGSTZ_BX'].set_ylabel('Reps', size=8)
+    # axs['LGSTZ_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    axs['LGSTZ_BX'].set_ylim([0, 30])
+
+    
+    # Set font size for major and minor ticks
+    # axs['LGSTZ_BX'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    # axs['LGSTZ_BX'].tick_params(axis='x', which='minor', labelsize=5, rotation=45) 
+    # axs['LGSTZ_BX'].tick_params(axis='y', which='major', labelsize=6)
+
+    # Set major ticks and thick lines to be placed on the first of every month
+    # axs['LGSTZ_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    # axs['LGSTZ_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+ 
+    # boxplot all sets
+    sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey") # x='Set', y='Reps',
+    # add stripplot
+    # sns.stripplot(data=lgstz_all_sets,  jitter=0.2, size=2.5, ax=axs['LGSTZ_BX']) # x='group', y='value',  color="orange",  x='Set', y='Reps', hue='Set',
+
+    # # Define custom x positions for each stripplot
+    # x_positions = {'Set 1': 0.9, 'Set 2': 1.0, 'Set 3': 1.1}
+
+    # # Map the set names to their respective x positions
+    # lgstz_all_sets['x_pos'] = lgstz_all_sets['Set'].map(x_positions)
+
+    # # Plot the stripplots
+    # for set_name in ['Set 1', 'Set 2', 'Set 3']:
+    #     subset = lgstz_all_sets[lgstz_all_sets['Set'] == set_name]
+    #     sns.stripplot(
+    #         data=subset,
+    #         x='x_pos',
+    #         y='Reps',
+    #         color=set_hue_palette[set_name],
+    #         jitter=0.05,
+    #         size=2.5,
+    #         ax=axs['LGSTZ_BX']
+    #     )
+
+    # Swarmplot with dodge
+    sns.swarmplot(
+        data=lgstz_all_sets,
+        x='All Sets',
+        y='Reps',
+        hue='Set',
+        palette=set_hue_palette,
+        dodge=True,    # Automatically separates points by 'Set'
+        size=3,
+        ax=axs['LGSTZ_BX']
+    )
+
+    # Use a dummy 'x' to avoid creating separate stripplots
+    # sns.stripplot(data=lgstz_all_sets, x='Set', y='Reps', hue='Set', jitter=0.2, size=2.5, 
+    #           ax=axs['LGSTZ_BX'], palette=set_hue_palette, dodge=False)
+# Add stripplot with specific colors for each set using 'hue' and 'palette'
+# sns.stripplot(data=lgstz_all_sets, x='Set', y='Reps', hue='Set', jitter=0.2, size=2.5, 
+#               ax=axs['LGSTZ_BX'], dodge=True, palette=custom_palette)
+
+# # Remove duplicate legend entries
+# handles, labels = axs['LGSTZ_BX'].get_legend_handles_labels()
+# axs['LGSTZ_BX'].legend(handles[:3], labels[:3], loc='upper right', borderaxespad=0.1, fontsize=5)
+
+
+    axs['LGSTZ_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+   
+
+
 
     return fig
 

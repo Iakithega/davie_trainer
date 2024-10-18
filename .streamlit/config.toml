@@ -7,7 +7,7 @@ base="dark"
 primaryColor="#192DF1"  
 textColor="#D3D2D2" 
 backgroundColor = "#000000"   #080707
-secondaryBackgroundColor = "#1C1C1E"   #202043
+secondaryBackgroundColor = "#1C1C1E"   #202043 #192DF1
 
 
 # Font family for all text in the app, except code blocks. One of "sans serif", "serif", or "monospace".
