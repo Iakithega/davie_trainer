@@ -106,9 +106,11 @@ def pushup_plot(data, start_date, current_date):
 
     #Moving Average Plot
     moving_average_plot(ax=axs['LGSTZ'], data=data, name="Liegestütz Average all sets", window=3)
-    
-    axs['LGSTZ'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
 
+    axs['LGSTZ'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+
+
+    # Records Plot
     axs['LGSTZ_REC'].set_title(f"Records Push Ups", size=7)
     axs['LGSTZ_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -134,9 +136,6 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ_REC'].bar(dates - pd.Timedelta(hours=10), data["Liegestütz Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['LGSTZ_REC'].bar(dates, data["Liegestütz Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['LGSTZ_REC'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
-
-    # Adding legend
-    axs['LGSTZ_REC'].legend(loc='best', fontsize=5)
 
 
     # Initialize dictionaries to keep track of the maximum values for each set name
@@ -167,8 +166,7 @@ def pushup_plot(data, start_date, current_date):
                     axs['LGSTZ_REC'].text(date + offset, value + 3, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
                     
-    axs['LGSTZ_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
-
+    axs['LGSTZ_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
 
     return fig
 
@@ -227,7 +225,7 @@ def plank_plot(data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['PLK'], data=data, name="Planke Average all sets", window=3)
 
-    axs['PLK'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
+    axs['PLK'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
     
     
     
@@ -256,10 +254,6 @@ def plank_plot(data, start_date, current_date):
     axs['PLK_REC'].bar(dates - pd.Timedelta(hours=10), data["Planke Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['PLK_REC'].bar(dates, data["Planke Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['PLK_REC'].bar(dates + pd.Timedelta(hours=10), data["Planke Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
-
-    # Adding legend
-    axs['PLK_REC'].legend(loc='best', fontsize=5)
-
 
     
     # Initialize dictionaries to keep track of the maximum values for each set name
@@ -290,7 +284,7 @@ def plank_plot(data, start_date, current_date):
                     axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
     
-    axs['PLK_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
+    axs['PLK_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
     return fig
 
@@ -350,7 +344,7 @@ def kniebeuge_plot(data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['KNBG'], data=data, name="Kniebeugen Average all sets", window=3)
 
-    axs['KNBG'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
+    axs['KNBG'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
     
 
     axs['KNBG_REC'].set_title(f"Records Kniebeugen", size=7)
@@ -377,9 +371,6 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG_REC'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['KNBG_REC'].bar(dates, data["Kniebeugen Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['KNBG_REC'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
-
-    # Adding legend
-    axs['KNBG_REC'].legend(loc='best', fontsize=5)
 
     
     # Initialize dictionaries to keep track of the maximum values for each set name
@@ -410,7 +401,7 @@ def kniebeuge_plot(data, start_date, current_date):
                     axs['KNBG_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
 
-    axs['KNBG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
+    axs['KNBG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
 
     return fig
 
@@ -474,7 +465,7 @@ def hamcurls_plot(data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['HMCRL'], data=data, name="Weighted Hammer Curls Average reps all sets", window=3)
 
-    axs['HMCRL'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
+    axs['HMCRL'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
 
 
     axs['HMCRL_REC'].set_title(f"Records Hammer Curls", size=7)
@@ -502,10 +493,6 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].bar(dates, data["Weighted Hammer Curls Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['HMCRL_REC'].bar(dates + pd.Timedelta(hours=10), data["Weighted Hammer Curls Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
 
-    # Adding legend
-    axs['HMCRL_REC'].legend(loc='best', fontsize=5)
-
-    
 
     # Initialize dictionaries to keep track of the maximum values for each metric
     max_values = {
@@ -556,7 +543,7 @@ def hamcurls_plot(data, start_date, current_date):
                         axs['HMCRL_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
 
-    axs['HMCRL_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6) 
+    axs['HMCRL_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
 
     return fig
 
@@ -641,7 +628,7 @@ def turmrud_plot(data, start_date, current_date):
     # Moving Average Plot scored
     moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average score all sets", window=3)
 
-    axs['TRMRD'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
+    axs['TRMRD'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
 
 
@@ -672,9 +659,6 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Rudern Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['TRMRD_REC'].bar(dates, data["Weighted Turm Rudern Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['TRMRD_REC'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Rudern Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
-
-    # Adding legend
-    axs['TRMRD_REC'].legend(loc='best', fontsize=5)
 
 
     # Initialize dictionaries to keep track of the maximum values for each metric
@@ -726,7 +710,7 @@ def turmrud_plot(data, start_date, current_date):
                         axs['TRMRD_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
 
-    axs['TRMRD_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
+    axs['TRMRD_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
     return fig
 
@@ -790,7 +774,7 @@ def turmzg_plot(data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['TRMZG'], data=data, name="Weighted Turm Zug Average reps all sets", window=3)
 
-    axs['TRMZG'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
+    axs['TRMZG'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
 
     axs['TRMZG_REC'].set_title(f"Records Turm Zug", size=7)
@@ -817,9 +801,6 @@ def turmzg_plot(data, start_date, current_date):
     axs['TRMZG_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Zug Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['TRMZG_REC'].bar(dates, data["Weighted Turm Zug Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['TRMZG_REC'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Zug Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
-
-    # Adding legend
-    axs['TRMZG_REC'].legend(loc='best', fontsize=5)
 
 
     # Initialize dictionaries to keep track of the maximum values for each metric
@@ -871,7 +852,7 @@ def turmzg_plot(data, start_date, current_date):
                         axs['TRMZG_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
     
-    axs['TRMZG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=6)
+    axs['TRMZG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
     return fig
 
