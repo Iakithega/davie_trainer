@@ -237,9 +237,9 @@ if st.session_state['person_chosen'] != 'Select':
                 model=st.session_state["selected_model"],
                 messages=[
                     {"role": "system", 
-                     "content": f'''Deine Aufgabe besteht darin Geschichten für den 9 jährigen David zu erzählen. Du musste die Geschichten aus der Perspektive eines bekannten Characters erzählen, der dir vorgegeben wird.
+                     "content": f'''Deine Aufgabe besteht darin Geschichten für den 9 jährigen David zu erzählen. Diese Geschichten hört David immer direkt nach seinem Training. Du musste die Geschichten aus der Perspektive eines bekannten Characters erzählen, der dir vorgegeben wird.
                                     Die Geschichten müssen so aufgebaut sein, dass David darin die Hauptrolle spielt und viele Details über ihn mit in die Geschichte eingebaut werden. 
-                                    Die Geschichten sollen so sein dass die für einen 9 Jährigen witzig und intetessant sind.
+                                    Die Geschichten sollen so sein dass die für einen 9 Jährigen witzig und intetessant sind. Die Rede solltest du mit einer Begrüßung von David beginnen, der diese Geschichten regelmäßig nach dem abschluß des Trainings hört.
                                     David is 9 Jahre alt und mag es zu trainieren um stärker zu werden. Er mag es die Show Titans zu schauen und möchte auch stark werden wie ein kleiner Titan.
                                     Der junge David mag es zu trainieren um stärker zu werden. Er übt auch fleißig tricks und Übungen auf dem Reck und den Barren und möchte stark wie ein Titan sein. 
                                     Zusätzlich werden dir weitere Details und Ereignisse genannt die du in die Geschichte mit einabuen solltest.
