@@ -294,7 +294,7 @@ def plank_plot(data, start_date, current_date):
     axs['PLK'].set_xlabel(' ', size=14)
     axs['PLK'].set_ylabel('Sec', size=8)
     axs['PLK'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    axs['PLK'].set_ylim([0, 150])
+    axs['PLK'].set_ylim([0, 160])
 
     # Set font size for major and minor ticks
     axs['PLK'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
@@ -388,6 +388,59 @@ def plank_plot(data, start_date, current_date):
                                         va='center', ha='center', fontsize=4, color='black')
     
     axs['PLK_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+
+
+
+    # Statistics Plot
+    # Reshape the data using pd.melt
+    sets_columns = ["Planke set 1", "Planke set 2", "Planke set 3"]
+    plk_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
+
+    # Clean up the 'Set' labels
+    plk_all_sets['Set'] = plk_all_sets['Set'].str.replace('Planke set ', 'Set ')
+
+    # Add a constant column for x-axis grouping
+    plk_all_sets['All Sets'] = 'All Sets'
+    
+    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+
+
+    axs['PLK_BX'].set_title(f"Planke Stats", size=7)
+    axs['PLK_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['PLK_BX'].set_xlabel(' ', size=8)
+    axs['PLK_BX'].yaxis.set_label_position("right")
+    axs['PLK_BX'].set_ylabel('Reps', size=8, labelpad=5)
+    # axs['PLK_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    axs['PLK_BX'].set_ylim([0, 160])
+
+    
+    # Set font size for major and minor ticks
+    axs['PLK_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
+    axs['PLK_BX'].tick_params(axis='x', which='minor', labelsize=6) 
+    axs['PLK_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+
+    # Set major ticks and thick lines to be placed on the first of every month
+    # axs['PLK_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    # axs['PLK_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+ 
+    # boxplot all sets
+    sns.boxplot(data=plk_all_sets, x='All Sets', y='Reps', ax=axs['PLK_BX'], color="lightgrey") 
+
+    # Swarmplot with dodge
+    sns.swarmplot(
+        data=plk_all_sets,
+        x='All Sets',
+        y='Reps',
+        hue='Set',
+        palette=set_hue_palette,
+        dodge=True,    # Automatically separates points by 'Set'
+        size=3,
+        ax=axs['PLK_BX']
+    )
+
+    axs['PLK_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
     return fig
 
