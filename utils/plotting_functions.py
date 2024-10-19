@@ -138,6 +138,7 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ_REC'].bar(dates + pd.Timedelta(hours=10), data["Liegestütz Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
 
 
+
     # Initialize dictionaries to keep track of the maximum values for each set name
     max_values = {
         "Liegestütz Average all sets": -float('inf'),
@@ -426,7 +427,7 @@ def kniebeuge_plot(data, start_date, current_date):
     axs['KNBG_REC'].bar(dates, data["Kniebeugen Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['KNBG_REC'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
 
-    
+
     # Initialize dictionaries to keep track of the maximum values for each set name
     max_values = {
         "Kniebeugen Average all sets": -float('inf'),
@@ -598,6 +599,7 @@ def hamcurls_plot(data, start_date, current_date):
     axs['HMCRL_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Hammer Curls Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['HMCRL_REC'].bar(dates, data["Weighted Hammer Curls Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['HMCRL_REC'].bar(dates + pd.Timedelta(hours=10), data["Weighted Hammer Curls Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
 
 
     # Initialize dictionaries to keep track of the maximum values for each metric
@@ -816,6 +818,7 @@ def turmrud_plot(data, start_date, current_date):
     axs['TRMRD_REC'].bar(dates - pd.Timedelta(hours=10), data["Weighted Turm Rudern Average reps all sets"], alpha=1, width=bar_width, color="green", label="Average")
     axs['TRMRD_REC'].bar(dates, data["Weighted Turm Rudern Max reps all sets"], alpha=1, width=bar_width, color="gold", label="Max")
     axs['TRMRD_REC'].bar(dates + pd.Timedelta(hours=10), data["Weighted Turm Rudern Sum reps all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
 
 
     # Initialize dictionaries to keep track of the maximum values for each metric

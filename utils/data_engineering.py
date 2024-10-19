@@ -234,6 +234,85 @@ def calc_trmzg_score_overview(df):
     df['Weighted Turm Zug Sum score all sets'] = df[score_columns].sum(axis=1, skipna=True)
     return df
 
+def calc_cummax_for_recs(df):
+    # Calculate running max for each metric for exercises with no weights
+    df['Liegestütz Average cummax'] = df['Liegestütz Average all sets'].fillna(0).cummax()
+    df['Liegestütz Max cummax'] = df['Liegestütz Max all sets'].fillna(0).cummax()
+    df['Liegestütz Sum cummax'] = df['Liegestütz Sum all sets'].fillna(0).cummax()
+
+    df['Planke Average cummax'] = df['Planke Average all sets'].fillna(0).cummax()
+    df['Planke Max cummax'] = df['Planke Max all sets'].fillna(0).cummax()
+    df['Planke Sum cummax'] = df['Planke Sum all sets'].fillna(0).cummax()
+
+    df['Kniebeugen Average cummax'] = df['Kniebeugen Average all sets'].fillna(0).cummax()
+    df['Kniebeugen Max cummax'] = df['Kniebeugen Max all sets'].fillna(0).cummax()
+    df['Kniebeugen Sum cummax'] = df['Kniebeugen Sum all sets'].fillna(0).cummax()
+
+    # Calculate running max for each metric for exercises with weights
+    df['Weighted Turm Rudern Average score cummax'] = df['Weighted Turm Rudern Average score all sets'].fillna(0).cummax()
+    df['Weighted Turm Rudern Max score cummax'] = df['Weighted Turm Rudern Max score all sets'].fillna(0).cummax()
+    df['Weighted Turm Rudern Sum score cummax'] = df['Weighted Turm Rudern Sum score all sets'].fillna(0).cummax()
+
+    df['Weighted Hammer Curls Average score cummax'] = df['Weighted Hammer Curls Average score all sets'].fillna(0).cummax()
+    df['Weighted Hammer Curls Max score cummax'] = df['Weighted Hammer Curls Max score all sets'].fillna(0).cummax()
+    df['Weighted Hammer Curls Sum score cummax'] = df['Weighted Hammer Curls Sum score all sets'].fillna(0).cummax()
+
+    df['Weighted Turm Zug Average score cummax'] = df['Weighted Turm Zug Average score all sets'].fillna(0).cummax()
+    df['Weighted Turm Zug Max score cummax'] = df['Weighted Turm Zug Max score all sets'].fillna(0).cummax()
+    df['Weighted Turm Zug Sum score cummax'] = df['Weighted Turm Zug Sum score all sets'].fillna(0).cummax()
+
+
+
+
+
+
+
+
+    # # Create columns for broken records
+    # df['Liegestütz Average score broken'] = np.where(df['Liegestütz Average all sets'] > df[''].shift(1), 1, 0)
+    # df['Liegestütz Max score broken'] = np.where(df['Liegestütz Max all sets'] > df['Liegestütz Max Max'].shift(1), 1, 0)
+    # df['Liegestütz Sum score broken'] = np.where(df['Liegestütz Sum all sets'] > df['Liegestütz Sum Max'].shift(1), 1, 0)
+
+    # # Calculate how many different types of records were broken each day
+    # df['Liegestütz Records broken count'] = df[['Liegestütz Average score broken', 
+    #                                             'Liegestütz Max score broken', 
+    #                                             'Liegestütz Sum score broken']].sum(axis=1)
+
+
+
+
+    return df
+
+def add_record_broken_columns(df):
+    # For each exercise without weights
+    df['Liegestütz Average record broken'] = (df['Liegestütz Average all sets'] > df['Liegestütz Average cummax'].shift(1)).astype(int)
+    df['Liegestütz Max record broken'] = (df['Liegestütz Max all sets'] > df['Liegestütz Max cummax'].shift(1)).astype(int)
+    df['Liegestütz Sum record broken'] = (df['Liegestütz Sum all sets'] > df['Liegestütz Sum cummax'].shift(1)).astype(int)
+
+    df['Planke Average record broken'] = (df['Planke Average all sets'] > df['Planke Average cummax'].shift(1)).astype(int)
+    df['Planke Max record broken'] = (df['Planke Max all sets'] > df['Planke Max cummax'].shift(1)).astype(int)
+    df['Planke Sum record broken'] = (df['Planke Sum all sets'] > df['Planke Sum cummax'].shift(1)).astype(int)
+
+    df['Kniebeugen Average record broken'] = (df['Kniebeugen Average all sets'] > df['Kniebeugen Average cummax'].shift(1)).astype(int)
+    df['Kniebeugen Max record broken'] = (df['Kniebeugen Max all sets'] > df['Kniebeugen Max cummax'].shift(1)).astype(int)
+    df['Kniebeugen Sum record broken'] = (df['Kniebeugen Sum all sets'] > df['Kniebeugen Sum cummax'].shift(1)).astype(int)
+
+    # For each exercise with weights
+    df['Weighted Turm Rudern Average record broken'] = (df['Weighted Turm Rudern Average score all sets'] > df['Weighted Turm Rudern Average score cummax'].shift(1)).astype(int)
+    df['Weighted Turm Rudern Max record broken'] = (df['Weighted Turm Rudern Max score all sets'] > df['Weighted Turm Rudern Max score cummax'].shift(1)).astype(int)
+    df['Weighted Turm Rudern Sum record broken'] = (df['Weighted Turm Rudern Sum score all sets'] > df['Weighted Turm Rudern Sum score cummax'].shift(1)).astype(int)
+
+    df['Weighted Hammer Curls Average record broken'] = (df['Weighted Hammer Curls Average score all sets'] > df['Weighted Hammer Curls Average score cummax'].shift(1)).astype(int)
+    df['Weighted Hammer Curls Max record broken'] = (df['Weighted Hammer Curls Max score all sets'] > df['Weighted Hammer Curls Max score cummax'].shift(1)).astype(int)
+    df['Weighted Hammer Curls Sum record broken'] = (df['Weighted Hammer Curls Sum score all sets'] > df['Weighted Hammer Curls Sum score cummax'].shift(1)).astype(int)
+
+    df['Weighted Turm Zug Average record broken'] = (df['Weighted Turm Zug Average score all sets'] > df['Weighted Turm Zug Average score cummax'].shift(1)).astype(int)
+    df['Weighted Turm Zug Max record broken'] = (df['Weighted Turm Zug Max score all sets'] > df['Weighted Turm Zug Max score cummax'].shift(1)).astype(int)
+    df['Weighted Turm Zug Sum record broken'] = (df['Weighted Turm Zug Sum score all sets'] > df['Weighted Turm Zug Sum score cummax'].shift(1)).astype(int)
+
+    return df
+
+
 
 def complete_data_wrangeling(initial_data):
 
@@ -261,5 +340,9 @@ def complete_data_wrangeling(initial_data):
 
     # calculate no weight averages, max and sum for distanced Turm Rudern
     data = calc_sets_overview_with_weights_dstanced(data)
+
+    data = calc_cummax_for_recs(data)
+
+    data = add_record_broken_columns(data)
 
     return data
