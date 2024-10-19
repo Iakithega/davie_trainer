@@ -69,9 +69,12 @@ data, monthly_stats_data = complete_data_wrangeling(initial_data)
 
 
 # overview of the datas in a dataframe after Data Wrangeling 
-with st.expander("Raw Table"): 
+with st.expander("Raw Table all data"): 
     st.dataframe(data)
 
+# overview of the datas in a dataframe after Data Wrangeling 
+with st.expander("Raw Table monthly stats"): 
+    st.dataframe(monthly_stats_data)
 v_spacer(height=7, sb=False)
 
 

@@ -224,51 +224,51 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
 
 
 
-
-    axs['LGSTZ_RECS'].set_title(f"Push Ups Stats", size=7)
+    # THE RECORDS PLOT
+    axs['LGSTZ_RECS'].set_title(f"Push Ups Records", size=7)
     axs['LGSTZ_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
     axs['LGSTZ_RECS'].set_xlabel(' ', size=8)
     axs['LGSTZ_RECS'].yaxis.set_label_position("right")
-    axs['LGSTZ_RECS'].set_ylabel('Reps', size=8, labelpad=5)
-    # axs['LGSTZ_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['LGSTZ_RECS'].set_ylim([0, 30])
+    axs['LGSTZ_RECS'].set_ylabel('Records', size=8, labelpad=5)
 
-    
-    # Set font size for major and minor ticks
-    axs['LGSTZ_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)  
-    axs['LGSTZ_RECS'].tick_params(axis='x', which='minor', labelsize=6) 
+    # # Set font size for major and minor ticks
+    axs['LGSTZ_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    axs['LGSTZ_RECS'].tick_params(axis='x', which='minor', labelsize=6)
     axs['LGSTZ_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['LGSTZ_RECS'].set_ylim([0, 10])
 
-    # Set major ticks and thick lines to be placed on the first of every month
-    # axs['LGSTZ_RECS'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
-    # axs['LGSTZ_RECS'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+    # Define the exercise-specific categories for Liegestütz
+    categories = ['Liegestütz Sum record broken', 'Liegestütz Max record broken', 'Liegestütz Average record broken']
+    category_colors = ['blue', 'green', 'orange']  # Assign colors for each Liegestütz category
+
+    # Define horizontal offsets for each category
+    offset = 0.15  # How much space between each category within a month
+    base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    for i, month in enumerate(monthly_stats_data.index):
+        # For each category (Sum, Max, Average for Liegestütz)
+        for j, category in enumerate(categories):
+            # Get the value for the category (how many dots to draw)
+            value = monthly_stats_data.loc[month, category]
+            
+            # Draw dots (circles) vertically stacked for the current category
+            y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+            # Calculate x_positions by adding a unique offset for each category per month
+            x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+            # Plot the dots for the current category
+            axs['LGSTZ_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=5)
+
+    # Set major ticks for months
+    axs['LGSTZ_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['LGSTZ_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+
+    # Add grid
+    axs['LGSTZ_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5)
 
 
-
-    # Plot Average records
-    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Average records broken'], label='Average Records Broken', marker='o')
-
-    # Plot Max records
-    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Max records broken'], label='Max Records Broken', marker='o')
-
-    # Plot Sum records
-    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Sum records broken'], label='Sum Records Broken', marker='o')
-
-    # Plot Training Days on the same graph (but secondary axis)
-    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Training Days'], label='Training Days', marker='o', linestyle='--', color='black')
-
-    # Add labels and legend
-    # axs['LGSTZ_RECS'].title('Monthly Record Breaking Stats and Training Days')
-    # axs['LGSTZ_RECS'].xlabel('Month')
-    # axs['LGSTZ_RECS'].ylabel('Records Broken')
-    # axs['LGSTZ_RECS'].legend()
-    # axs['LGSTZ_RECS'].grid(True)
-
-    # Show the plot
-    # axs['LGSTZ_RECS'].xticks(rotation=45)
-    # axs['LGSTZ_RECS'].tight_layout()
- 
    
 
     return fig
