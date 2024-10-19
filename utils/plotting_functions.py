@@ -171,19 +171,6 @@ def pushup_plot(data, start_date, current_date):
 
 
     # Statistics Plot
-
-    
-    # # Combine data for all 3 sets into a format suitable for Seaborn
-    # # Using dropna() to skip missing values in case Set 2 or Set 3 are not available on some days
-    # lgstz_all_sets = pd.DataFrame({
-    # 'Reps': pd.concat([data["Liegestütz set 1"].reset_index(drop=True), 
-    #                    data["Liegestütz set 2"].dropna().reset_index(drop=True), 
-    #                    data["Liegestütz set 3"].dropna().reset_index(drop=True)], axis=0, ignore_index=True),
-    # 'Set': (['Set 1'] * len(data["Liegestütz set 1"])) +
-    #        (['Set 2'] * len(data["Liegestütz set 2"].dropna())) +
-    #        (['Set 3'] * len(data["Liegestütz set 3"].dropna()))
-    #                             })
-
     # Reshape the data using pd.melt
     sets_columns = ["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"]
     lgstz_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
@@ -219,27 +206,6 @@ def pushup_plot(data, start_date, current_date):
  
     # boxplot all sets
     sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey") # x='Set', y='Reps',
-    # add stripplot
-    # sns.stripplot(data=lgstz_all_sets,  jitter=0.2, size=2.5, ax=axs['LGSTZ_BX']) # x='group', y='value',  color="orange",  x='Set', y='Reps', hue='Set',
-
-    # # Define custom x positions for each stripplot
-    # x_positions = {'Set 1': 0.9, 'Set 2': 1.0, 'Set 3': 1.1}
-
-    # # Map the set names to their respective x positions
-    # lgstz_all_sets['x_pos'] = lgstz_all_sets['Set'].map(x_positions)
-
-    # # Plot the stripplots
-    # for set_name in ['Set 1', 'Set 2', 'Set 3']:
-    #     subset = lgstz_all_sets[lgstz_all_sets['Set'] == set_name]
-    #     sns.stripplot(
-    #         data=subset,
-    #         x='x_pos',
-    #         y='Reps',
-    #         color=set_hue_palette[set_name],
-    #         jitter=0.05,
-    #         size=2.5,
-    #         ax=axs['LGSTZ_BX']
-    #     )
 
     # Swarmplot with dodge
     sns.swarmplot(
@@ -253,22 +219,8 @@ def pushup_plot(data, start_date, current_date):
         ax=axs['LGSTZ_BX']
     )
 
-    # Use a dummy 'x' to avoid creating separate stripplots
-    # sns.stripplot(data=lgstz_all_sets, x='Set', y='Reps', hue='Set', jitter=0.2, size=2.5, 
-    #           ax=axs['LGSTZ_BX'], palette=set_hue_palette, dodge=False)
-# Add stripplot with specific colors for each set using 'hue' and 'palette'
-# sns.stripplot(data=lgstz_all_sets, x='Set', y='Reps', hue='Set', jitter=0.2, size=2.5, 
-#               ax=axs['LGSTZ_BX'], dodge=True, palette=custom_palette)
-
-# # Remove duplicate legend entries
-# handles, labels = axs['LGSTZ_BX'].get_legend_handles_labels()
-# axs['LGSTZ_BX'].legend(handles[:3], labels[:3], loc='upper right', borderaxespad=0.1, fontsize=5)
-
-
     axs['LGSTZ_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
    
-
-
 
     return fig
 
@@ -277,9 +229,9 @@ def plank_plot(data, start_date, current_date):
 
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['PLK_REC', 'PLK_REC', 'PLK_REC'],
-                                ['PLK', 'PLK', 'PLK'],
-                                ['PLK', 'PLK', 'PLK'],
+                                ['PLK_REC', 'PLK_REC', 'PLK_REC', 'PLK_REC', 'PLK_REC', 'PLK_RECS'],
+                                ['PLK', 'PLK', 'PLK', 'PLK', 'PLK', 'PLK_STATS'],
+                                ['PLK', 'PLK', 'PLK', 'PLK', 'PLK', 'PLK_STATS'],
                                 ],
                                 figsize=(10, 5))
     fig.patch.set_alpha(0.5)
@@ -395,9 +347,9 @@ def plank_plot(data, start_date, current_date):
 def kniebeuge_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['KNBG_REC', 'KNBG_REC', 'KNBG_REC'],
-                                ['KNBG', 'KNBG', 'KNBG'],
-                                ['KNBG', 'KNBG', 'KNBG'],
+                                ['KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_RECS'],
+                                ['KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_STATS'],
+                                ['KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_STATS'],
                                 ],
                                 figsize=(10, 5))
     fig.patch.set_alpha(0.5)
@@ -511,9 +463,9 @@ def kniebeuge_plot(data, start_date, current_date):
 def hamcurls_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC'],
-                                ['HMCRL', 'HMCRL', 'HMCRL'],
-                                ['HMCRL', 'HMCRL', 'HMCRL'],
+                                ['HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_RECS'],
+                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_STATS'],
+                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_STATS'],
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Hammer Curls''', size=10) 
@@ -655,9 +607,9 @@ def hamcurls_plot(data, start_date, current_date):
 def turmrud_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC'],
-                                ['TRMRD', 'TRMRD', 'TRMRD'],
-                                ['TRMRD', 'TRMRD', 'TRMRD'],
+                                ['TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_RECS'],
+                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_STATS'],
+                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_STATS'],
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Turm Rudern''', size=10)
@@ -823,9 +775,9 @@ def turmrud_plot(data, start_date, current_date):
 def turmzg_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['TRMZG_REC', 'TRMZG_REC', 'TRMZG_REC'],
-                                ['TRMZG', 'TRMZG', 'TRMZG'],
-                                ['TRMZG', 'TRMZG', 'TRMZG'],
+                                ['TRMZG_REC', 'TRMZG_REC', 'TRMZG_REC','TRMZG_REC', 'TRMZG_REC', 'TRMZG_RECS'],
+                                ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_STATS'],
+                                ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_STATS'],
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Turm Zug''', size=10)
