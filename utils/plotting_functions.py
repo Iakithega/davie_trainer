@@ -492,9 +492,22 @@ def kniebeuge_plot(data, start_date, current_date):
     # axs['KNBG_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
     # axs['KNBG_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
- 
     # boxplot all sets
     sns.boxplot(data=knbg_all_sets, x='All Sets', y='Reps', ax=axs['KNBG_BX'], color="lightgrey") 
+
+    # Swarmplot with dodge
+    sns.swarmplot(
+        data=knbg_all_sets,
+        x='All Sets',
+        y='Reps',
+        hue='Set',
+        palette=set_hue_palette,
+        dodge=True,    # Automatically separates points by 'Set'
+        size=3,
+        ax=axs['KNBG_BX']
+    )
+
+    axs['KNBG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
     return fig
 
@@ -637,6 +650,57 @@ def hamcurls_plot(data, start_date, current_date):
                                             va='center', ha='center', fontsize=4, color='black')
 
     axs['HMCRL_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+
+
+    # Statistics Plot
+    # Reshape the data using pd.melt
+    sets_columns = ["Weighted Hammer Curls set 1 reps", "Weighted Hammer Curls set 2 reps", "Weighted Hammer Curls set 3 reps"]
+    hmcrl_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
+
+    # Clean up the 'Set' labels
+    hmcrl_all_sets['Set'] = hmcrl_all_sets['Set'].str.replace('Weighted Hammer Curls set ', 'Set ')
+
+    # Add a constant column for x-axis grouping
+    hmcrl_all_sets['All Sets'] = 'All Sets'
+    
+    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
+
+
+    axs['HMCRL_BX'].set_title(f"Hammer Curls Stats", size=7)
+    axs['HMCRL_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['HMCRL_BX'].set_xlabel(' ', size=8)
+    axs['HMCRL_BX'].yaxis.set_label_position("right")
+    axs['HMCRL_BX'].set_ylabel('Reps', size=8, labelpad=5)
+    # axs['HMCRL_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    axs['HMCRL_BX'].set_ylim([0, 30])
+
+    
+    # Set font size for major and minor ticks
+    axs['HMCRL_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
+    axs['HMCRL_BX'].tick_params(axis='x', which='minor', labelsize=6) 
+    axs['HMCRL_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+
+    # Set major ticks and thick lines to be placed on the first of every month
+    # axs['HMCRL_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    # axs['HMCRL_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+    # boxplot all sets
+    sns.boxplot(data=hmcrl_all_sets, x='All Sets', y='Reps', ax=axs['HMCRL_BX'], color="lightgrey") 
+
+    # Swarmplot with dodge
+    sns.swarmplot(
+        data=hmcrl_all_sets,
+        x='All Sets',
+        y='Reps',
+        hue='Set',
+        palette=set_hue_palette,
+        dodge=True,    # Automatically separates points by 'Set'
+        size=3,
+        ax=axs['HMCRL_BX']
+    )
+
+    axs['HMCRL_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
     return fig
 
