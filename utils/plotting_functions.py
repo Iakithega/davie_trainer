@@ -205,7 +205,7 @@ def pushup_plot(data, start_date, current_date):
 
  
     # boxplot all sets
-    sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey") # x='Set', y='Reps',
+    sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey") 
 
     # Swarmplot with dodge
     sns.swarmplot(
@@ -230,8 +230,8 @@ def plank_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['PLK_REC', 'PLK_REC', 'PLK_REC', 'PLK_REC', 'PLK_REC', 'PLK_RECS'],
-                                ['PLK', 'PLK', 'PLK', 'PLK', 'PLK', 'PLK_STATS'],
-                                ['PLK', 'PLK', 'PLK', 'PLK', 'PLK', 'PLK_STATS'],
+                                ['PLK', 'PLK', 'PLK', 'PLK', 'PLK', 'PLK_BX'],
+                                ['PLK', 'PLK', 'PLK', 'PLK', 'PLK', 'PLK_BX'],
                                 ],
                                 figsize=(10, 5))
     fig.patch.set_alpha(0.5)
@@ -348,8 +348,8 @@ def kniebeuge_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_RECS'],
-                                ['KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_STATS'],
-                                ['KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_STATS'],
+                                ['KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_BX'],
+                                ['KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_BX'],
                                 ],
                                 figsize=(10, 5))
     fig.patch.set_alpha(0.5)
@@ -457,6 +457,45 @@ def kniebeuge_plot(data, start_date, current_date):
 
     axs['KNBG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
 
+    
+    
+    # Statistics Plot
+    # Reshape the data using pd.melt
+    sets_columns = ["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"]
+    knbg_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
+
+    # Clean up the 'Set' labels
+    knbg_all_sets['Set'] = knbg_all_sets['Set'].str.replace('Kniebeugen set ', 'Set ')
+
+    # Add a constant column for x-axis grouping
+    knbg_all_sets['All Sets'] = 'All Sets'
+    
+    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+
+
+    axs['KNBG_BX'].set_title(f"Kniebeugen Stats", size=7)
+    axs['KNBG_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['KNBG_BX'].set_xlabel(' ', size=8)
+    axs['KNBG_BX'].yaxis.set_label_position("right")
+    axs['KNBG_BX'].set_ylabel('Reps', size=8, labelpad=5)
+    # axs['KNBG_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    axs['KNBG_BX'].set_ylim([0, 50])
+
+    
+    # Set font size for major and minor ticks
+    axs['KNBG_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
+    axs['KNBG_BX'].tick_params(axis='x', which='minor', labelsize=6) 
+    axs['KNBG_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+
+    # Set major ticks and thick lines to be placed on the first of every month
+    # axs['KNBG_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    # axs['KNBG_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+ 
+    # boxplot all sets
+    sns.boxplot(data=knbg_all_sets, x='All Sets', y='Reps', ax=axs['KNBG_BX'], color="lightgrey") 
+
     return fig
 
 
@@ -464,8 +503,8 @@ def hamcurls_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_RECS'],
-                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_STATS'],
-                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_STATS'],
+                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_BX'],
+                                ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_BX'],
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Hammer Curls''', size=10) 
@@ -608,8 +647,8 @@ def turmrud_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_RECS'],
-                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_STATS'],
-                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_STATS'],
+                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_BX'],
+                                ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_BX'],
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Turm Rudern''', size=10)
@@ -776,8 +815,8 @@ def turmzg_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['TRMZG_REC', 'TRMZG_REC', 'TRMZG_REC','TRMZG_REC', 'TRMZG_REC', 'TRMZG_RECS'],
-                                ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_STATS'],
-                                ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_STATS'],
+                                ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_BX'],
+                                ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_BX'],
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Turm Zug''', size=10)
