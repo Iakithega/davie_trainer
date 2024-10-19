@@ -56,9 +56,9 @@ def moving_average_plot(ax, data, name, window=3):
 def pushup_plot(data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
-                                ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_RECS'],
-                                ['LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ_BX'],
-                                ['LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ_BX']
+                                ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_RECS'],
+                                ['LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ_BX'],
+                                ['LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ_BX']
                                 ],
                                 figsize=(10, 5))
     fig.suptitle(f'''Push Ups''', size=10)
@@ -200,16 +200,17 @@ def pushup_plot(data, start_date, current_date):
     axs['LGSTZ_BX'].set_title(f"Push Ups Stats", size=7)
     axs['LGSTZ_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
-    # axs['LGSTZ_BX'].set_xlabel('Sets', size=14)
-    # axs['LGSTZ_BX'].set_ylabel('Reps', size=8)
+    axs['LGSTZ_BX'].set_xlabel(' ', size=8)
+    axs['LGSTZ_BX'].yaxis.set_label_position("right")
+    axs['LGSTZ_BX'].set_ylabel('Reps', size=8, labelpad=5)
     # axs['LGSTZ_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['LGSTZ_BX'].set_ylim([0, 30])
 
     
     # Set font size for major and minor ticks
-    # axs['LGSTZ_BX'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
-    # axs['LGSTZ_BX'].tick_params(axis='x', which='minor', labelsize=5, rotation=45) 
-    # axs['LGSTZ_BX'].tick_params(axis='y', which='major', labelsize=6)
+    axs['LGSTZ_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
+    axs['LGSTZ_BX'].tick_params(axis='x', which='minor', labelsize=6) 
+    axs['LGSTZ_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
 
     # Set major ticks and thick lines to be placed on the first of every month
     # axs['LGSTZ_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
