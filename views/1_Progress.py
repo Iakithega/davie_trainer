@@ -104,7 +104,7 @@ st.pyplot(fig_turmrud)
 
 v_spacer(height=2, sb=False)
 
-fig_turmzg = turmzg_plot(data, start_date, current_date)
+fig_turmzg = turmzg_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_turmzg)
 
 

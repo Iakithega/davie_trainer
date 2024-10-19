@@ -1165,21 +1165,21 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
 
 
     # THE RECORDS PLOT
-    axs['HMCRL_RECS'].set_title(f"Hammer Curls Records", size=7)
-    axs['HMCRL_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+    axs['TRMRD_RECS'].set_title(f"Turm Rudern Records", size=7)
+    axs['TRMRD_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
-    axs['HMCRL_RECS'].set_xlabel(' ', size=8)
-    axs['HMCRL_RECS'].yaxis.set_label_position("right")
-    axs['HMCRL_RECS'].set_ylabel('Records', size=8, labelpad=5)
+    axs['TRMRD_RECS'].set_xlabel(' ', size=8)
+    axs['TRMRD_RECS'].yaxis.set_label_position("right")
+    axs['TRMRD_RECS'].set_ylabel('Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
-    axs['HMCRL_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
-    axs['HMCRL_RECS'].tick_params(axis='x', which='minor', labelsize=6)
-    axs['HMCRL_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
-    axs['HMCRL_RECS'].set_ylim([0, 8])
+    axs['TRMRD_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    axs['TRMRD_RECS'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['TRMRD_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['TRMRD_RECS'].set_ylim([0, 8])
 
     # Define the exercise-specific categories for Liegestütz
-    categories = ['Weighted Hammer Curls Sum record broken', 'Weighted Hammer Curls Max record broken', 'Weighted Hammer Curls Average record broken']
+    categories = ['Weighted Turm Rudern Sum record broken', 'Weighted Turm Rudern Max record broken', 'Weighted Turm Rudern Average record broken']
     category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
 
     # Define horizontal offsets for each category
@@ -1199,14 +1199,14 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
             # Plot the dots for the current category
-            axs['HMCRL_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            axs['TRMRD_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
 
     # Set major ticks for months
-    axs['HMCRL_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
-    axs['HMCRL_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+    axs['TRMRD_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['TRMRD_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
 
     # Add grid
-    axs['HMCRL_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['TRMRD_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
     return fig
 
@@ -1214,7 +1214,7 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
 
 
 
-def turmzg_plot(data, start_date, current_date):
+def turmzg_plot(data, monthly_stats_data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['TRMZG_REC', 'TRMZG_REC', 'TRMZG_REC','TRMZG_REC', 'TRMZG_REC', 'TRMZG_RECS'],
@@ -1401,6 +1401,51 @@ def turmzg_plot(data, start_date, current_date):
     )
 
     axs['TRMZG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+
+
+    # THE RECORDS PLOT
+    axs['TRMZG_RECS'].set_title(f"Turm Zug Records", size=7)
+    axs['TRMZG_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['TRMZG_RECS'].set_xlabel(' ', size=8)
+    axs['TRMZG_RECS'].yaxis.set_label_position("right")
+    axs['TRMZG_RECS'].set_ylabel('Records', size=8, labelpad=5)
+
+    # # Set font size for major and minor ticks
+    axs['TRMZG_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    axs['TRMZG_RECS'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['TRMZG_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['TRMZG_RECS'].set_ylim([0, 8])
+
+    # Define the exercise-specific categories for Liegestütz
+    categories = ['Weighted Turm Zug Sum record broken', 'Weighted Turm Zug Max record broken', 'Weighted Turm Zug Average record broken']
+    category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
+
+    # Define horizontal offsets for each category
+    offset = 0.15  # How much space between each category within a month
+    base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    for i, month in enumerate(monthly_stats_data.index):
+        # For each category (Sum, Max, Average for Liegestütz)
+        for j, category in enumerate(categories):
+            # Get the value for the category (how many dots to draw)
+            value = monthly_stats_data.loc[month, category]
+            
+            # Draw dots (circles) vertically stacked for the current category
+            y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+            # Calculate x_positions by adding a unique offset for each category per month
+            x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+            # Plot the dots for the current category
+            axs['TRMZG_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+
+    # Set major ticks for months
+    axs['TRMZG_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['TRMZG_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+
+    # Add grid
+    axs['TRMZG_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
     return fig
 
