@@ -84,22 +84,22 @@ st.pyplot(fig_pushup)
 
 v_spacer(height=2, sb=False)
 
-fig_planke = plank_plot(data, start_date, current_date)
+fig_planke = plank_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_planke)
 
 v_spacer(height=2, sb=False)
 
-fig_kniebeuge = kniebeuge_plot(data, start_date, current_date)
+fig_kniebeuge = kniebeuge_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_kniebeuge)
 
 v_spacer(height=2, sb=False)
 
-fig_hammercurl = hamcurls_plot(data, start_date, current_date)
+fig_hammercurl = hamcurls_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_hammercurl)
 
 v_spacer(height=2, sb=False)
 
-fig_turmrud = turmrud_plot(data, start_date, current_date)
+fig_turmrud = turmrud_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_turmrud)
 
 v_spacer(height=2, sb=False)

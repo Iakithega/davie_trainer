@@ -236,11 +236,11 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     axs['LGSTZ_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
     axs['LGSTZ_RECS'].tick_params(axis='x', which='minor', labelsize=6)
     axs['LGSTZ_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
-    axs['LGSTZ_RECS'].set_ylim([0, 10])
+    axs['LGSTZ_RECS'].set_ylim([0, 8])
 
     # Define the exercise-specific categories for Liegestütz
     categories = ['Liegestütz Sum record broken', 'Liegestütz Max record broken', 'Liegestütz Average record broken']
-    category_colors = ['blue', 'green', 'orange']  # Assign colors for each Liegestütz category
+    category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
 
     # Define horizontal offsets for each category
     offset = 0.15  # How much space between each category within a month
@@ -259,7 +259,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
             # Plot the dots for the current category
-            axs['LGSTZ_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=5)
+            axs['LGSTZ_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
 
     # Set major ticks for months
     axs['LGSTZ_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -274,7 +274,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     return fig
 
 
-def plank_plot(data, start_date, current_date):
+def plank_plot(data, monthly_stats_data, start_date, current_date):
 
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
@@ -442,11 +442,57 @@ def plank_plot(data, start_date, current_date):
 
     axs['PLK_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
+
+    # THE RECORDS PLOT
+    axs['PLK_RECS'].set_title(f"Planke Records", size=7)
+    axs['PLK_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['PLK_RECS'].set_xlabel(' ', size=8)
+    axs['PLK_RECS'].yaxis.set_label_position("right")
+    axs['PLK_RECS'].set_ylabel('Records', size=8, labelpad=5)
+
+    # # Set font size for major and minor ticks
+    axs['PLK_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    axs['PLK_RECS'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['PLK_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['PLK_RECS'].set_ylim([0, 8])
+
+    # Define the exercise-specific categories for Liegestütz
+    categories = ['Planke Sum record broken', 'Planke Max record broken', 'Planke Average record broken']
+    category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
+
+    # Define horizontal offsets for each category
+    offset = 0.15  # How much space between each category within a month
+    base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    for i, month in enumerate(monthly_stats_data.index):
+        # For each category (Sum, Max, Average for Liegestütz)
+        for j, category in enumerate(categories):
+            # Get the value for the category (how many dots to draw)
+            value = monthly_stats_data.loc[month, category]
+            
+            # Draw dots (circles) vertically stacked for the current category
+            y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+            # Calculate x_positions by adding a unique offset for each category per month
+            x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+            # Plot the dots for the current category
+            axs['PLK_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+
+    # Set major ticks for months
+    axs['PLK_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['PLK_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+
+    # Add grid
+    axs['PLK_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5)
+
+
     return fig
 
 
 
-def kniebeuge_plot(data, start_date, current_date):
+def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_REC', 'KNBG_RECS'],
@@ -611,10 +657,58 @@ def kniebeuge_plot(data, start_date, current_date):
 
     axs['KNBG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
+
+
+
+
+    # THE RECORDS PLOT
+    axs['KNBG_RECS'].set_title(f"Kniebeugen Records", size=7)
+    axs['KNBG_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['KNBG_RECS'].set_xlabel(' ', size=8)
+    axs['KNBG_RECS'].yaxis.set_label_position("right")
+    axs['KNBG_RECS'].set_ylabel('Records', size=8, labelpad=5)
+
+    # # Set font size for major and minor ticks
+    axs['KNBG_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    axs['KNBG_RECS'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['KNBG_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['KNBG_RECS'].set_ylim([0, 8])
+
+    # Define the exercise-specific categories for Liegestütz
+    categories = ['Kniebeugen Sum record broken', 'Kniebeugen Max record broken', 'Kniebeugen Average record broken']
+    category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
+
+    # Define horizontal offsets for each category
+    offset = 0.15  # How much space between each category within a month
+    base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    for i, month in enumerate(monthly_stats_data.index):
+        # For each category (Sum, Max, Average for Liegestütz)
+        for j, category in enumerate(categories):
+            # Get the value for the category (how many dots to draw)
+            value = monthly_stats_data.loc[month, category]
+            
+            # Draw dots (circles) vertically stacked for the current category
+            y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+            # Calculate x_positions by adding a unique offset for each category per month
+            x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+            # Plot the dots for the current category
+            axs['KNBG_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+
+    # Set major ticks for months
+    axs['KNBG_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['KNBG_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+
+    # Add grid
+    axs['KNBG_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+
     return fig
 
 
-def hamcurls_plot(data, start_date, current_date):
+def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_REC', 'HMCRL_RECS'],
@@ -805,12 +899,57 @@ def hamcurls_plot(data, start_date, current_date):
 
     axs['HMCRL_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
+
+    # THE RECORDS PLOT
+    axs['HMCRL_RECS'].set_title(f"Hammer Curls Records", size=7)
+    axs['HMCRL_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['HMCRL_RECS'].set_xlabel(' ', size=8)
+    axs['HMCRL_RECS'].yaxis.set_label_position("right")
+    axs['HMCRL_RECS'].set_ylabel('Records', size=8, labelpad=5)
+
+    # # Set font size for major and minor ticks
+    axs['HMCRL_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    axs['HMCRL_RECS'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['HMCRL_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['HMCRL_RECS'].set_ylim([0, 8])
+
+    # Define the exercise-specific categories for Liegestütz
+    categories = ['Weighted Hammer Curls Sum record broken', 'Weighted Hammer Curls Max record broken', 'Weighted Hammer Curls Average record broken']
+    category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
+
+    # Define horizontal offsets for each category
+    offset = 0.15  # How much space between each category within a month
+    base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    for i, month in enumerate(monthly_stats_data.index):
+        # For each category (Sum, Max, Average for Liegestütz)
+        for j, category in enumerate(categories):
+            # Get the value for the category (how many dots to draw)
+            value = monthly_stats_data.loc[month, category]
+            
+            # Draw dots (circles) vertically stacked for the current category
+            y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+            # Calculate x_positions by adding a unique offset for each category per month
+            x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+            # Plot the dots for the current category
+            axs['HMCRL_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+
+    # Set major ticks for months
+    axs['HMCRL_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['HMCRL_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+
+    # Add grid
+    axs['HMCRL_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+
     return fig
 
 
 
 
-def turmrud_plot(data, start_date, current_date):
+def turmrud_plot(data, monthly_stats_data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_REC', 'TRMRD_RECS'],
@@ -1023,6 +1162,51 @@ def turmrud_plot(data, start_date, current_date):
     )
 
     axs['TRMRD_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+
+
+    # THE RECORDS PLOT
+    axs['HMCRL_RECS'].set_title(f"Hammer Curls Records", size=7)
+    axs['HMCRL_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['HMCRL_RECS'].set_xlabel(' ', size=8)
+    axs['HMCRL_RECS'].yaxis.set_label_position("right")
+    axs['HMCRL_RECS'].set_ylabel('Records', size=8, labelpad=5)
+
+    # # Set font size for major and minor ticks
+    axs['HMCRL_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    axs['HMCRL_RECS'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['HMCRL_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['HMCRL_RECS'].set_ylim([0, 8])
+
+    # Define the exercise-specific categories for Liegestütz
+    categories = ['Weighted Hammer Curls Sum record broken', 'Weighted Hammer Curls Max record broken', 'Weighted Hammer Curls Average record broken']
+    category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
+
+    # Define horizontal offsets for each category
+    offset = 0.15  # How much space between each category within a month
+    base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    for i, month in enumerate(monthly_stats_data.index):
+        # For each category (Sum, Max, Average for Liegestütz)
+        for j, category in enumerate(categories):
+            # Get the value for the category (how many dots to draw)
+            value = monthly_stats_data.loc[month, category]
+            
+            # Draw dots (circles) vertically stacked for the current category
+            y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+            # Calculate x_positions by adding a unique offset for each category per month
+            x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+            # Plot the dots for the current category
+            axs['HMCRL_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+
+    # Set major ticks for months
+    axs['HMCRL_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['HMCRL_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+
+    # Add grid
+    axs['HMCRL_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
     return fig
 
