@@ -869,6 +869,57 @@ def turmrud_plot(data, start_date, current_date):
 
     axs['TRMRD_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
 
+
+    # Statistics Plot
+    # Reshape the data using pd.melt
+    sets_columns = ["Weighted Turm Rudern set 1 reps", "Weighted Turm Rudern set 2 reps", "Weighted Turm Rudern set 3 reps"]
+    trmrd_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
+
+    # Clean up the 'Set' labels
+    trmrd_all_sets['Set'] = trmrd_all_sets['Set'].str.replace('Weighted Turm Rudern set ', 'Set ')
+
+    # Add a constant column for x-axis grouping
+    trmrd_all_sets['All Sets'] = 'All Sets'
+    
+    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
+
+
+    axs['TRMRD_BX'].set_title(f"Turm Rudern Stats", size=7)
+    axs['TRMRD_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['TRMRD_BX'].set_xlabel(' ', size=8)
+    axs['TRMRD_BX'].yaxis.set_label_position("right")
+    axs['TRMRD_BX'].set_ylabel('Reps', size=8, labelpad=5)
+    # axs['TRMRD_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    axs['TRMRD_BX'].set_ylim([0, 40])
+
+    
+    # Set font size for major and minor ticks
+    axs['TRMRD_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
+    axs['TRMRD_BX'].tick_params(axis='x', which='minor', labelsize=6) 
+    axs['TRMRD_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+
+    # Set major ticks and thick lines to be placed on the first of every month
+    # axs['TRMRD_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    # axs['TRMRD_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+    # boxplot all sets
+    sns.boxplot(data=trmrd_all_sets, x='All Sets', y='Reps', ax=axs['TRMRD_BX'], color="lightgrey") 
+
+    # Swarmplot with dodge
+    sns.swarmplot(
+        data=trmrd_all_sets,
+        x='All Sets',
+        y='Reps',
+        hue='Set',
+        palette=set_hue_palette,
+        dodge=True,    # Automatically separates points by 'Set'
+        size=3,
+        ax=axs['TRMRD_BX']
+    )
+
+    axs['TRMRD_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+
     return fig
 
 
