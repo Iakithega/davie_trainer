@@ -53,7 +53,7 @@ def moving_average_plot(ax, data, name, window=3):
     ax.scatter(training_data.index, training_data[ma_column], color="gray", s=10)
 
 
-def pushup_plot(data, start_date, current_date):
+def pushup_plot(data, monthly_stats_data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_RECS'],
@@ -221,6 +221,54 @@ def pushup_plot(data, start_date, current_date):
     )
 
     axs['LGSTZ_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+
+
+
+
+    axs['LGSTZ_RECS'].set_title(f"Push Ups Stats", size=7)
+    axs['LGSTZ_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['LGSTZ_RECS'].set_xlabel(' ', size=8)
+    axs['LGSTZ_RECS'].yaxis.set_label_position("right")
+    axs['LGSTZ_RECS'].set_ylabel('Reps', size=8, labelpad=5)
+    # axs['LGSTZ_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['LGSTZ_RECS'].set_ylim([0, 30])
+
+    
+    # Set font size for major and minor ticks
+    axs['LGSTZ_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)  
+    axs['LGSTZ_RECS'].tick_params(axis='x', which='minor', labelsize=6) 
+    axs['LGSTZ_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+
+    # Set major ticks and thick lines to be placed on the first of every month
+    # axs['LGSTZ_RECS'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    # axs['LGSTZ_RECS'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+
+
+    # Plot Average records
+    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Average records broken'], label='Average Records Broken', marker='o')
+
+    # Plot Max records
+    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Max records broken'], label='Max Records Broken', marker='o')
+
+    # Plot Sum records
+    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Sum records broken'], label='Sum Records Broken', marker='o')
+
+    # Plot Training Days on the same graph (but secondary axis)
+    axs['LGSTZ_RECS'].plot(monthly_stats_data.index.astype(str), monthly_stats_data['Total Training Days'], label='Training Days', marker='o', linestyle='--', color='black')
+
+    # Add labels and legend
+    # axs['LGSTZ_RECS'].title('Monthly Record Breaking Stats and Training Days')
+    # axs['LGSTZ_RECS'].xlabel('Month')
+    # axs['LGSTZ_RECS'].ylabel('Records Broken')
+    # axs['LGSTZ_RECS'].legend()
+    # axs['LGSTZ_RECS'].grid(True)
+
+    # Show the plot
+    # axs['LGSTZ_RECS'].xticks(rotation=45)
+    # axs['LGSTZ_RECS'].tight_layout()
+ 
    
 
     return fig

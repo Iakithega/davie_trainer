@@ -65,10 +65,10 @@ current_date = current_date.strftime('%Y-%m-%d')
 # load the data
 initial_data = load_raw_excel(path_to_excel)
 # run all the data wrangeling files
-data = complete_data_wrangeling(initial_data)
+data, monthly_stats_data = complete_data_wrangeling(initial_data)
 
 
-# overview of the datas in a dataframe after Data Wrangeling
+# overview of the datas in a dataframe after Data Wrangeling 
 with st.expander("Raw Table"): 
     st.dataframe(data)
 
@@ -76,7 +76,7 @@ v_spacer(height=7, sb=False)
 
 
 
-fig_pushup = pushup_plot(data, start_date, current_date)
+fig_pushup = pushup_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_pushup)
 
 v_spacer(height=2, sb=False)

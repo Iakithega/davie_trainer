@@ -261,57 +261,126 @@ def calc_cummax_for_recs(df):
     df['Weighted Turm Zug Max score cummax'] = df['Weighted Turm Zug Max score all sets'].fillna(0).cummax()
     df['Weighted Turm Zug Sum score cummax'] = df['Weighted Turm Zug Sum score all sets'].fillna(0).cummax()
 
-
-
-
-
-
-
-
-    # # Create columns for broken records
-    # df['Liegestütz Average score broken'] = np.where(df['Liegestütz Average all sets'] > df[''].shift(1), 1, 0)
-    # df['Liegestütz Max score broken'] = np.where(df['Liegestütz Max all sets'] > df['Liegestütz Max Max'].shift(1), 1, 0)
-    # df['Liegestütz Sum score broken'] = np.where(df['Liegestütz Sum all sets'] > df['Liegestütz Sum Max'].shift(1), 1, 0)
-
-    # # Calculate how many different types of records were broken each day
-    # df['Liegestütz Records broken count'] = df[['Liegestütz Average score broken', 
-    #                                             'Liegestütz Max score broken', 
-    #                                             'Liegestütz Sum score broken']].sum(axis=1)
-
-
-
-
     return df
 
-def add_record_broken_columns(df):
-    # For each exercise without weights
+def calc_record_broken_columns(df):
+    # # For each exercise without weights
+    # df['Liegestütz Average record broken'] = (df['Liegestütz Average all sets'] > df['Liegestütz Average cummax'].shift(1)).astype(int)
+    # df['Liegestütz Max record broken'] = (df['Liegestütz Max all sets'] > df['Liegestütz Max cummax'].shift(1)).astype(int)
+    # df['Liegestütz Sum record broken'] = (df['Liegestütz Sum all sets'] > df['Liegestütz Sum cummax'].shift(1)).astype(int)
+
+    # df['Planke Average record broken'] = (df['Planke Average all sets'] > df['Planke Average cummax'].shift(1)).astype(int)
+    # df['Planke Max record broken'] = (df['Planke Max all sets'] > df['Planke Max cummax'].shift(1)).astype(int)
+    # df['Planke Sum record broken'] = (df['Planke Sum all sets'] > df['Planke Sum cummax'].shift(1)).astype(int)
+
+    # df['Kniebeugen Average record broken'] = (df['Kniebeugen Average all sets'] > df['Kniebeugen Average cummax'].shift(1)).astype(int)
+    # df['Kniebeugen Max record broken'] = (df['Kniebeugen Max all sets'] > df['Kniebeugen Max cummax'].shift(1)).astype(int)
+    # df['Kniebeugen Sum record broken'] = (df['Kniebeugen Sum all sets'] > df['Kniebeugen Sum cummax'].shift(1)).astype(int)
+
+    # # For each exercise with weights
+    # df['Weighted Turm Rudern Average record broken'] = (df['Weighted Turm Rudern Average score all sets'] > df['Weighted Turm Rudern Average score cummax'].shift(1)).astype(int)
+    # df['Weighted Turm Rudern Max record broken'] = (df['Weighted Turm Rudern Max score all sets'] > df['Weighted Turm Rudern Max score cummax'].shift(1)).astype(int)
+    # df['Weighted Turm Rudern Sum record broken'] = (df['Weighted Turm Rudern Sum score all sets'] > df['Weighted Turm Rudern Sum score cummax'].shift(1)).astype(int)
+
+    # df['Weighted Hammer Curls Average record broken'] = (df['Weighted Hammer Curls Average score all sets'] > df['Weighted Hammer Curls Average score cummax'].shift(1)).astype(int)
+    # df['Weighted Hammer Curls Max record broken'] = (df['Weighted Hammer Curls Max score all sets'] > df['Weighted Hammer Curls Max score cummax'].shift(1)).astype(int)
+    # df['Weighted Hammer Curls Sum record broken'] = (df['Weighted Hammer Curls Sum score all sets'] > df['Weighted Hammer Curls Sum score cummax'].shift(1)).astype(int)
+
+    # df['Weighted Turm Zug Average record broken'] = (df['Weighted Turm Zug Average score all sets'] > df['Weighted Turm Zug Average score cummax'].shift(1)).astype(int)
+    # df['Weighted Turm Zug Max record broken'] = (df['Weighted Turm Zug Max score all sets'] > df['Weighted Turm Zug Max score cummax'].shift(1)).astype(int)
+    # df['Weighted Turm Zug Sum record broken'] = (df['Weighted Turm Zug Sum score all sets'] > df['Weighted Turm Zug Sum score cummax'].shift(1)).astype(int)
+
+    # Liegestütz
     df['Liegestütz Average record broken'] = (df['Liegestütz Average all sets'] > df['Liegestütz Average cummax'].shift(1)).astype(int)
     df['Liegestütz Max record broken'] = (df['Liegestütz Max all sets'] > df['Liegestütz Max cummax'].shift(1)).astype(int)
     df['Liegestütz Sum record broken'] = (df['Liegestütz Sum all sets'] > df['Liegestütz Sum cummax'].shift(1)).astype(int)
 
+    # Planke
     df['Planke Average record broken'] = (df['Planke Average all sets'] > df['Planke Average cummax'].shift(1)).astype(int)
     df['Planke Max record broken'] = (df['Planke Max all sets'] > df['Planke Max cummax'].shift(1)).astype(int)
     df['Planke Sum record broken'] = (df['Planke Sum all sets'] > df['Planke Sum cummax'].shift(1)).astype(int)
 
+    # Kniebeugen
     df['Kniebeugen Average record broken'] = (df['Kniebeugen Average all sets'] > df['Kniebeugen Average cummax'].shift(1)).astype(int)
     df['Kniebeugen Max record broken'] = (df['Kniebeugen Max all sets'] > df['Kniebeugen Max cummax'].shift(1)).astype(int)
     df['Kniebeugen Sum record broken'] = (df['Kniebeugen Sum all sets'] > df['Kniebeugen Sum cummax'].shift(1)).astype(int)
 
-    # For each exercise with weights
+    # Weighted Turm Rudern
     df['Weighted Turm Rudern Average record broken'] = (df['Weighted Turm Rudern Average score all sets'] > df['Weighted Turm Rudern Average score cummax'].shift(1)).astype(int)
     df['Weighted Turm Rudern Max record broken'] = (df['Weighted Turm Rudern Max score all sets'] > df['Weighted Turm Rudern Max score cummax'].shift(1)).astype(int)
     df['Weighted Turm Rudern Sum record broken'] = (df['Weighted Turm Rudern Sum score all sets'] > df['Weighted Turm Rudern Sum score cummax'].shift(1)).astype(int)
 
+    # Weighted Hammer Curls
     df['Weighted Hammer Curls Average record broken'] = (df['Weighted Hammer Curls Average score all sets'] > df['Weighted Hammer Curls Average score cummax'].shift(1)).astype(int)
     df['Weighted Hammer Curls Max record broken'] = (df['Weighted Hammer Curls Max score all sets'] > df['Weighted Hammer Curls Max score cummax'].shift(1)).astype(int)
     df['Weighted Hammer Curls Sum record broken'] = (df['Weighted Hammer Curls Sum score all sets'] > df['Weighted Hammer Curls Sum score cummax'].shift(1)).astype(int)
 
+    # Weighted Turm Zug
     df['Weighted Turm Zug Average record broken'] = (df['Weighted Turm Zug Average score all sets'] > df['Weighted Turm Zug Average score cummax'].shift(1)).astype(int)
     df['Weighted Turm Zug Max record broken'] = (df['Weighted Turm Zug Max score all sets'] > df['Weighted Turm Zug Max score cummax'].shift(1)).astype(int)
     df['Weighted Turm Zug Sum record broken'] = (df['Weighted Turm Zug Sum score all sets'] > df['Weighted Turm Zug Sum score cummax'].shift(1)).astype(int)
 
     return df
 
+
+def add_total_records_broken(df):
+    # Define patterns for the columns you want to sum
+    exercises = ['Liegestütz', 'Planke', 'Kniebeugen', 'Weighted Turm Rudern', 'Weighted Hammer Curls', 'Weighted Turm Zug']
+    record_types = ['Average', 'Max', 'Sum']
+
+    # Loop through each exercise and calculate the total records broken
+    for exercise in exercises:
+        columns_to_sum = [f'{exercise} {record_type} record broken' for record_type in record_types]
+        df[f'{exercise} Total records broken'] = df[columns_to_sum].sum(axis=1)
+
+    return df
+
+
+
+
+def prepare_monthly_data(df):
+    # Assuming you have a date column named 'date' in your dataframe
+    df['month'] = df.index.to_period('M')
+
+    df.index.to_period('M')
+
+    # Group by month and sum the records broken for Average, Max, and Sum across all exercises
+    monthly_stats = df.groupby('month').agg({
+        'Liegestütz Average record broken': 'sum',
+        'Liegestütz Max record broken': 'sum',
+        'Liegestütz Sum record broken': 'sum',
+        'Planke Average record broken': 'sum',
+        'Planke Max record broken': 'sum',
+        'Planke Sum record broken': 'sum',
+        'Kniebeugen Average record broken': 'sum',
+        'Kniebeugen Max record broken': 'sum',
+        'Kniebeugen Sum record broken': 'sum',
+        'Weighted Turm Rudern Average record broken': 'sum',
+        'Weighted Turm Rudern Max record broken': 'sum',
+        'Weighted Turm Rudern Sum record broken': 'sum',
+        'Weighted Hammer Curls Average record broken': 'sum',
+        'Weighted Hammer Curls Max record broken': 'sum',
+        'Weighted Hammer Curls Sum record broken': 'sum',
+        'Weighted Turm Zug Average record broken': 'sum',
+        'Weighted Turm Zug Max record broken': 'sum',
+        'Weighted Turm Zug Sum record broken': 'sum'
+    })
+
+    # Calculate the total records broken for each type (Average, Max, Sum) across all exercises
+    monthly_stats['Total Average records broken'] = (
+        monthly_stats.filter(like='Average record broken').sum(axis=1)
+    )
+    monthly_stats['Total Max records broken'] = (
+        monthly_stats.filter(like='Max record broken').sum(axis=1)
+    )
+    monthly_stats['Total Sum records broken'] = (
+        monthly_stats.filter(like='Sum record broken').sum(axis=1)
+    )
+
+    # Count the number of training days per month
+    monthly_stats['Total Training Days'] = df.groupby('month').size()
+
+    return monthly_stats
 
 
 def complete_data_wrangeling(initial_data):
@@ -343,6 +412,12 @@ def complete_data_wrangeling(initial_data):
 
     data = calc_cummax_for_recs(data)
 
-    data = add_record_broken_columns(data)
+    data = calc_record_broken_columns(data)
 
-    return data
+    data = add_total_records_broken(data)
+
+    monthly_stats_data = prepare_monthly_data(data)
+
+
+
+    return data, monthly_stats_data
