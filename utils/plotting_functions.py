@@ -107,7 +107,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     #Moving Average Plot
     moving_average_plot(ax=axs['LGSTZ'], data=data, name="Liegestütz Average all sets", window=3)
 
-    axs['LGSTZ'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+    axs['LGSTZ'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
 
 
     # Records Plot
@@ -167,7 +167,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
                     axs['LGSTZ_REC'].text(date + offset, value + 3, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
                     
-    axs['LGSTZ_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+    axs['LGSTZ_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
 
 
 
@@ -220,7 +220,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
         ax=axs['LGSTZ_BX']
     )
 
-    axs['LGSTZ_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['LGSTZ_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3, handletextpad=0.01, columnspacing=0.5)
 
 
 
@@ -328,7 +328,7 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['PLK'], data=data, name="Planke Average all sets", window=3)
 
-    axs['PLK'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+    axs['PLK'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
     
     
     
@@ -387,7 +387,7 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
                     axs['PLK_REC'].text(date + offset, value + 5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
     
-    axs['PLK_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['PLK_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3)
 
 
 
@@ -440,7 +440,7 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
         ax=axs['PLK_BX']
     )
 
-    axs['PLK_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['PLK_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3, handletextpad=0.01, columnspacing=0.5)
 
 
     # THE RECORDS PLOT
@@ -546,7 +546,7 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['KNBG'], data=data, name="Kniebeugen Average all sets", window=3)
 
-    axs['KNBG'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+    axs['KNBG'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
     
 
     axs['KNBG_REC'].set_title(f"Records Kniebeugen", size=7)
@@ -603,7 +603,7 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
                     axs['KNBG_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
                                         va='center', ha='center', fontsize=4, color='black')
 
-    axs['KNBG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+    axs['KNBG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
 
     
     
@@ -655,7 +655,7 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
         ax=axs['KNBG_BX']
     )
 
-    axs['KNBG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['KNBG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3, handletextpad=0.01, columnspacing=0.5)
 
 
 
@@ -767,7 +767,7 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['HMCRL'], data=data, name="Weighted Hammer Curls Average reps all sets", window=3)
 
-    axs['HMCRL'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+    axs['HMCRL'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
 
 
     axs['HMCRL_REC'].set_title(f"Records Hammer Curls", size=7)
@@ -846,7 +846,7 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
                         axs['HMCRL_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
 
-    axs['HMCRL_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5) 
+    axs['HMCRL_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
 
 
     # Statistics Plot
@@ -897,7 +897,7 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
         ax=axs['HMCRL_BX']
     )
 
-    axs['HMCRL_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['HMCRL_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=1, handletextpad=0.01, columnspacing=0.5)
 
 
     # THE RECORDS PLOT
@@ -1027,7 +1027,7 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
     # Moving Average Plot scored
     moving_average_plot(ax=axs['TRMRD'], data=data, name="Weighted Turm Rudern Average score all sets", window=3)
 
-    axs['TRMRD'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['TRMRD'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=4)
 
 
 
@@ -1110,7 +1110,7 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
                         axs['TRMRD_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
 
-    axs['TRMRD_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['TRMRD_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3)
 
 
     # Statistics Plot
@@ -1161,7 +1161,7 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
         ax=axs['TRMRD_BX']
     )
 
-    axs['TRMRD_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['TRMRD_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=1, handletextpad=0.01, columnspacing=0.5)
 
 
     # THE RECORDS PLOT
@@ -1270,7 +1270,7 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
     # Moving Average Plot
     moving_average_plot(ax=axs['TRMZG'], data=data, name="Weighted Turm Zug Average reps all sets", window=3)
 
-    axs['TRMZG'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['TRMZG'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3)
 
 
     axs['TRMZG_REC'].set_title(f"Records Turm Zug", size=7)
@@ -1348,7 +1348,7 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
                         axs['TRMZG_REC'].text(date + offset, score_y, f"{round(score_value)}",
                                             va='center', ha='center', fontsize=4, color='black')
     
-    axs['TRMZG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['TRMZG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3)
 
 
 
@@ -1400,7 +1400,7 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
         ax=axs['TRMZG_BX']
     )
 
-    axs['TRMZG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5)
+    axs['TRMZG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=1, handletextpad=0.01, columnspacing=0.5)
 
 
     # THE RECORDS PLOT
