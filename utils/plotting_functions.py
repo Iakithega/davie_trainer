@@ -1450,6 +1450,225 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
     return fig
 
 
+def rec_overview_plot(data, monthly_stats_data):
+    plt.style.use('seaborn-v0_8')
+    fig, axs = plt.subplot_mosaic(
+                                [
+                                ['PUSH_PIC', 'PUSH', 'PUSH', 'PUSH', 'PUSH', 'PUSH_SUM', 'PUSH_SUM'],
+                                ['KNBG_PIC', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_SUM', 'KNBG_SUM'],
+                                ['PLNK_PIC', 'PLNK', 'PLNK', 'PLNK', 'PLNK', 'PLNK_SUM', 'PLNK_SUM'],
+                                ['HMCRL_PIC', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_SUM', 'HMCRL_SUM'],
+                                ['TMRD_PIC', 'TMRD', 'TMRD', 'TMRD', 'TMRD', 'TMRD_SUM', 'TMRD_SUM'],
+                                ['TMZG_PIC', 'TMZG', 'TMZG', 'TMZG', 'TMZG', 'TRMZG_SUM', 'TRMZG_SUM'],
+                                ['.', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS_ALL_SUM', 'MNTHS_ALL_SUM'],],
+                                figsize=(10, 5)
+                                )
+    fig.patch.set_alpha(0.5)
+    fig.suptitle(f'''Records overview''', size=10)
+
+    plt.subplots_adjust(wspace=.2, hspace=.2)
+
+    
+    # axs['KNBG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    # axs['KNBG'].set_title(f"Progress Kniebeugen", size=7)
+    # axs['KNBG'].set_xlabel(' ', size=14)
+    # axs['KNBG'].set_ylabel('Reps', size=8)
+    # axs['KNBG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['KNBG'].set_ylim([0, 60])
+
+    # # Set font size for major and minor ticks
+    # axs['KNBG'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    # axs['KNBG'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    # axs['KNBG'].tick_params(axis='y', which='major', labelsize=6) 
+
+    # # Set major ticks and thick lines to be placed on the first of every month
+    # axs['KNBG'].xaxis.set_major_locator(mdates.MonthLocator())  
+    # axs['KNBG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    # axs['KNBG'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)
+
+    # axs['KNBG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
+    # axs['KNBG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
+    # axs['KNBG'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+    # # Plotting the three sets next to each other
+    # bar_width = 0.3
+    # dates = data.index
+
+    # axs['KNBG'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen set 1"], alpha=1, width=bar_width, color="limegreen", label="Set 1")
+    # axs['KNBG'].bar(dates, data["Kniebeugen set 2"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
+    # axs['KNBG'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen set 3"], alpha=1, color="darkviolet", width=bar_width, label="Set 3")
+
+
+    # for set_name, offset in zip(["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=16)]):
+    #     for date, value in data[set_name].loc[start_date:current_date].items():
+    #         if not pd.isna(value):
+    #             axs['KNBG'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
+    
+
+    # # Moving Average Plot
+    # moving_average_plot(ax=axs['KNBG'], data=data, name="Kniebeugen Average all sets", window=3)
+
+    # axs['KNBG'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
+    
+
+    # axs['KNBG_REC'].set_title(f"Records Kniebeugen", size=7)
+    # axs['KNBG_REC'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+    # axs['KNBG_REC'].set_xlabel(' ', size=14)
+    # axs['KNBG_REC'].set_ylabel('Reps', size=8)
+    # axs['KNBG_REC'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['KNBG_REC'].set_ylim([0, 120])
+
+    # # Set font size for major and minor ticks
+    # axs['KNBG_REC'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
+    # axs['KNBG_REC'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
+    # axs['KNBG_REC'].tick_params(axis='y', which='major', labelsize=6) 
+
+    # # Set major ticks and thick lines to be placed on the first of every month
+    # axs['KNBG_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
+    # axs['KNBG_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
+    # axs['KNBG_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)
+
+    # axs['KNBG_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
+    # axs['KNBG_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
+    # axs['KNBG_REC'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+    # axs['KNBG_REC'].bar(dates - pd.Timedelta(hours=10), data["Kniebeugen Average all sets"], alpha=1, width=bar_width, color="green", label="Average")
+    # axs['KNBG_REC'].bar(dates, data["Kniebeugen Max all sets"], alpha=1, width=bar_width, color="gold", label="Max")
+    # axs['KNBG_REC'].bar(dates + pd.Timedelta(hours=10), data["Kniebeugen Sum all sets"], alpha=1, color="gray", width=bar_width, label="Amount")
+
+
+    # # Initialize dictionaries to keep track of the maximum values for each set name
+    # max_values = {
+    #     "Kniebeugen Average all sets": -float('inf'),
+    #     "Kniebeugen Max all sets": -float('inf'),
+    #     "Kniebeugen Sum all sets": -float('inf')
+    # }
+
+    # # Iterate over the three metrics and add the annotation
+    # for set_name, offset in zip(
+    #     ["Kniebeugen Average all sets", "Kniebeugen Max all sets", "Kniebeugen Sum all sets"], 
+    #     [-pd.Timedelta(hours=10), pd.Timedelta(0), pd.Timedelta(hours=10)]
+    # ):
+    #     for date, value in data[set_name].loc[start_date:current_date].items():
+    #         if not pd.isna(value) and value != 0:
+    #             # Check if the current value is a new record (higher than the previous maximum)
+    #             if value > max_values[set_name]:
+    #                 # Update the maximum value for this set_name
+    #                 max_values[set_name] = value
+                    
+    #                 # Highlight the record by adding a background color (e.g., yellow)
+    #                 axs['KNBG_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+    #                                     va='center', ha='center', fontsize=4, color='black', 
+    #                                     bbox=dict(facecolor='green', alpha=0.3, edgecolor='none', pad=0.15))
+    #             else:
+    #                 # Regular annotation for non-record values (without background)
+    #                 axs['KNBG_REC'].text(date + offset, value + 0.5, f"{round(value)}", 
+    #                                     va='center', ha='center', fontsize=4, color='black')
+
+    # axs['KNBG_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
+
+    
+    
+    # # Statistics Plot
+    # # Reshape the data using pd.melt
+    # sets_columns = ["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"]
+    # knbg_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
+
+    # # Clean up the 'Set' labels
+    # knbg_all_sets['Set'] = knbg_all_sets['Set'].str.replace('Kniebeugen set ', 'Set ')
+
+    # # Add a constant column for x-axis grouping
+    # knbg_all_sets['All Sets'] = 'All Sets'
+    
+    # set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+
+
+    # axs['KNBG_BX'].set_title(f"Kniebeugen Stats", size=7)
+    # axs['KNBG_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    # axs['KNBG_BX'].set_xlabel(' ', size=8)
+    # axs['KNBG_BX'].yaxis.set_label_position("right")
+    # axs['KNBG_BX'].set_ylabel('Reps', size=8, labelpad=5)
+    # # axs['KNBG_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    # axs['KNBG_BX'].set_ylim([0, 50])
+
+    
+    # # Set font size for major and minor ticks
+    # axs['KNBG_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
+    # axs['KNBG_BX'].tick_params(axis='x', which='minor', labelsize=6) 
+    # axs['KNBG_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+
+    # # Set major ticks and thick lines to be placed on the first of every month
+    # # axs['KNBG_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    # # axs['KNBG_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+
+    # # boxplot all sets
+    # sns.boxplot(data=knbg_all_sets, x='All Sets', y='Reps', ax=axs['KNBG_BX'], color="lightgrey") 
+
+    # # Swarmplot with dodge
+    # sns.swarmplot(
+    #     data=knbg_all_sets,
+    #     x='All Sets',
+    #     y='Reps',
+    #     hue='Set',
+    #     palette=set_hue_palette,
+    #     dodge=True,    # Automatically separates points by 'Set'
+    #     size=3,
+    #     ax=axs['KNBG_BX']
+    # )
+
+    # axs['KNBG_BX'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3, handletextpad=0.01, columnspacing=0.5)
+
+
+
+
+
+    # # THE RECORDS PLOT
+    # axs['KNBG_RECS'].set_title(f"Kniebeugen Records", size=7)
+    # axs['KNBG_RECS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    # axs['KNBG_RECS'].set_xlabel(' ', size=8)
+    # axs['KNBG_RECS'].yaxis.set_label_position("right")
+    # axs['KNBG_RECS'].set_ylabel('Records', size=8, labelpad=5)
+
+    # # # Set font size for major and minor ticks
+    # axs['KNBG_RECS'].tick_params(axis='x', which='major', labelsize=6, rotation=45)
+    # axs['KNBG_RECS'].tick_params(axis='x', which='minor', labelsize=6)
+    # axs['KNBG_RECS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    # axs['KNBG_RECS'].set_ylim([0, 8])
+
+    # # Define the exercise-specific categories for Liegestütz
+    # categories = ['Kniebeugen Sum record broken', 'Kniebeugen Max record broken', 'Kniebeugen Average record broken']
+    # category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
+
+    # # Define horizontal offsets for each category
+    # offset = 0.15  # How much space between each category within a month
+    # base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    # for i, month in enumerate(monthly_stats_data.index):
+    #     # For each category (Sum, Max, Average for Liegestütz)
+    #     for j, category in enumerate(categories):
+    #         # Get the value for the category (how many dots to draw)
+    #         value = monthly_stats_data.loc[month, category]
+            
+    #         # Draw dots (circles) vertically stacked for the current category
+    #         y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+    #         # Calculate x_positions by adding a unique offset for each category per month
+    #         x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+    #         # Plot the dots for the current category
+    #         axs['KNBG_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+
+    # # Set major ticks for months
+    # axs['KNBG_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    # axs['KNBG_RECS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=45)
+
+    # # Add grid
+    # axs['KNBG_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+
+    return fig
 
 
 

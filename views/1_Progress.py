@@ -61,11 +61,14 @@ current_date = datetime.today() + timedelta(days=3)
 # Format the date as 'YYYY-MM-DD'
 current_date = current_date.strftime('%Y-%m-%d')
 
+@st.cache_data
+def load_and_process_data():
+    initial_data = load_raw_excel(path_to_excel)
+    data, monthly_stats_data = complete_data_wrangeling(initial_data)
+    return data, monthly_stats_data
 
-# load the data
-initial_data = load_raw_excel(path_to_excel)
-# run all the data wrangeling files
-data, monthly_stats_data = complete_data_wrangeling(initial_data)
+# Call the function to cache the data
+data, monthly_stats_data = load_and_process_data() 
 
 
 # overview of the datas in a dataframe after Data Wrangeling 
