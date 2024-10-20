@@ -177,7 +177,7 @@ if st.session_state['person_chosen'] != 'Select':
 
     with col4_settings_row:
         v_spacer(height=3, sb=False) 
-        model_toggle = st.toggle(label="GPT-4" , 
+        model_toggle = st.toggle(label="GPT-o1" , 
                                  key="Key1", 
                                 )
 
@@ -194,7 +194,7 @@ if st.session_state['person_chosen'] != 'Select':
         st.session_state['extra_metapher_option'] = "" 
 
     if model_toggle:
-        st.session_state['selected_model'] = "gpt-3.5-turbo"
+        st.session_state['selected_model'] = "o1-preview"
     else:
         st.session_state['selected_model'] = "gpt-4o" 
             
