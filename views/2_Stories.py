@@ -248,7 +248,8 @@ if st.session_state['person_chosen'] != 'Select':
                                     Bitte formuliere eine spannende und witzige Geschichte im Stil von {selected_personality} um und rede dabei diese Sprache: {st.session_state['selected_language']}. 
                                     {st.session_state['extra_metapher_option']} 
                                     {st.session_state['extra_personality_option']}
-                                    Hier sind weitere Ereignisse oder Deatils die du in die geschichte für 9 jährigen David mit einbauen solltest: "{st.session_state['user_input']}"
+                                    Hier sind weitere Ereignisse oder Deatils vom heutigen Training von David, die du in die geschichte für 9 jährigen David mit einbauen solltest: {st.session_state['user_input']}.
+                                    Du solltest versuchen diese Ereignisse auf eine witzige Art und Weise in die Geschichte einbauen, damit die Geschichte auch witzig ist.
                                 '''},
                         ],
                 temperature = chosen_temperature
