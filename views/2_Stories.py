@@ -150,7 +150,7 @@ if st.session_state['selected_language'] == "русский":
     st.session_state['voice'] = "8PCccElp0PQGRfTFCu0p" # srN6rA7HPBQZ1WEO6tDP
 
 if st.session_state['selected_language'] == "deutsch":
-    st.session_state['voice'] = "fiRQs1f3h1NvmrcmdYpo" # 67cBenwxpAxMOamZ0RaE # MHOybJN5BsVS5H8m3mru
+    st.session_state['voice'] = "MHOybJN5BsVS5H8m3mru" #  #  # weich und leicht feminin fiRQs1f3h1NvmrcmdYpo etwas höhere ältere stimme wie scholz: 67cBenwxpAxMOamZ0RaE
 
 
 
