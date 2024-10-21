@@ -1522,6 +1522,7 @@ def rec_overview_plot(data, monthly_stats_data):
     offset = 0.15  # How much space between each category within a month
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
+
     for i, month in enumerate(monthly_stats_data.index):
         # For each category (Sum, Max, Average for Liegestütz)
         for j, category in enumerate(categories):
@@ -1534,8 +1535,14 @@ def rec_overview_plot(data, monthly_stats_data):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['PUSH'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['PUSH'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['PUSH'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['PUSH'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
