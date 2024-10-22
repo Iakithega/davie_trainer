@@ -258,8 +258,14 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['LGSTZ_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['LGSTZ_RECS'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['LGSTZ_RECS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['LGSTZ_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -477,8 +483,14 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['PLK_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['PLK_RECS'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['PLK_RECS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['PLK_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -695,8 +707,14 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['KNBG_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['KNBG_RECS'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['KNBG_RECS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['KNBG_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -934,8 +952,14 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['HMCRL_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['HMCRL_RECS'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['HMCRL_RECS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['HMCRL_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1198,8 +1222,14 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['TRMRD_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['TRMRD_RECS'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['TRMRD_RECS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['TRMRD_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1437,8 +1467,14 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['TRMZG_RECS'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['TRMZG_RECS'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['TRMZG_RECS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['TRMZG_RECS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1461,12 +1497,16 @@ def rec_overview_plot(data, monthly_stats_data):
                                 ['HMCRL_PIC', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_SUM', 'HMCRL_SUM'],
                                 ['TMRD_PIC', 'TMRD', 'TMRD', 'TMRD', 'TMRD', 'TMRD_SUM', 'TMRD_SUM'],
                                 ['TMZG_PIC', 'TMZG', 'TMZG', 'TMZG', 'TMZG', 'TRMZG_SUM', 'TRMZG_SUM'],
-                                ['.', 'N_TRN', 'N_TRN', 'N_TRN', 'N_TRN', 'N_TRN_SUM', 'N_TRN_SUM'],
+                                # ['.', 'N_TRN', 'N_TRN', 'N_TRN', 'N_TRN', 'N_TRN_SUM', 'N_TRN_SUM'],
+                                ['.', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS_ALL_SUM', 'MNTHS_ALL_SUM'],
                                 ['.', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS_ALL_SUM', 'MNTHS_ALL_SUM']],
                                 figsize=(10, 5)
                                 )
     fig.patch.set_alpha(0.5)
-    fig.suptitle(f'''Records overview''', size=10)
+    fig.suptitle(f'''Records overview''', size=12, fontweight='bold', color="white")
+
+    # title = fig.suptitle('Records overview', size=10)
+    # title.set_alpha(0.5)
 
     plt.subplots_adjust(wspace=.2, hspace=.2)
 
@@ -1519,7 +1559,7 @@ def rec_overview_plot(data, monthly_stats_data):
     category_colors = ['grey', 'gold', 'green']  # Assign colors for each Liegestütz category
 
     # Define horizontal offsets for each category
-    offset = 0.15  # How much space between each category within a month
+    offset = 0.1  # How much space between each category within a month
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
 
@@ -1574,11 +1614,11 @@ def rec_overview_plot(data, monthly_stats_data):
     category_colors = ['grey', 'gold', 'green']  # Assign colors for each Kniebeugen category
 
     # Define horizontal offsets for each category
-    offset = 0.15  # How much space between each category within a month
+    offset = 0.1  # How much space between each category within a month
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
     for i, month in enumerate(monthly_stats_data.index):
-        # For each category (Sum, Max, Average for Kniebeugen)
+        # For each category (Sum, Max, Average for Liegestütz)
         for j, category in enumerate(categories):
             # Get the value for the category (how many dots to draw)
             value = monthly_stats_data.loc[month, category]
@@ -1589,8 +1629,14 @@ def rec_overview_plot(data, monthly_stats_data):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['KNBG'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['KNBG'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['KNBG'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['KNBG'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1620,11 +1666,11 @@ def rec_overview_plot(data, monthly_stats_data):
     category_colors = ['grey', 'gold', 'green']  # Assign colors for each Planke category
 
     # Define horizontal offsets for each category
-    offset = 0.15  # How much space between each category within a month
+    offset = 0.1  # How much space between each category within a month
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
     for i, month in enumerate(monthly_stats_data.index):
-        # For each category (Sum, Max, Average for Planke)
+        # For each category (Sum, Max, Average for Liegestütz)
         for j, category in enumerate(categories):
             # Get the value for the category (how many dots to draw)
             value = monthly_stats_data.loc[month, category]
@@ -1635,8 +1681,14 @@ def rec_overview_plot(data, monthly_stats_data):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['PLNK'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['PLNK'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['PLNK'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['PLNK'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1667,11 +1719,11 @@ def rec_overview_plot(data, monthly_stats_data):
     category_colors = ['grey', 'gold', 'green']  # Assign colors for each Hammercurls category
 
     # Define horizontal offsets for each category
-    offset = 0.15  # How much space between each category within a month
+    offset = 0.1  # How much space between each category within a month
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
     for i, month in enumerate(monthly_stats_data.index):
-        # For each category (Sum, Max, Average for Hammercurls)
+        # For each category (Sum, Max, Average for Liegestütz)
         for j, category in enumerate(categories):
             # Get the value for the category (how many dots to draw)
             value = monthly_stats_data.loc[month, category]
@@ -1682,8 +1734,14 @@ def rec_overview_plot(data, monthly_stats_data):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['HMCRL'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['HMCRL'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['HMCRL'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['HMCRL'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1714,11 +1772,11 @@ def rec_overview_plot(data, monthly_stats_data):
     category_colors = ['grey', 'gold', 'green']  # Assign colors for each Turm Rudern category
 
     # Define horizontal offsets for each category
-    offset = 0.15  # How much space between each category within a month
+    offset = 0.1  # How much space between each category within a month
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
     for i, month in enumerate(monthly_stats_data.index):
-        # For each category (Sum, Max, Average for Turm Rudern)
+        # For each category (Sum, Max, Average for Liegestütz)
         for j, category in enumerate(categories):
             # Get the value for the category (how many dots to draw)
             value = monthly_stats_data.loc[month, category]
@@ -1729,8 +1787,14 @@ def rec_overview_plot(data, monthly_stats_data):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['TMRD'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['TMRD'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['TMRD'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['TMRD'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1760,11 +1824,11 @@ def rec_overview_plot(data, monthly_stats_data):
     category_colors = ['grey', 'gold', 'green']  # Assign colors for each Turmzug category
 
     # Define horizontal offsets for each category
-    offset = 0.15  # How much space between each category within a month
+    offset = 0.1  # How much space between each category within a month
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
     for i, month in enumerate(monthly_stats_data.index):
-        # For each category (Sum, Max, Average for Turmzug)
+        # For each category (Sum, Max, Average for Liegestütz)
         for j, category in enumerate(categories):
             # Get the value for the category (how many dots to draw)
             value = monthly_stats_data.loc[month, category]
@@ -1775,8 +1839,14 @@ def rec_overview_plot(data, monthly_stats_data):
             # Calculate x_positions by adding a unique offset for each category per month
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
-            # Plot the dots for the current category
-            axs['TMZG'].scatter(x_positions, y_positions, color=category_colors[j], label=category if i == 0 else "", s=10)
+            if value > 0:
+                # Plot the dots for the current category
+                axs['TMZG'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['TMZG'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
 
     # Set major ticks for months
     axs['TMZG'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
@@ -1784,6 +1854,59 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['TMZG'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+
+
+    
+    # THE RECORDS OVERVIEW MONTHLY PLOT
+    axs['MNTHS'].set_title(f" ", size=7)
+    axs['MNTHS'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['MNTHS'].set_xlabel(' ', size=8)
+    axs['MNTHS'].yaxis.set_label_position("right")
+    axs['MNTHS'].set_ylabel('Monthly Records', size=8, labelpad=5)
+
+    # # Set font size for major and minor ticks
+    axs['MNTHS'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
+    axs['MNTHS'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['MNTHS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['MNTHS'].set_ylim([0, 16])
+
+    # Define the exercise-specific categories for monthly plot
+    categories = ['Total Sum records broken', 'Total Max records broken', 'Total Average records broken', "Total Training Days"]
+    category_colors = ['grey', 'gold', 'green', "blue"]  # Assign colors for each monthly plot category
+
+    # Define horizontal offsets for each category
+    offset = 0.1  # How much space between each category within a month
+    base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
+
+    for i, month in enumerate(monthly_stats_data.index):
+        # For each category (Sum, Max, Average for Liegestütz)
+        for j, category in enumerate(categories):
+            # Get the value for the category (how many dots to draw)
+            value = monthly_stats_data.loc[month, category]
+            
+            # Draw dots (circles) vertically stacked for the current category
+            y_positions = np.arange(1, value + 1)  # Vertically stack dots for the given count
+            
+            # Calculate x_positions by adding a unique offset for each category per month
+            x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
+
+            if value > 0:
+                # Plot the dots for the current category
+                axs['MNTHS'].scatter(x_positions, y_positions, color=category_colors[j],
+                                    label=category if i == 0 else "", s=10)
+            else:
+                # Plot a marker (e.g., a small line) to indicate zero records
+                axs['MNTHS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
+                                    marker='o', s=15)
+
+    # Set major ticks for months
+    axs['MNTHS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
+    axs['MNTHS'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=0)
+
+    # Add grid
+    axs['MNTHS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+
 
 
 
