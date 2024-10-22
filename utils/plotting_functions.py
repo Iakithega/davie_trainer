@@ -3,10 +3,13 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd 
 
+import os.path
+
 import numpy as np
 
 import matplotlib.dates as mdates
 from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
+import matplotlib.image as mpimg
 
 from datetime import datetime
 from datetime import timedelta
@@ -1906,6 +1909,29 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['MNTHS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+
+
+
+
+
+
+    # Add grid
+    axs['PUSH_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+
+
+    push_pic_path = os.path.join("media", "exercise_pictures", "push_up_robot2.webp")
+
+    # Load your image (replace 'your_image.png' with the actual path to your image)
+    image = mpimg.imread(push_pic_path)
+
+    # Clear the current plot for 'TMZG'
+    axs['PUSH_PIC'].cla()
+
+    # Display the image in the plot
+    axs['PUSH_PIC'].imshow(image)
+
+    # Remove axis labels and ticks (optional, if you want the image alone)
+    axs['PUSH_PIC'].axis('off')  # This removes the axis
 
 
 
