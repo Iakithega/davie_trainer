@@ -376,11 +376,10 @@ def prepare_monthly_data(df):
 
 def complete_data_wrangeling(initial_data):
 
-    
-    
     # extract weights and reps and band strength
     data = weight_reps_exctracter(initial_data)
 
+    # implemented training day column
     data = mark_training_days(data)
 
     # calculate no weight averages, max and sum for liegestütze, planke and kniebeugen
