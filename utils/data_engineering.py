@@ -264,32 +264,6 @@ def calc_cummax_for_recs(df):
     return df
 
 def calc_record_broken_columns(df):
-    # # For each exercise without weights
-    # df['Liegestütz Average record broken'] = (df['Liegestütz Average all sets'] > df['Liegestütz Average cummax'].shift(1)).astype(int)
-    # df['Liegestütz Max record broken'] = (df['Liegestütz Max all sets'] > df['Liegestütz Max cummax'].shift(1)).astype(int)
-    # df['Liegestütz Sum record broken'] = (df['Liegestütz Sum all sets'] > df['Liegestütz Sum cummax'].shift(1)).astype(int)
-
-    # df['Planke Average record broken'] = (df['Planke Average all sets'] > df['Planke Average cummax'].shift(1)).astype(int)
-    # df['Planke Max record broken'] = (df['Planke Max all sets'] > df['Planke Max cummax'].shift(1)).astype(int)
-    # df['Planke Sum record broken'] = (df['Planke Sum all sets'] > df['Planke Sum cummax'].shift(1)).astype(int)
-
-    # df['Kniebeugen Average record broken'] = (df['Kniebeugen Average all sets'] > df['Kniebeugen Average cummax'].shift(1)).astype(int)
-    # df['Kniebeugen Max record broken'] = (df['Kniebeugen Max all sets'] > df['Kniebeugen Max cummax'].shift(1)).astype(int)
-    # df['Kniebeugen Sum record broken'] = (df['Kniebeugen Sum all sets'] > df['Kniebeugen Sum cummax'].shift(1)).astype(int)
-
-    # # For each exercise with weights
-    # df['Weighted Turm Rudern Average record broken'] = (df['Weighted Turm Rudern Average score all sets'] > df['Weighted Turm Rudern Average score cummax'].shift(1)).astype(int)
-    # df['Weighted Turm Rudern Max record broken'] = (df['Weighted Turm Rudern Max score all sets'] > df['Weighted Turm Rudern Max score cummax'].shift(1)).astype(int)
-    # df['Weighted Turm Rudern Sum record broken'] = (df['Weighted Turm Rudern Sum score all sets'] > df['Weighted Turm Rudern Sum score cummax'].shift(1)).astype(int)
-
-    # df['Weighted Hammer Curls Average record broken'] = (df['Weighted Hammer Curls Average score all sets'] > df['Weighted Hammer Curls Average score cummax'].shift(1)).astype(int)
-    # df['Weighted Hammer Curls Max record broken'] = (df['Weighted Hammer Curls Max score all sets'] > df['Weighted Hammer Curls Max score cummax'].shift(1)).astype(int)
-    # df['Weighted Hammer Curls Sum record broken'] = (df['Weighted Hammer Curls Sum score all sets'] > df['Weighted Hammer Curls Sum score cummax'].shift(1)).astype(int)
-
-    # df['Weighted Turm Zug Average record broken'] = (df['Weighted Turm Zug Average score all sets'] > df['Weighted Turm Zug Average score cummax'].shift(1)).astype(int)
-    # df['Weighted Turm Zug Max record broken'] = (df['Weighted Turm Zug Max score all sets'] > df['Weighted Turm Zug Max score cummax'].shift(1)).astype(int)
-    # df['Weighted Turm Zug Sum record broken'] = (df['Weighted Turm Zug Sum score all sets'] > df['Weighted Turm Zug Sum score cummax'].shift(1)).astype(int)
-
     # Liegestütz
     df['Liegestütz Average record broken'] = (df['Liegestütz Average all sets'] > df['Liegestütz Average cummax'].shift(1)).astype(int)
     df['Liegestütz Max record broken'] = (df['Liegestütz Max all sets'] > df['Liegestütz Max cummax'].shift(1)).astype(int)
@@ -336,6 +310,22 @@ def add_total_records_broken(df):
     return df
 
 
+def mark_training_days(df):
+    # Ensure the index is of datetime type
+    df = df.copy()
+    df.index = pd.to_datetime(df.index)
+    
+    # Create a date range from the earliest to the latest date
+    date_range = pd.date_range(start=df.index.min(), end=df.index.max(), freq='D')
+    
+    # Reindex the DataFrame to include all dates in the range
+    df = df.reindex(date_range)
+    
+    # Add 'Training Day' column: 1 if there's data, 0 otherwise
+    df['Training Day'] = df.notna().any(axis=1).astype(int)
+    
+    return df
+
 
 
 def prepare_monthly_data(df):
@@ -363,7 +353,8 @@ def prepare_monthly_data(df):
         'Weighted Hammer Curls Sum record broken': 'sum',
         'Weighted Turm Zug Average record broken': 'sum',
         'Weighted Turm Zug Max record broken': 'sum',
-        'Weighted Turm Zug Sum record broken': 'sum'
+        'Weighted Turm Zug Sum record broken': 'sum',
+        'Training Day': 'sum'
     })
 
     # Calculate the total records broken for each type (Average, Max, Sum) across all exercises
@@ -377,16 +368,20 @@ def prepare_monthly_data(df):
         monthly_stats.filter(like='Sum record broken').sum(axis=1)
     )
 
-    # Count the number of training days per month
-    monthly_stats['Total Training Days'] = df.groupby('month').size()
+    # # Count the number of training days per month
+    # monthly_stats['Total Training Days'] = df.groupby('month').size()
 
     return monthly_stats
 
 
 def complete_data_wrangeling(initial_data):
 
+    
+    
     # extract weights and reps and band strength
     data = weight_reps_exctracter(initial_data)
+
+    data = mark_training_days(data)
 
     # calculate no weight averages, max and sum for liegestütze, planke and kniebeugen
     data = calc_sets_overview_no_weights(data)
@@ -415,6 +410,7 @@ def complete_data_wrangeling(initial_data):
     data = calc_record_broken_columns(data)
 
     data = add_total_records_broken(data)
+    
 
     monthly_stats_data = prepare_monthly_data(data)
 

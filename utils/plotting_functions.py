@@ -1872,7 +1872,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['MNTHS'].set_ylim([0, 16])
 
     # Define the exercise-specific categories for monthly plot
-    categories = ['Total Sum records broken', 'Total Max records broken', 'Total Average records broken', "Total Training Days"]
+    categories = ['Total Sum records broken', 'Total Max records broken', 'Total Average records broken', "Training Day"]
     category_colors = ['grey', 'gold', 'green', "blue"]  # Assign colors for each monthly plot category
 
     # Define horizontal offsets for each category
