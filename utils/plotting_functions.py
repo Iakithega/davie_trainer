@@ -1651,6 +1651,11 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['PUSH'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
+    custom_labels = ['Sum Records', 'Max Records', 'Average Records']
+    axs['PUSH'].legend(labels=custom_labels, loc='upper right', fontsize=4.7, borderaxespad=0.3, 
+                       handletextpad=0.01, columnspacing=0.8, ncol=3)
+ 
+
 
 
 
@@ -1929,7 +1934,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['MNTHS'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
     axs['MNTHS'].tick_params(axis='x', which='minor', labelsize=6)
     axs['MNTHS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
-    axs['MNTHS'].set_ylim([0, 16])
+    axs['MNTHS'].set_ylim([0, 22])
 
     # Define the exercise-specific categories for monthly plot
     categories = ['Total Sum records broken', 'Total Max records broken', 'Total Average records broken', "Training Day"]
@@ -1940,7 +1945,7 @@ def rec_overview_plot(data, monthly_stats_data):
     base_x_offset = np.arange(len(monthly_stats_data.index))  # X positions for months
 
     for i, month in enumerate(monthly_stats_data.index):
-        # For each category (Sum, Max, Average for Liegestütz)
+    # For each category (Sum, Max, Average for Liegestütz)
         for j, category in enumerate(categories):
             # Get the value for the category (how many dots to draw)
             value = monthly_stats_data.loc[month, category]
@@ -1952,13 +1957,25 @@ def rec_overview_plot(data, monthly_stats_data):
             x_positions = np.full(len(y_positions), base_x_offset[i] + j * offset)  # Horizontally offset categories
 
             if value > 0:
-                # Plot the dots for the current category
+                # Plot the regular dots for the current category
                 axs['MNTHS'].scatter(x_positions, y_positions, color=category_colors[j],
                                     label=category if i == 0 else "", s=10)
+                
+                # Plot the larger empty dot ("o" symbol) on top of the stack
+                # Position the empty dot at one unit above the highest dot
+                axs['MNTHS'].scatter(base_x_offset[i] + j * offset, value + 2.5, 
+                                    facecolors='none', edgecolors=category_colors[j],
+                                    label="", s=70, marker='o')  # Larger size for the empty "o" symbol
+                
+                # Write the number of dots (value) inside the larger empty dot
+                axs['MNTHS'].text(base_x_offset[i] + j * offset, value + 2.5, str(value), 
+                                ha='center', va='center', fontsize=5, color="black") #color=category_colors[j]
+
             else:
                 # Plot a marker (e.g., a small line) to indicate zero records
                 axs['MNTHS'].scatter(base_x_offset[i] + j * offset, 1, facecolors='none', color=category_colors[j],
                                     marker='o', s=15)
+
 
     # Set major ticks for months
     axs['MNTHS'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
