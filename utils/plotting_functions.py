@@ -1,19 +1,25 @@
-import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import pandas as pd 
-import configparser
-
-
-import os.path
-
-import numpy as np
-from PIL import Image
-
-
+from matplotlib.patches import Rectangle
+from matplotlib.patches import Polygon
+from matplotlib.patches import PathPatch
+from matplotlib.path import Path
+import matplotlib.path as mpath
 import matplotlib.dates as mdates
 from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
 import matplotlib.image as mpimg
+import seaborn as sns
+
+from PIL import Image
+
+import streamlit as st
+from streamlit_extras.mandatory_date_range import date_range_picker 
+
+import pandas as pd 
+import numpy as np
+
+import os.path
+import configparser
 
 from datetime import datetime
 from datetime import timedelta
@@ -23,17 +29,9 @@ import calendar
 import yaml
 import json
 
-from streamlit_extras.mandatory_date_range import date_range_picker 
-
-
-from matplotlib.patches import Rectangle
-from matplotlib.patches import Polygon
-from matplotlib.patches import PathPatch
-from matplotlib.path import Path
-import matplotlib.path as mpath
-
 from utils.utils import *
 from utils.data_engineering import *
+
 
 config_path = os.path.join("utils", "paths.ini")
 
@@ -332,10 +330,18 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
                                 ['PLK', 'PLK', 'PLK', 'PLK', 'PLK', 'PLK_BX'],
                                 ],
                                 figsize=(10, 5))
+    
+    # Adjust the top margin to make space for the image and title
+    plt.subplots_adjust(wspace=.2, hspace=.8, top=0.85)
     fig.patch.set_alpha(0.5)
-    fig.suptitle(f'''Planke''', size=10)
+    fig.suptitle(f'''Planke''', size=10, y=1)
+    
+    # Create an axes for the image in the upper left corner
+    image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
+    # Hide the axes frame and display the image in the axes
+    image_ax.axis('off')
+    image_ax.imshow(plnk_pic)
 
-    plt.subplots_adjust(wspace=.2, hspace=.8)
 
     axs['PLK'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -555,10 +561,17 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
                                 ['KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG', 'KNBG_BX'],
                                 ],
                                 figsize=(10, 5))
-    fig.patch.set_alpha(0.5)
-    fig.suptitle(f'''Kniebeugen''', size=10)
     
-    plt.subplots_adjust(wspace=.2, hspace=.8)
+    plt.subplots_adjust(wspace=.2, hspace=.8, top=0.85)
+    fig.patch.set_alpha(0.5)
+    fig.suptitle(f'''Kniebeugen''', size=10, y=1)
+    
+    # Create an axes for the image in the upper left corner
+    image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
+    # Hide the axes frame and display the image in the axes
+    image_ax.axis('off')
+    image_ax.imshow(knbg_pic)
+
 
     
     axs['KNBG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -777,12 +790,17 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
                                 ['HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_BX'],
                                 ],
                                 figsize=(10, 5))
-    fig.suptitle(f'''Hammer Curls''', size=10) 
+    
+    plt.subplots_adjust(wspace=.2, hspace=.8, top=0.85)
+    fig.suptitle(f'''Hammer Curls''', size=10, y=1) 
     fig.patch.set_alpha(0.5)
     
-    plt.subplots_adjust(wspace=.2, hspace=.8)
+    # Create an axes for the image in the upper left corner
+    image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
+    # Hide the axes frame and display the image in the axes
+    image_ax.axis('off')
+    image_ax.imshow(hmcrl_pic)
 
-    
 
     axs['HMCRL'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -1024,10 +1042,18 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
                                 ['TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD', 'TRMRD_BX'],
                                 ],
                                 figsize=(10, 5))
-    fig.suptitle(f'''Turm Rudern''', size=10)
+    
+    plt.subplots_adjust(wspace=.2, hspace=.8, top=0.85)
+    fig.suptitle(f'''Turm Rudern''', size=10, y=1)
     fig.patch.set_alpha(0.5)
     
-    plt.subplots_adjust(wspace=.2, hspace=.8)
+    # Create an axes for the image in the upper left corner
+    image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
+    # Hide the axes frame and display the image in the axes
+    image_ax.axis('off')
+    image_ax.imshow(tmrd_pic)
+
+
 
     axs['TRMRD'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['TRMRD'].set_title(f"Progress Turm Rudern", size=7)
@@ -1295,10 +1321,16 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
                                 ['TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG', 'TRMZG_BX'],
                                 ],
                                 figsize=(10, 5))
-    fig.suptitle(f'''Turm Zug''', size=10)
+    
+    plt.subplots_adjust(wspace=.2, hspace=.8, top=0.85)
+    fig.suptitle(f'''Turm Zug''', size=10, y=1)
     fig.patch.set_alpha(0.5)
-
-    plt.subplots_adjust(wspace=.2, hspace=.8)
+    
+    # Create an axes for the image in the upper left corner
+    image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
+    # Hide the axes frame and display the image in the axes
+    image_ax.axis('off')
+    image_ax.imshow(tmzg_pic)
 
     axs['TRMZG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['TRMZG'].set_title(f"Progress Turm Zug", size=7)
