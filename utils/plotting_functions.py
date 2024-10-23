@@ -6,6 +6,8 @@ import pandas as pd
 import os.path
 
 import numpy as np
+from PIL import Image
+
 
 import matplotlib.dates as mdates
 from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
@@ -56,6 +58,8 @@ def moving_average_plot(ax, data, name, window=3):
     ax.scatter(training_data.index, training_data[ma_column], color="gray", s=10)
 
 
+    
+    
 def pushup_plot(data, monthly_stats_data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
@@ -64,10 +68,29 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
                                 ['LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ', 'LGSTZ_BX']
                                 ],
                                 figsize=(10, 5))
-    fig.suptitle(f'''Push Ups''', size=10)
+    
+    # Adjust the top margin to make space for the image and title
+    plt.subplots_adjust(wspace=.2, hspace=.8, top=0.85)
+    fig.suptitle(f'''Push Ups''', size=10, y=1)
     fig.patch.set_alpha(0.5)
+    
 
-    plt.subplots_adjust(wspace=.2, hspace=.8)
+    # # Load your image (replace 'your_image.png' with the actual path to your image)
+    push_pic_path = os.path.join("media", "exercise_pictures", "push_up_1_panorama.png")
+    push_pic = Image.open(push_pic_path)
+    
+    # Create an axes for the image in the upper left corner
+    image_ax = fig.add_axes([0.01, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
+    # Hide the axes frame and display the image in the axes
+    image_ax.axis('off')
+    image_ax.imshow(push_pic)
+
+    
+    
+
+
+
+    
     
     
     axs['LGSTZ'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -1520,33 +1543,9 @@ def rec_overview_plot(data, monthly_stats_data):
         pos = axs[key].get_position()
         
         # Adjust the width (decrease it to make space smaller on the right)
-        axs[key].set_position([pos.x0, pos.y0, pos.width * 1.55, pos.height])
+        axs[key].set_position([pos.x0, pos.y0, pos.width * 1.5, pos.height])
 
     
-    # axs['KNBG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
-
-    # axs['KNBG'].set_title(f"Progress Kniebeugen", size=7)
-    # axs['KNBG'].set_xlabel(' ', size=14)
-    # axs['KNBG'].set_ylabel('Reps', size=8)
-    # axs['KNBG'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    # axs['KNBG'].set_ylim([0, 60])
-
-    # # Set font size for major and minor ticks
-    # axs['KNBG'].tick_params(axis='x', which='major', labelsize=5, rotation=45)  
-    # axs['KNBG'].tick_params(axis='x', which='minor', labelsize=5, rotation=45)
-    # axs['KNBG'].tick_params(axis='y', which='major', labelsize=6) 
-
-    # # Set major ticks and thick lines to be placed on the first of every month
-    # axs['KNBG'].xaxis.set_major_locator(mdates.MonthLocator())  
-    # axs['KNBG'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
-    # axs['KNBG'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)
-
-    # axs['KNBG'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
-    # axs['KNBG'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
-    # axs['KNBG'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3
-
-
-
 
     # THE RECORDS PLOT
     axs['PUSH'].set_title(f" ", size=7)
