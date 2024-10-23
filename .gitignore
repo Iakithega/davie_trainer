@@ -1,6 +1,5 @@
 *venv
 .venv/
 .venv_devtrain/
-.venv_devtrain
-
 secrets.toml
+.VSCodeCounter/
