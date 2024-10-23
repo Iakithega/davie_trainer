@@ -1513,6 +1513,15 @@ def rec_overview_plot(data, monthly_stats_data):
 
     plt.subplots_adjust(wspace=.2, hspace=.2)
 
+    # Moving the PIC Plots closer to the main plot
+    pic_keys = ['PUSH_PIC', 'KNBG_PIC', 'PLNK_PIC', 'HMCRL_PIC', 'TMRD_PIC', 'TMZG_PIC']
+    for key in pic_keys:
+        # Get the current position of the subplot
+        pos = axs[key].get_position()
+        
+        # Adjust the width (decrease it to make space smaller on the right)
+        axs[key].set_position([pos.x0, pos.y0, pos.width * 1.55, pos.height])
+
     
     # axs['KNBG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -1920,7 +1929,7 @@ def rec_overview_plot(data, monthly_stats_data):
     push_pic_path = os.path.join("media", "exercise_pictures", "push_up_1_panorama.png")
     image = mpimg.imread(push_pic_path)
 
-    # Clear the current plot for 'TMZG'
+    # Clear the current plot for PUSH UPS
     axs['PUSH_PIC'].cla()
 
     # Display the image in the plot
