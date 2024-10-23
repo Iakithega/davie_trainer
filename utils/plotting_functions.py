@@ -49,7 +49,6 @@ def load_all_images(config_file=config_path):
     
     # Dictionary to store the images
     images = {}
-    
     for key, path in config['img_paths'].items():
         try:
             images[key] = Image.open(path)  # Load the image and store it in the dictionary
@@ -103,11 +102,6 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     plt.subplots_adjust(wspace=.2, hspace=.8, top=0.85)
     fig.suptitle(f'''Push Ups''', size=10, y=1)
     fig.patch.set_alpha(0.5)
-    
-
-    # # # Load your image (replace 'your_image.png' with the actual path to your image)
-    # push_pic_path = os.path.join("media", "exercise_pictures", "push_up_1_panorama.png")
-    # push_pic = Image.open(push_pic_path)
     
     # Create an axes for the image in the upper left corner
     image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
@@ -1946,89 +1940,67 @@ def rec_overview_plot(data, monthly_stats_data):
     # PIC PUSH UPS
     # Add grid
     axs['PUSH_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
-    # Load your image (replace 'your_image.png' with the actual path to your image)
-    push_pic_path = os.path.join("media", "exercise_pictures", "push_up_1_panorama.png")
-    image = mpimg.imread(push_pic_path)
     # Clear the current plot for PUSH UPS
     axs['PUSH_PIC'].cla()
     # Display the image in the plot
-    axs['PUSH_PIC'].imshow(image)
+    axs['PUSH_PIC'].imshow(push_pic)
     # Remove axis labels and ticks (optional, if you want the image alone)
     axs['PUSH_PIC'].axis('off')  # This removes the axis
-
 
 
     # PIC PUSH UPS
     # Add grid
     axs['KNBG_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
-    # Load your image (replace 'your_image.png' with the actual path to your image)
-    push_pic_path = os.path.join("media", "exercise_pictures", "squats_panorama.png")
-    image = mpimg.imread(push_pic_path)
     # Clear the current plot for 'TMZG'
     axs['KNBG_PIC'].cla()
     # Display the image in the plot
-    axs['KNBG_PIC'].imshow(image)
+    axs['KNBG_PIC'].imshow(knbg_pic)
     # Remove axis labels and ticks (optional, if you want the image alone)
     axs['KNBG_PIC'].axis('off')  # This removes the axis
-
 
 
     # PIC PLANKE  
     # Add grid
     axs['PLNK_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
-    # Load your image (replace 'your_image.png' with the actual path to your image)
-    push_pic_path = os.path.join("media", "exercise_pictures", "plank_optimal_panorama.png")
-    image = mpimg.imread(push_pic_path)
     # Clear the current plot for 'TMZG'
     axs['PLNK_PIC'].cla()
     # Display the image in the plot
-    axs['PLNK_PIC'].imshow(image)
+    axs['PLNK_PIC'].imshow(plnk_pic)
     # Remove axis labels and ticks (optional, if you want the image alone)
     axs['PLNK_PIC'].axis('off')  # This removes the axis
-
 
 
     # PIC HAMMERCURL
     # Add grid
     axs['HMCRL_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
-    # Load your image (replace 'your_image.png' with the actual path to your image)
-    push_pic_path = os.path.join("media", "exercise_pictures", "hammercurl_spacy__panorama.png")
-    image = mpimg.imread(push_pic_path)
     # Clear the current plot for 'TMZG'
     axs['HMCRL_PIC'].cla()
     # Display the image in the plot
-    axs['HMCRL_PIC'].imshow(image)
+    axs['HMCRL_PIC'].imshow(hmcrl_pic)
     # Remove axis labels and ticks (optional, if you want the image alone)
     axs['HMCRL_PIC'].axis('off')  # This removes the axis
-
 
 
     # PIC TURM RUDERN 
     # Add grid
     axs['TMRD_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
-    # Load your image (replace 'your_image.png' with the actual path to your image)
-    push_pic_path = os.path.join("media", "exercise_pictures", "turmrudern_spacy_2_panorama.png")
-    image = mpimg.imread(push_pic_path)
     # Clear the current plot for 'TMZG'
     axs['TMRD_PIC'].cla()
     # Display the image in the plot
-    axs['TMRD_PIC'].imshow(image)
-    # Remove axis labels and ticks (optional, if you want the image alone)
-    axs['TMRD_PIC'].axis('off')  # This removes the axis
+    axs['TMRD_PIC'].imshow(tmrd_pic)
+    # Remove axis labels and ticks 
+    axs['TMRD_PIC'].axis('off')  
 
 
     # PIC TURM ZUG 
     # Add grid
     axs['TMZG_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
-    # Load your image (replace 'your_image.png' with the actual path to your image)
-    push_pic_path = os.path.join("media", "exercise_pictures", "turmzug_spacy__panoram_best.png")
-    image = mpimg.imread(push_pic_path)
     # Clear the current plot for 'TMZG'
     axs['TMZG_PIC'].cla()
     # Display the image in the plot
-    axs['TMZG_PIC'].imshow(image)
-    # Remove axis labels and ticks (optional, if you want the image alone)
-    axs['TMZG_PIC'].axis('off')  # This removes the axis
+    axs['TMZG_PIC'].imshow(tmzg_pic)
+    # Remove axis labels and ticks 
+    axs['TMZG_PIC'].axis('off') 
 
     return fig
 
