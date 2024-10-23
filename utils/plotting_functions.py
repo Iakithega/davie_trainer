@@ -1918,9 +1918,8 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['PUSH_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
-    push_pic_path = os.path.join("media", "exercise_pictures", "push_up_1.png")
-
     # Load your image (replace 'your_image.png' with the actual path to your image)
+    push_pic_path = os.path.join("media", "exercise_pictures", "push_up_1.png")
     image = mpimg.imread(push_pic_path)
 
     # Clear the current plot for 'TMZG'
@@ -1938,9 +1937,8 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['KNBG_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
-    push_pic_path = os.path.join("media", "exercise_pictures", "squats_1.webp")
-
     # Load your image (replace 'your_image.png' with the actual path to your image)
+    push_pic_path = os.path.join("media", "exercise_pictures", "squats_1.webp")
     image = mpimg.imread(push_pic_path)
 
     # Clear the current plot for 'TMZG'
@@ -1958,9 +1956,8 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['PLNK_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
-    push_pic_path = os.path.join("media", "exercise_pictures", "plank_not_optimal.png")
-
     # Load your image (replace 'your_image.png' with the actual path to your image)
+    push_pic_path = os.path.join("media", "exercise_pictures", "plank_not_optimal.png")
     image = mpimg.imread(push_pic_path)
 
     # Clear the current plot for 'TMZG'
@@ -1979,9 +1976,8 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['HMCRL_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
-    push_pic_path = os.path.join("media", "exercise_pictures", "hammercurl_spacy_1.png")
-
     # Load your image (replace 'your_image.png' with the actual path to your image)
+    push_pic_path = os.path.join("media", "exercise_pictures", "hammercurl_spacy_1.png")
     image = mpimg.imread(push_pic_path)
 
     # Clear the current plot for 'TMZG'
@@ -1999,9 +1995,8 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['TMRD_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
-    push_pic_path = os.path.join("media", "exercise_pictures", "turmrudern_spacy_2_panorama.png")
-
     # Load your image (replace 'your_image.png' with the actual path to your image)
+    push_pic_path = os.path.join("media", "exercise_pictures", "turmrudern_spacy_2_panorama.png")
     image = mpimg.imread(push_pic_path)
 
     # Clear the current plot for 'TMZG'
@@ -2018,9 +2013,8 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['TMRD_PIC'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
 
-    push_pic_path = os.path.join("media", "exercise_pictures", "turmzug_spacy__panoram_best.png")
-
     # Load your image (replace 'your_image.png' with the actual path to your image)
+    push_pic_path = os.path.join("media", "exercise_pictures", "turmzug_spacy__panoram_best.png")
     image = mpimg.imread(push_pic_path)
 
     # Clear the current plot for 'TMZG'
