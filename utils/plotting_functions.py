@@ -168,7 +168,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     # Set major ticks and thick lines to be placed on the first of every month
     axs['LGSTZ_REC'].xaxis.set_major_locator(mdates.MonthLocator())  
     axs['LGSTZ_REC'].xaxis.set_major_formatter(mdates.DateFormatter('''%a %d.%m''')) 
-    axs['LGSTZ_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
+    axs['LGSTZ_REC'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.3)  
 
     axs['LGSTZ_REC'].xaxis.set_minor_locator(mdates.WeekdayLocator(byweekday=()))
     axs['LGSTZ_REC'].xaxis.set_minor_formatter(mdates.DateFormatter('''%a %d.%m''')) # \n %a'
@@ -314,6 +314,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
 
     # Add grid
     axs['LGSTZ_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5)
+    axs['LGSTZ_RECS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.3)
 
 
    
@@ -547,6 +548,7 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
 
     # Add grid
     axs['PLK_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5)
+    axs['PLK_RECS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.3)
 
 
     return fig
@@ -778,6 +780,7 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
 
     # Add grid
     axs['KNBG_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['KNBG_RECS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.3)
 
     return fig
 
@@ -832,12 +835,12 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
     axs['HMCRL'].bar(dates, data["Weighted Hammer Curls set 2 reps"], alpha=1, width=bar_width, color="dodgerblue", label="Set 2")
     axs['HMCRL'].bar(dates + pd.Timedelta(hours=10), data["Weighted Hammer Curls set 3 reps"], alpha=1, color="darkviolet", width=bar_width, label="Set 3") 
 
-    for set_name, offset in zip(["Weighted Hammer Curls set 1 reps", "Weighted Hammer Curls set 2 reps", "Weighted Hammer Curls set 3 reps"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Weighted Hammer Curls set 1 reps", "Weighted Hammer Curls set 2 reps", "Weighted Hammer Curls set 3 reps"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=12)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['HMCRL'].text(date + offset, value + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
     
-    for set_name, offset in zip(["Weighted Hammer Curls set 1 weight", "Weighted Hammer Curls set 2 weight", "Weighted Hammer Curls set 3 weight"], [-pd.Timedelta(hours=12), pd.Timedelta(0), pd.Timedelta(hours=12)]):
+    for set_name, offset in zip(["Weighted Hammer Curls set 1 weight", "Weighted Hammer Curls set 2 weight", "Weighted Hammer Curls set 3 weight"], [-pd.Timedelta(hours=16), pd.Timedelta(0), pd.Timedelta(hours=12)]):
         for date, value in data[set_name].loc[start_date:current_date].items():
             if not pd.isna(value):
                 axs['HMCRL'].text(date + offset, value/2 + 0.5, f"{round(value)}", va='center', ha='center', fontsize=5, color='black')
@@ -1028,6 +1031,7 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
 
     # Add grid
     axs['HMCRL_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['HMCRL_RECS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.3)
 
     return fig
 
@@ -1306,6 +1310,7 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
 
     # Add grid
     axs['TRMRD_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['TRMRD_RECS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.3)
 
     return fig
 
@@ -1557,6 +1562,8 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
 
     # Add grid
     axs['TRMZG_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['TRMZG_RECS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.3)
+    
 
     return fig
 

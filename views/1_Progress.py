@@ -54,12 +54,16 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.title("David Train")
 
+
 # calculate the current date for plots
-start_date = "2024.08.10"
+min_date = datetime.strptime("2024.08.10", "%Y.%m.%d")
 # Get the current date
 current_date = datetime.today() + timedelta(days=3)
+last_50_days = datetime.today() - timedelta(days=50)
 # Format the date as 'YYYY-MM-DD'
 current_date = current_date.strftime('%Y-%m-%d')
+
+
 
 @st.cache_data
 def load_and_process_data():
@@ -78,36 +82,39 @@ with st.expander("Raw Table all data"):
 # overview of the datas in a dataframe after Data Wrangeling 
 with st.expander("Raw Table monthly stats"): 
     st.dataframe(monthly_stats_data)
-v_spacer(height=7, sb=False)
+v_spacer(height=5, sb=False)
+
+
+# picking starting date for the plots
+date_col1, date_col2 = st.columns([1, 10])
+with date_col1:
+    start_date = st.date_input(label="Start Date", value=last_50_days, min_value=min_date)
+    v_spacer(height=2, sb=False)
 
 
 
 fig_pushup = pushup_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_pushup)
-
 v_spacer(height=2, sb=False)
 
 fig_planke = plank_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_planke)
-
 v_spacer(height=2, sb=False)
 
 fig_kniebeuge = kniebeuge_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_kniebeuge)
-
 v_spacer(height=2, sb=False)
 
 fig_hammercurl = hamcurls_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_hammercurl)
-
 v_spacer(height=2, sb=False)
 
 fig_turmrud = turmrud_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_turmrud)
-
 v_spacer(height=2, sb=False)
 
 fig_turmzg = turmzg_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_turmzg)
+v_spacer(height=2, sb=False)
 
 
