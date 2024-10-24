@@ -105,7 +105,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
     # Hide the axes frame and display the image in the axes
     image_ax.axis('off')
-    image_ax.imshow(push_pic)
+    image_ax.imshow(push_pic, alpha=0.6)
 
     
     axs['LGSTZ'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -340,7 +340,7 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
     image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
     # Hide the axes frame and display the image in the axes
     image_ax.axis('off')
-    image_ax.imshow(plnk_pic)
+    image_ax.imshow(plnk_pic, alpha=0.5)
 
 
     axs['PLK'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -570,7 +570,7 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
     image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
     # Hide the axes frame and display the image in the axes
     image_ax.axis('off')
-    image_ax.imshow(knbg_pic)
+    image_ax.imshow(knbg_pic, alpha=0.5)
 
 
     
@@ -799,7 +799,7 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
     image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
     # Hide the axes frame and display the image in the axes
     image_ax.axis('off')
-    image_ax.imshow(hmcrl_pic)
+    image_ax.imshow(hmcrl_pic, alpha=0.5)
 
 
     axs['HMCRL'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -1051,7 +1051,7 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
     image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
     # Hide the axes frame and display the image in the axes
     image_ax.axis('off')
-    image_ax.imshow(tmrd_pic)
+    image_ax.imshow(tmrd_pic, alpha=0.5)
 
 
 
@@ -1330,7 +1330,7 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
     image_ax = fig.add_axes([0.07, 0.91, 0.25, 0.09], anchor='NW')  # [left, bottom, width, height]
     # Hide the axes frame and display the image in the axes
     image_ax.axis('off')
-    image_ax.imshow(tmzg_pic)
+    image_ax.imshow(tmzg_pic, alpha=0.5)
 
     axs['TRMZG'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
     axs['TRMZG'].set_title(f"Progress Turm Zug", size=7)
@@ -1572,7 +1572,6 @@ def rec_overview_plot(data, monthly_stats_data):
                                 ['HMCRL_PIC', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL', 'HMCRL_SUM', 'HMCRL_SUM'],
                                 ['TMRD_PIC', 'TMRD', 'TMRD', 'TMRD', 'TMRD', 'TMRD_SUM', 'TMRD_SUM'],
                                 ['TMZG_PIC', 'TMZG', 'TMZG', 'TMZG', 'TMZG', 'TRMZG_SUM', 'TRMZG_SUM'],
-                                # ['.', 'N_TRN', 'N_TRN', 'N_TRN', 'N_TRN', 'N_TRN_SUM', 'N_TRN_SUM'],
                                 ['.', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS_ALL_SUM', 'MNTHS_ALL_SUM'],
                                 ['.', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS', 'MNTHS_ALL_SUM', 'MNTHS_ALL_SUM']],
                                 figsize=(10, 5)
@@ -1605,14 +1604,10 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['PUSH'].set_ylabel('Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
-    axs['PUSH'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
-    axs['PUSH'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['PUSH'].tick_params(axis='x', labeltop=True, labelbottom=False, which='major', labelsize=6, rotation=0)
     axs['PUSH'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['PUSH'].set_ylim([0, 8])
 
-
-    # Define the common list of months
-    common_months = monthly_stats_data.index  # Assuming the index contains all months, even with zero records
 
     # Define the exercise-specific categories for Liegestütz
     categories = ['Liegestütz Sum record broken', 'Liegestütz Max record broken', 'Liegestütz Average record broken']
@@ -1650,6 +1645,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['PUSH'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['PUSH'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
 
     custom_labels = ['Sum Records', 'Max Records', 'Average Records']
     axs['PUSH'].legend(labels=custom_labels, loc='upper right', fontsize=4.7, borderaxespad=0.3, 
@@ -1669,8 +1665,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['KNBG'].set_ylabel('Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
-    axs['KNBG'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
-    axs['KNBG'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['KNBG'].tick_params(axis='x', which='both', labelbottom=False)
     axs['KNBG'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['KNBG'].set_ylim([0, 8])
 
@@ -1709,6 +1704,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['KNBG'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['KNBG'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
 
 
 
@@ -1721,8 +1717,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['PLNK'].set_ylabel('Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
-    axs['PLNK'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
-    axs['PLNK'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['PLNK'].tick_params(axis='x', which='both', labelbottom=False)
     axs['PLNK'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['PLNK'].set_ylim([0, 8])
 
@@ -1761,6 +1756,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['PLNK'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['PLNK'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
 
 
 
@@ -1774,8 +1770,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['HMCRL'].set_ylabel('Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
-    axs['HMCRL'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
-    axs['HMCRL'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['HMCRL'].tick_params(axis='x', which='both', labelbottom=False)
     axs['HMCRL'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['HMCRL'].set_ylim([0, 8])
 
@@ -1814,6 +1809,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['HMCRL'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['HMCRL'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
 
 
 
@@ -1827,8 +1823,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['TMRD'].set_ylabel('Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
-    axs['TMRD'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
-    axs['TMRD'].tick_params(axis='x', which='minor', labelsize=6)
+    axs['TMRD'].tick_params(axis='x', which='both', labelbottom=False)
     axs['TMRD'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['TMRD'].set_ylim([0, 8])
 
@@ -1867,6 +1862,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['TMRD'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['TMRD'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
 
 
 
@@ -1876,12 +1872,10 @@ def rec_overview_plot(data, monthly_stats_data):
 
     axs['TMZG'].set_xlabel(' ', size=8)
     axs['TMZG'].yaxis.set_label_position("right")
-    axs['TMZG'].set_ylabel('Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
-    axs['TMZG'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
-    axs['TMZG'].tick_params(axis='x', which='minor', labelsize=6)
-    axs['TMZG'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['TMZG'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['TMZG'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['TMZG'].set_ylim([0, 8])
 
     # Define the exercise-specific categories for Turmzug
@@ -1919,6 +1913,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['TMZG'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['TMZG'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
 
 
     
@@ -1928,12 +1923,12 @@ def rec_overview_plot(data, monthly_stats_data):
 
     axs['MNTHS'].set_xlabel(' ', size=8)
     axs['MNTHS'].yaxis.set_label_position("right")
-    axs['MNTHS'].set_ylabel('Monthly Records', size=8, labelpad=5)
+    # axs['MNTHS'].set_ylabel('Monthly Records', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
     axs['MNTHS'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
     axs['MNTHS'].tick_params(axis='x', which='minor', labelsize=6)
-    axs['MNTHS'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['MNTHS'].tick_params(axis='y', labelright=False, labelleft=True, which='major', labelsize=6, grid_alpha=0.3)
     axs['MNTHS'].set_ylim([0, 22])
 
     # Define the exercise-specific categories for monthly plot
@@ -1983,6 +1978,8 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Add grid
     axs['MNTHS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['MNTHS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+    
 
 
 
