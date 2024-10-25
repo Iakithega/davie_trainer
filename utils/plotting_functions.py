@@ -2004,6 +2004,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['PUSH_SUM'].tick_params(axis='x', which='both', labelbottom=False)
     axs['PUSH_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['PUSH_SUM'].set_ylim([0, 6])
+    axs['PUSH_SUM'].set_xlim([0, 15])
 
 
     # Define only the specified categories
@@ -2020,6 +2021,197 @@ def rec_overview_plot(data, monthly_stats_data):
     # Add grid
     axs['PUSH_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
     axs['PUSH_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
+
+
+    # THE RECORDS SUM EXERSICE KNIEBEUGEN
+    axs['KNBG_SUM'].set_title(f" ", size=7)
+    axs['KNBG_SUM'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['KNBG_SUM'].set_xlabel(' ', size=8)
+    axs['KNBG_SUM'].yaxis.set_label_position("right")
+
+    # # Set font size for major and minor ticks
+    axs['KNBG_SUM'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['KNBG_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['KNBG_SUM'].set_ylim([0, 6])
+    axs['KNBG_SUM'].set_xlim([0, 15])
+
+
+    # Define only the specified categories
+    categories = ['Kniebeugen Average record broken', 'Kniebeugen Max record broken', 'Kniebeugen Sum record broken']
+    category_colors = ['grey', 'gold', 'green']  # Define colors for the three categories
+
+    # Calculate the total sum across the three months for each specified category
+    totals = monthly_stats_data[categories].sum()
+
+    # Plot a single horizontal bar for each specified category with the total sums
+    # y_positions = np.arange(len(categories))
+    axs['KNBG_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Add grid
+    axs['KNBG_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['KNBG_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
+
+
+
+    # THE RECORDS SUM EXERSICE PLANKE
+    axs['PLNK_SUM'].set_title(f" ", size=7)
+    axs['PLNK_SUM'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['PLNK_SUM'].set_xlabel(' ', size=8)
+    axs['PLNK_SUM'].yaxis.set_label_position("right")
+
+    # # Set font size for major and minor ticks
+    axs['PLNK_SUM'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['PLNK_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['PLNK_SUM'].set_ylim([0, 6])
+    axs['PLNK_SUM'].set_xlim([0, 15])
+
+
+    # Define only the specified categories
+    categories = ['Planke Average record broken', 'Planke Max record broken', 'Planke Sum record broken']
+    category_colors = ['grey', 'gold', 'green']  # Define colors for the three categories
+
+    # Calculate the total sum across the three months for each specified category
+    totals = monthly_stats_data[categories].sum()
+
+    # Plot a single horizontal bar for each specified category with the total sums
+    # y_positions = np.arange(len(categories))
+    axs['PLNK_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Add grid
+    axs['PLNK_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['PLNK_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
+
+
+    # THE RECORDS SUM EXERSICE HAMMERCURLS
+    axs['HMCRL_SUM'].set_title(f" ", size=7)
+    axs['HMCRL_SUM'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['HMCRL_SUM'].set_xlabel(' ', size=8)
+    axs['HMCRL_SUM'].yaxis.set_label_position("right")
+
+    # # Set font size for major and minor ticks
+    axs['HMCRL_SUM'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['HMCRL_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['HMCRL_SUM'].set_ylim([0, 6])
+    axs['HMCRL_SUM'].set_xlim([0, 15])
+
+
+    # Define only the specified categories
+    categories = ['Weighted Hammer Curls Average record broken', 'Weighted Hammer Curls Max record broken', 'Weighted Hammer Curls Sum record broken']
+    category_colors = ['grey', 'gold', 'green']  # Define colors for the three categories
+
+    # Calculate the total sum across the three months for each specified category
+    totals = monthly_stats_data[categories].sum()
+
+    # Plot a single horizontal bar for each specified category with the total sums
+    # y_positions = np.arange(len(categories))
+    axs['HMCRL_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Add grid
+    axs['HMCRL_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['HMCRL_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
+
+
+
+
+    # THE RECORDS SUM EXERSICE TRURMRUDERN
+    axs['TMRD_SUM'].set_title(f" ", size=7)
+    axs['TMRD_SUM'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['TMRD_SUM'].set_xlabel(' ', size=8)
+    axs['TMRD_SUM'].yaxis.set_label_position("right")
+
+    # # Set font size for major and minor ticks
+    axs['TMRD_SUM'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['TMRD_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['TMRD_SUM'].set_ylim([0, 6])
+    axs['TMRD_SUM'].set_xlim([0, 15])
+
+
+    # Define only the specified categories
+    categories = ['Weighted Turm Rudern Average record broken', 'Weighted Turm Rudern Max record broken', 'Weighted Turm Rudern Sum record broken']
+    category_colors = ['grey', 'gold', 'green']  # Define colors for the three categories
+
+    # Calculate the total sum across the three months for each specified category
+    totals = monthly_stats_data[categories].sum()
+
+    # Plot a single horizontal bar for each specified category with the total sums
+    # y_positions = np.arange(len(categories))
+    axs['TMRD_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Add grid
+    axs['TMRD_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['TMRD_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
+
+
+
+    # THE RECORDS SUM EXERSICE TRURMRUDERN
+    axs['TRMZG_SUM'].set_title(f" ", size=7)
+    axs['TRMZG_SUM'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['TRMZG_SUM'].set_xlabel(' ', size=8)
+    axs['TRMZG_SUM'].yaxis.set_label_position("right")
+
+    # # Set font size for major and minor ticks
+    axs['TRMZG_SUM'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['TRMZG_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['TRMZG_SUM'].set_ylim([0, 6])
+    axs['TRMZG_SUM'].set_xlim([0, 15])
+
+
+    # Define only the specified categories
+    categories = ['Weighted Turm Zug Average record broken', 'Weighted Turm Zug Max record broken', 'Weighted Turm Zug Sum record broken']
+    category_colors = ['grey', 'gold', 'green']  # Define colors for the three categories
+
+    # Calculate the total sum across the three months for each specified category
+    totals = monthly_stats_data[categories].sum()
+
+    # Plot a single horizontal bar for each specified category with the total sums
+    # y_positions = np.arange(len(categories))
+    axs['TRMZG_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Add grid
+    axs['TRMZG_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['TRMZG_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
+
+
+
+    # THE RECORDS SUM EXERSICE TRURMRUDERN
+    axs['MNTHS_ALL_SUM'].set_title(f" ", size=7)
+    axs['MNTHS_ALL_SUM'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['MNTHS_ALL_SUM'].set_xlabel(' ', size=8)
+    axs['MNTHS_ALL_SUM'].yaxis.set_label_position("right")
+
+    # # Set font size for major and minor ticks
+    axs['MNTHS_ALL_SUM'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['MNTHS_ALL_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['MNTHS_ALL_SUM'].set_ylim([0, 7.5])
+    axs['MNTHS_ALL_SUM'].set_xlim([0, 50])
+
+
+    # Define only the specified categories
+    categories = ['Total Sum records broken', 'Total Max records broken', 'Total Average records broken', "Training Day"]
+    category_colors = ['grey', 'gold', 'green', "blue"]  # Define colors for the three categories
+
+    # Calculate the total sum across the three months for each specified category
+    totals = monthly_stats_data[categories].sum()
+
+    # Plot a single horizontal bar for each specified category with the total sums
+    # y_positions = np.arange(len(categories))
+    axs['MNTHS_ALL_SUM'].barh((1.5, 3, 4.5, 6), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum', "Days"])
+
+    # Add grid
+    axs['MNTHS_ALL_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['MNTHS_ALL_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
 
 
 
