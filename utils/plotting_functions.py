@@ -1608,7 +1608,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     axs['PUSH'].set_xlabel(' ', size=8)
     axs['PUSH'].yaxis.set_label_position("right")
-    axs['PUSH'].set_ylabel('Records', size=8, labelpad=5)
+    axs['PUSH'].set_ylabel(' ', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
     axs['PUSH'].tick_params(axis='x', labeltop=True, labelbottom=False, which='major', labelsize=6, rotation=0)
@@ -1669,7 +1669,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     axs['KNBG'].set_xlabel(' ', size=8)
     axs['KNBG'].yaxis.set_label_position("right")
-    axs['KNBG'].set_ylabel('Records', size=8, labelpad=5)
+    axs['KNBG'].set_ylabel(' ', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
     axs['KNBG'].tick_params(axis='x', which='both', labelbottom=False)
@@ -1721,7 +1721,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     axs['PLNK'].set_xlabel(' ', size=8)
     axs['PLNK'].yaxis.set_label_position("right")
-    axs['PLNK'].set_ylabel('Records', size=8, labelpad=5)
+    axs['PLNK'].set_ylabel(' ', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
     axs['PLNK'].tick_params(axis='x', which='both', labelbottom=False)
@@ -1774,7 +1774,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     axs['HMCRL'].set_xlabel(' ', size=8)
     axs['HMCRL'].yaxis.set_label_position("right")
-    axs['HMCRL'].set_ylabel('Records', size=8, labelpad=5)
+    axs['HMCRL'].set_ylabel(' ', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
     axs['HMCRL'].tick_params(axis='x', which='both', labelbottom=False)
@@ -1827,7 +1827,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     axs['TMRD'].set_xlabel(' ', size=8)
     axs['TMRD'].yaxis.set_label_position("right")
-    axs['TMRD'].set_ylabel('Records', size=8, labelpad=5)
+    axs['TMRD'].set_ylabel(' ', size=8, labelpad=5)
 
     # # Set font size for major and minor ticks
     axs['TMRD'].tick_params(axis='x', which='both', labelbottom=False)
@@ -1987,6 +1987,42 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['MNTHS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
     axs['MNTHS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
     
+
+
+
+
+    
+
+    # THE RECORDS SUM EXERSICE PUSH UP
+    axs['PUSH_SUM'].set_title(f" ", size=7)
+    axs['PUSH_SUM'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['PUSH_SUM'].set_xlabel(' ', size=8)
+    axs['PUSH_SUM'].yaxis.set_label_position("right")
+
+    # # Set font size for major and minor ticks
+    axs['PUSH_SUM'].tick_params(axis='x', which='both', labelbottom=False)
+    axs['PUSH_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['PUSH_SUM'].set_ylim([0, 6])
+
+
+    # Define only the specified categories
+    categories = ['Liegestütz Average record broken', 'Liegestütz Max record broken', 'Liegestütz Sum record broken']
+    category_colors = ['grey', 'gold', 'green']  # Define colors for the three categories
+
+    # Calculate the total sum across the three months for each specified category
+    totals = monthly_stats_data[categories].sum()
+
+    # Plot a single horizontal bar for each specified category with the total sums
+    # y_positions = np.arange(len(categories))
+    axs['PUSH_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Add grid
+    axs['PUSH_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
+    axs['PUSH_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
+
+
 
 
 
