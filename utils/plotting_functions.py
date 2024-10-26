@@ -1931,7 +1931,7 @@ def rec_overview_plot(data, monthly_stats_data):
     # # Set font size for major and minor ticks
     axs['MNTHS'].tick_params(axis='x', which='major', labelsize=6, rotation=0)
     axs['MNTHS'].tick_params(axis='x', which='minor', labelsize=6)
-    axs['MNTHS'].tick_params(axis='y', labelright=False, labelleft=True, which='major', labelsize=6, grid_alpha=0.3)
+    axs['MNTHS'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['MNTHS'].set_ylim([0, 22])
 
     # Define the exercise-specific categories for monthly plot
@@ -1987,30 +1987,10 @@ def rec_overview_plot(data, monthly_stats_data):
 
 
     #########PLOTS FOR EXERSICE ALL SUM RECS###################
-    
-    #sum_recs_of_all_exers = [sum_rec for monthly_stats_data[categories].sum()]
 
+    # calculation of the highest record sum of all exersices for implementing a limit of the x axis for horizontal bar plots
     max_recsum_of_all_exersices = find_max_recsum_of_all_exersices(monthly_stats_data)
 
-    # def find_max_recsum_of_all_exersices():
-
-    #     all_exersices_list = ['Liegestütz Average record broken', 'Liegestütz Max record broken', 'Liegestütz Sum record broken',
-    #                       'Kniebeugen Average record broken', 'Kniebeugen Max record broken', 'Kniebeugen Sum record broken',
-    #                       'Planke Average record broken', 'Planke Max record broken', 'Planke Sum record broken',
-    #                       'Weighted Hammer Curls Average record broken', 'Weighted Hammer Curls Max record broken', 'Weighted Hammer Curls Sum record broken',
-    #                       'Weighted Turm Rudern Average record broken', 'Weighted Turm Rudern Max record broken', 'Weighted Turm Rudern Sum record broken',
-    #                       'Weighted Turm Zug Average record broken', 'Weighted Turm Zug Max record broken', 'Weighted Turm Zug Sum record broken'
-    #                       ]
-        
-    #     recsum_of_all_exers = []
-    #     for exersice in all_exersices_list:
-    #         exersice_sum = monthly_stats_data[exersice].sum()
-    #         recsum_of_all_exers.append(exersice_sum)
-    #         max_recsum = recsum_of_all_exers.max()
-    #     return max_recsum
-
-
-    
 
     # THE RECORDS SUM EXERSICE PUSH UP
     axs['PUSH_SUM'].set_title(f" ", size=7)
@@ -2032,11 +2012,17 @@ def rec_overview_plot(data, monthly_stats_data):
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
     y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
-    bar_height = 1.1  # Adjust this value to change the bar thickness
+    bar_height = 1.2  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
     axs['PUSH_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Display the value of each bar at the end
+    for i, (value, y_pos) in enumerate(zip(totals, y_positions)):
+        # Draw shadow by placing a darker, slightly offset version of the text
+        axs['PUSH_SUM'].text(value - 0.725, y_pos - 0.1, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='black', alpha=0.5)
+        axs['PUSH_SUM'].text(value - 0.6, y_pos, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='white')
 
     # Add grid
     axs['PUSH_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2065,11 +2051,17 @@ def rec_overview_plot(data, monthly_stats_data):
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
     y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
-    bar_height = 1.1  # Adjust this value to change the bar thickness
+    bar_height = 1.2  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
     axs['KNBG_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Display the value of each bar at the end
+    for i, (value, y_pos) in enumerate(zip(totals, y_positions)):
+        # Draw shadow by placing a darker, slightly offset version of the text
+        axs['KNBG_SUM'].text(value - 0.725, y_pos - 0.1, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='black', alpha=0.5)
+        axs['KNBG_SUM'].text(value - 0.6, y_pos, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='white')
 
     # Add grid
     axs['KNBG_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2099,11 +2091,17 @@ def rec_overview_plot(data, monthly_stats_data):
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
     y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
-    bar_height = 1.1  # Adjust this value to change the bar thickness
+    bar_height = 1.2  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
     axs['PLNK_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Display the value of each bar at the end
+    for i, (value, y_pos) in enumerate(zip(totals, y_positions)):
+        # Draw shadow by placing a darker, slightly offset version of the text
+        axs['PLNK_SUM'].text(value - 0.725, y_pos - 0.1, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='black', alpha=0.5)
+        axs['PLNK_SUM'].text(value - 0.6, y_pos, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='white')
 
     # Add grid
     axs['PLNK_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2133,11 +2131,17 @@ def rec_overview_plot(data, monthly_stats_data):
     totals = monthly_stats_data[categories].sum()
 
     y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
-    bar_height = 1.1  # Adjust this value to change the bar thickness
+    bar_height = 1.2  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
     axs['HMCRL_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Display the value of each bar at the end
+    for i, (value, y_pos) in enumerate(zip(totals, y_positions)):
+        # Draw shadow by placing a darker, slightly offset version of the text
+        axs['HMCRL_SUM'].text(value - 0.725, y_pos - 0.1, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='black', alpha=0.5)
+        axs['HMCRL_SUM'].text(value - 0.6, y_pos, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='white')
 
     # Add grid
     axs['HMCRL_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2168,11 +2172,17 @@ def rec_overview_plot(data, monthly_stats_data):
     totals = monthly_stats_data[categories].sum()
 
     y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
-    bar_height = 1.1  # Adjust this value to change the bar thickness
+    bar_height = 1.2  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
     axs['TMRD_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Display the value of each bar at the end
+    for i, (value, y_pos) in enumerate(zip(totals, y_positions)):
+        # Draw shadow by placing a darker, slightly offset version of the text
+        axs['TMRD_SUM'].text(value - 0.725, y_pos - 0.1, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='black', alpha=0.5)
+        axs['TMRD_SUM'].text(value - 0.6, y_pos, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='white')
 
     # Add grid
     axs['TMRD_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2203,11 +2213,17 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Plot a single horizontal bar for each specified category with the total sums
     y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
-    bar_height = 1.1  # Adjust this value to change the bar thickness
+    bar_height = 1.2  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
     axs['TRMZG_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+
+    # Display the value of each bar at the end
+    for i, (value, y_pos) in enumerate(zip(totals, y_positions)):
+        # Draw shadow by placing a darker, slightly offset version of the text
+        axs['TRMZG_SUM'].text(value - 0.725, y_pos - 0.1, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='black', alpha=0.5)
+        axs['TRMZG_SUM'].text(value - 0.6, y_pos, f'{value}', va='center', ha='left', fontsize=6, fontweight='bold', color='white')
 
     # Add grid
     axs['TRMZG_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2244,6 +2260,12 @@ def rec_overview_plot(data, monthly_stats_data):
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
     axs['MNTHS_ALL_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum', "Days"])
+
+        # Display the value of each bar at the end
+    for i, (value, y_pos) in enumerate(zip(totals, y_positions)):
+        # Draw shadow by placing a darker, slightly offset version of the text
+        axs['MNTHS_ALL_SUM'].text(value - 3.525, y_pos - 0.1, f'{value}', va='center', ha='left', fontsize=7, fontweight='bold', color='black', alpha=0.5)
+        axs['MNTHS_ALL_SUM'].text(value - 3.1, y_pos, f'{value}', va='center', ha='left', fontsize=7, fontweight='bold', color='white')
 
     # Add grid
     axs['MNTHS_ALL_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
