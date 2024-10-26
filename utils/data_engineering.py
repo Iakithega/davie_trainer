@@ -328,6 +328,27 @@ def mark_training_days(df):
 
 
 
+def find_max_recsum_of_all_exersices(monthly_stats_data):
+
+    all_exersices_list = ['Liegestütz Average record broken', 'Liegestütz Max record broken', 'Liegestütz Sum record broken',
+                          'Kniebeugen Average record broken', 'Kniebeugen Max record broken', 'Kniebeugen Sum record broken',
+                          'Planke Average record broken', 'Planke Max record broken', 'Planke Sum record broken',
+                          'Weighted Hammer Curls Average record broken', 'Weighted Hammer Curls Max record broken', 'Weighted Hammer Curls Sum record broken',
+                          'Weighted Turm Rudern Average record broken', 'Weighted Turm Rudern Max record broken', 'Weighted Turm Rudern Sum record broken',
+                          'Weighted Turm Zug Average record broken', 'Weighted Turm Zug Max record broken', 'Weighted Turm Zug Sum record broken'
+                          ]
+        
+    recsum_of_all_exers = []
+    for exersice in all_exersices_list:
+        exersice_sum = monthly_stats_data[exersice].sum()
+        recsum_of_all_exers.append(exersice_sum)
+
+    max_recsum = max(recsum_of_all_exers)
+
+    return max_recsum
+
+
+
 def prepare_monthly_data(df):
     # Assuming you have a date column named 'date' in your dataframe
     df['month'] = df.index.to_period('M')

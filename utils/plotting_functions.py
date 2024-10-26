@@ -1585,18 +1585,15 @@ def rec_overview_plot(data, monthly_stats_data):
                                 )
     fig.patch.set_alpha(0.5)
     fig.suptitle(f'''Records overview''', size=12, fontweight='bold', color="white")
-
-    # title = fig.suptitle('Records overview', size=10)
     # title.set_alpha(0.5)
 
     plt.subplots_adjust(wspace=.2, hspace=.2)
 
-    # Moving the PIC Plots closer to the main plot
+    # Moving the PIC Plots closer to the main record plot
     pic_keys = ['PUSH_PIC', 'KNBG_PIC', 'PLNK_PIC', 'HMCRL_PIC', 'TMRD_PIC', 'TMZG_PIC']
     for key in pic_keys:
         # Get the current position of the subplot
         pos = axs[key].get_position()
-        
         # Adjust the width (decrease it to make space smaller on the right)
         axs[key].set_position([pos.x0, pos.y0, pos.width * 1.5, pos.height])
 
@@ -1612,7 +1609,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # # Set font size for major and minor ticks
     axs['PUSH'].tick_params(axis='x', labeltop=True, labelbottom=False, which='major', labelsize=6, rotation=0)
-    axs['PUSH'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['PUSH'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['PUSH'].set_ylim([0, 8])
 
 
@@ -1673,7 +1670,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # # Set font size for major and minor ticks
     axs['KNBG'].tick_params(axis='x', which='both', labelbottom=False)
-    axs['KNBG'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['KNBG'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['KNBG'].set_ylim([0, 8])
 
     # Define the exercise-specific categories for Kniebeugen
@@ -1725,7 +1722,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # # Set font size for major and minor ticks
     axs['PLNK'].tick_params(axis='x', which='both', labelbottom=False)
-    axs['PLNK'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['PLNK'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['PLNK'].set_ylim([0, 8])
 
     # Define the exercise-specific categories for Planke
@@ -1778,7 +1775,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # # Set font size for major and minor ticks
     axs['HMCRL'].tick_params(axis='x', which='both', labelbottom=False)
-    axs['HMCRL'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['HMCRL'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['HMCRL'].set_ylim([0, 8])
 
     # Define the exercise-specific categories for Hammercurls
@@ -1831,7 +1828,7 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # # Set font size for major and minor ticks
     axs['TMRD'].tick_params(axis='x', which='both', labelbottom=False)
-    axs['TMRD'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    axs['TMRD'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['TMRD'].set_ylim([0, 8])
 
     # Define the exercise-specific categories for Turm Rudern
@@ -1866,7 +1863,6 @@ def rec_overview_plot(data, monthly_stats_data):
     # Set major ticks for months
     axs['TMRD'].set_xticks(base_x_offset + 0.1)  # Center the labels between the 3 bars
     axs['TMRD'].set_xticklabels(monthly_stats_data.index.astype(str), rotation=0)
-
     # Add grid
     axs['TMRD'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
     axs['TMRD'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
@@ -1990,6 +1986,29 @@ def rec_overview_plot(data, monthly_stats_data):
 
 
 
+    #########PLOTS FOR EXERSICE ALL SUM RECS###################
+    
+    #sum_recs_of_all_exers = [sum_rec for monthly_stats_data[categories].sum()]
+
+    max_recsum_of_all_exersices = find_max_recsum_of_all_exersices(monthly_stats_data)
+
+    # def find_max_recsum_of_all_exersices():
+
+    #     all_exersices_list = ['Liegestütz Average record broken', 'Liegestütz Max record broken', 'Liegestütz Sum record broken',
+    #                       'Kniebeugen Average record broken', 'Kniebeugen Max record broken', 'Kniebeugen Sum record broken',
+    #                       'Planke Average record broken', 'Planke Max record broken', 'Planke Sum record broken',
+    #                       'Weighted Hammer Curls Average record broken', 'Weighted Hammer Curls Max record broken', 'Weighted Hammer Curls Sum record broken',
+    #                       'Weighted Turm Rudern Average record broken', 'Weighted Turm Rudern Max record broken', 'Weighted Turm Rudern Sum record broken',
+    #                       'Weighted Turm Zug Average record broken', 'Weighted Turm Zug Max record broken', 'Weighted Turm Zug Sum record broken'
+    #                       ]
+        
+    #     recsum_of_all_exers = []
+    #     for exersice in all_exersices_list:
+    #         exersice_sum = monthly_stats_data[exersice].sum()
+    #         recsum_of_all_exers.append(exersice_sum)
+    #         max_recsum = recsum_of_all_exers.max()
+    #     return max_recsum
+
 
     
 
@@ -2004,8 +2023,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['PUSH_SUM'].tick_params(axis='x', which='both', labelbottom=False)
     axs['PUSH_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['PUSH_SUM'].set_ylim([0, 6])
-    axs['PUSH_SUM'].set_xlim([0, 15])
-
+    axs['PUSH_SUM'].set_xlim([0, max_recsum_of_all_exersices*2])
 
     # Define only the specified categories
     categories = ['Liegestütz Average record broken', 'Liegestütz Max record broken', 'Liegestütz Sum record broken']
@@ -2013,14 +2031,17 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
+    y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
+    bar_height = 1.1  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
-    axs['PUSH_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+    axs['PUSH_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
 
     # Add grid
     axs['PUSH_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
     axs['PUSH_SUM'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.9)
+
 
 
 
@@ -2035,8 +2056,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['KNBG_SUM'].tick_params(axis='x', which='both', labelbottom=False)
     axs['KNBG_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['KNBG_SUM'].set_ylim([0, 6])
-    axs['KNBG_SUM'].set_xlim([0, 15])
-
+    axs['KNBG_SUM'].set_xlim([0, max_recsum_of_all_exersices*2])
 
     # Define only the specified categories
     categories = ['Kniebeugen Average record broken', 'Kniebeugen Max record broken', 'Kniebeugen Sum record broken']
@@ -2044,10 +2064,12 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
+    y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
+    bar_height = 1.1  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
-    axs['KNBG_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+    axs['KNBG_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
 
     # Add grid
     axs['KNBG_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2067,7 +2089,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['PLNK_SUM'].tick_params(axis='x', which='both', labelbottom=False)
     axs['PLNK_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['PLNK_SUM'].set_ylim([0, 6])
-    axs['PLNK_SUM'].set_xlim([0, 15])
+    axs['PLNK_SUM'].set_xlim([0, max_recsum_of_all_exersices*2])
 
 
     # Define only the specified categories
@@ -2076,10 +2098,12 @@ def rec_overview_plot(data, monthly_stats_data):
 
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
+    y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
+    bar_height = 1.1  # Adjust this value to change the bar thickness
 
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
-    axs['PLNK_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+    axs['PLNK_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
 
     # Add grid
     axs['PLNK_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2098,7 +2122,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['HMCRL_SUM'].tick_params(axis='x', which='both', labelbottom=False)
     axs['HMCRL_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['HMCRL_SUM'].set_ylim([0, 6])
-    axs['HMCRL_SUM'].set_xlim([0, 15])
+    axs['HMCRL_SUM'].set_xlim([0, max_recsum_of_all_exersices*2])
 
 
     # Define only the specified categories
@@ -2108,9 +2132,12 @@ def rec_overview_plot(data, monthly_stats_data):
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
 
+    y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
+    bar_height = 1.1  # Adjust this value to change the bar thickness
+
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
-    axs['HMCRL_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+    axs['HMCRL_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
 
     # Add grid
     axs['HMCRL_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2131,8 +2158,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['TMRD_SUM'].tick_params(axis='x', which='both', labelbottom=False)
     axs['TMRD_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['TMRD_SUM'].set_ylim([0, 6])
-    axs['TMRD_SUM'].set_xlim([0, 15])
-
+    axs['TMRD_SUM'].set_xlim([0, max_recsum_of_all_exersices*2])
 
     # Define only the specified categories
     categories = ['Weighted Turm Rudern Average record broken', 'Weighted Turm Rudern Max record broken', 'Weighted Turm Rudern Sum record broken']
@@ -2141,9 +2167,12 @@ def rec_overview_plot(data, monthly_stats_data):
     # Calculate the total sum across the three months for each specified category
     totals = monthly_stats_data[categories].sum()
 
+    y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
+    bar_height = 1.1  # Adjust this value to change the bar thickness
+
     # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
-    axs['TMRD_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+    axs['TMRD_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
 
     # Add grid
     axs['TMRD_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2163,8 +2192,7 @@ def rec_overview_plot(data, monthly_stats_data):
     axs['TRMZG_SUM'].tick_params(axis='x', which='both', labelbottom=False)
     axs['TRMZG_SUM'].tick_params(axis='y', labelright=False, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     axs['TRMZG_SUM'].set_ylim([0, 6])
-    axs['TRMZG_SUM'].set_xlim([0, 15])
-
+    axs['TRMZG_SUM'].set_xlim([0, max_recsum_of_all_exersices*2])
 
     # Define only the specified categories
     categories = ['Weighted Turm Zug Average record broken', 'Weighted Turm Zug Max record broken', 'Weighted Turm Zug Sum record broken']
@@ -2174,8 +2202,12 @@ def rec_overview_plot(data, monthly_stats_data):
     totals = monthly_stats_data[categories].sum()
 
     # Plot a single horizontal bar for each specified category with the total sums
+    y_positions = [1.5, 3, 4.5]  # Custom positions for the bars
+    bar_height = 1.1  # Adjust this value to change the bar thickness
+
+    # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
-    axs['TRMZG_SUM'].barh((1.5, 3, 4.5), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
+    axs['TRMZG_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum'])
 
     # Add grid
     axs['TRMZG_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
@@ -2206,8 +2238,12 @@ def rec_overview_plot(data, monthly_stats_data):
     totals = monthly_stats_data[categories].sum()
 
     # Plot a single horizontal bar for each specified category with the total sums
+    y_positions = [1.5, 3, 4.5, 6]  # Custom positions for the bars
+    bar_height = 1.2  # Adjust this value to change the bar thickness
+
+    # Plot a single horizontal bar for each specified category with the total sums
     # y_positions = np.arange(len(categories))
-    axs['MNTHS_ALL_SUM'].barh((1.5, 3, 4.5, 6), totals, color=category_colors, tick_label=['Average', 'Max', 'Sum', "Days"])
+    axs['MNTHS_ALL_SUM'].barh(y=y_positions, width=totals, height=bar_height, color=category_colors, tick_label=['Average', 'Max', 'Sum', "Days"])
 
     # Add grid
     axs['MNTHS_ALL_SUM'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5, alpha=0.3)
