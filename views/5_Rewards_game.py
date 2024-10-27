@@ -18,123 +18,199 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.write("# The Game")
 
-@st.cache_data
-def load_and_process_data():
-    initial_data = load_raw_excel(path_to_excel)
-    data, monthly_stats_data = complete_data_wrangeling(initial_data)
-    return data, monthly_stats_data
-
-
 
 config_path = os.path.join("utils", "paths.ini")
 creature_images_path = os.path.join("media", "pics_of_creatures")
-
-# @st.cache_data
-# def load_all_images(config_file=config_path):
-#     # Read paths from the ini file
-#     config = configparser.ConfigParser()
-#     config.read(config_file)
-
-#         # Ensure the section [img_paths] exists
-#     if 'img_paths' not in config:
-#         raise ValueError("Section 'img_paths' not found in the config file.")
-    
-#     # Dictionary to store the images
-#     images = {}
-#     for key, path in config['img_paths'].items():
-#         try:
-#             images[key] = Image.open(path)  # Load the image and store it in the dictionary
-#         except FileNotFoundError:
-#             raise FileNotFoundError(f"Image at path '{path}' not found.")
-    
-#     return images
+creaturealready_won_images_path = os.path.join("media", "pics_of_creatures", "already_won_creatures")
 
 
-# # load images
-# images = load_all_images(config_path)
-# push_pic, knbg_pic, plnk_pic, hmcrl_pic, tmrd_pic, tmzg_pic = (images['push_pic'], images['knbg_pic'], images['plnk_pic'],
-#                                                                images['hmcrl_pic'],images['tmrd_pic'], images['tmzg_pic'])
+# Initialize session state for controlling the game and storing last images
+if 'start' not in st.session_state:
+    st.session_state.start = False
+if 'last_image' not in st.session_state:
+    st.session_state.last_image = None
+if 'last_image_name' not in st.session_state:
+    st.session_state.last_image_name = None
+
 
 @st.cache_data
-def load_image_paths(creature_images_path=creature_images_path):
+def load_image_paths(creature_images_path):
     # Get all image files in the media folder (assuming .jpg and .png formats)
     image_paths = {}
     for filename in os.listdir(creature_images_path):
         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-            # Use the filename as the key and the full path as the value
             key = os.path.splitext(filename)[0]
             full_path = os.path.join(creature_images_path, filename)
             image_paths[key] = full_path
-    
     return image_paths
 
-# Bildpfade laden und cachen
+# Load and cache image paths
 creature_image_paths = load_image_paths(creature_images_path)
 
-
-# UI: Image Carousel
-st.title("Image Carousel")
-
-# "Stop" button
+# Start and Stop buttons
+start_button = st.button("Start")
 stop_button = st.button("Stop")
+
+# Update session state based on button clicks
+if start_button:
+    st.session_state.start = True
+if stop_button:
+    st.session_state.start = False
 
 # Random order of images
 image_names = list(creature_image_paths.keys())
 random.shuffle(image_names)
 
+# Display area
+placeholder = st.empty()  # Placeholder for the image display
 
-col1, col2, col3 = st.columns([1,1,1], gap="large")
-with col2:
-    v_spacer(5, False)
-    placeholder = st.empty()
+# Spinning through images
+if st.session_state.start:
     for name in image_names:
+        # Display image and name in the placeholder
         placeholder.image(creature_image_paths[name], use_column_width='auto')
-        st.markdown(f'{name}')
-        time.sleep(0.2)
+        st.markdown(f"{name.upper()}")
+        
+        # Store the last displayed image in session state
+        st.session_state.last_image = creature_image_paths[name]
+        st.session_state.last_image_name = name
+        
+        time.sleep(0.2)  # Control the speed of spinning
+        
+        # Stop spinning if "Stop" button is pressed
+        if not st.session_state.start:
+            break
+
+# Display the last image shown when stopped
+if not st.session_state.start and st.session_state.last_image:
+    placeholder.image(st.session_state.last_image, use_column_width='auto')
+    st.markdown(f"{st.session_state.last_image_name.upper()}")
 
 
-# # Start carousel
-# stop = False
-# for key in image_keys:
-#     if stop_button:
-#         stop = True
-#     if stop:
-#         st.image(creature_image_paths[key], caption=key)
-#         break
-#     st.image(creature_image_paths[key], caption=key)
-#     time.sleep(0.5)
-
-# # Show the selected image after stopping
-# if stop:
-#     st.write(f"Selected Image: {key}")
 
 
-# # UI: Bild-Karussell
-# st.title("Bild-Karussell")
-
-# # "Stopp"-Button
-# stop_button = st.button("Stopp")
-
-# # Zufällige Reihenfolge der Bildpfade generieren
-# image_keys = list(image_paths.keys())
-# random.shuffle(image_keys)
-
-# # Karussell starten
-# stop = False
-# for key in image_keys:
-#     if stop_button:
-#         stop = True
-#     if stop:
-#         st.image(image_paths[key], caption=key)
-#         break
-#     st.image(image_paths[key], caption=key)
-#     time.sleep(0.5)
-
-# # Letztes ausgewähltes Bild anzeigen
-# if stop:
-#     st.write(f"Ausgewähltes Bild: {key}")
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+# # Initialize session state for controlling the game and storing last images
+# if 'start' not in st.session_state:
+#     st.session_state.start = False
+# if 'last_images' not in st.session_state:
+#     st.session_state.last_images = {}
+# if 'current_tab' not in st.session_state:  
+#     st.session_state.current_tab = 0  
+
+
+
+# @st.cache_data
+# def load_image_paths(creature_images_path=creature_images_path):
+#     # Get all image files in the media folder (assuming .jpg and .png formats)
+#     image_paths = {}
+#     for filename in os.listdir(creature_images_path):
+#         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+#             # Use the filename as the key and the full path as the value
+#             key = os.path.splitext(filename)[0]
+#             full_path = os.path.join(creature_images_path, filename)
+#             image_paths[key] = full_path
+    
+#     return image_paths
+
+# # Bildpfade laden und cachen
+# creature_image_paths = load_image_paths(creature_images_path)
+
+
+
+# # Start and Stop buttons
+# start_button = st.button("Start")
+# stop_button = st.button("Stop")
+
+# # # Update session state based on button clicks
+# if start_button:
+#     st.session_state.start = True
+#     st.session_state.current_tab = 0
+# if stop_button:
+#     st.session_state.start = False
+
+
+# # Random order of images
+# image_names = list(creature_image_paths.keys())
+# random.shuffle(image_names)
+
+
+
+# # Set up dynamic tabs for each creature
+# tab_names = list(creature_image_paths.keys())
+
+# col1, col2, col3 = st.columns([1,2,1], gap="large")
+# with col2:
+#     tabs = st.tabs([name.upper() for name in tab_names])
+
+
+# # Loop through each tab and each image, displaying images if "Start" is active
+# if st.session_state.start:
+#     for name in image_names:
+#         # NEW: Select the current tab based on the current index
+#         current_tab_name = tab_names[st.session_state.current_tab]
+#         with tabs[st.session_state.current_tab]:  # Display in the active tab
+#             placeholder = st.empty()  # Placeholder for the image
+#             # Display image and name in the current tab
+#             placeholder.image(creature_image_paths[name], use_column_width='auto')
+#             st.markdown(f"{name.upper()}")
+            
+#             # Store the last displayed image for each tab in session state
+#             st.session_state.last_images[current_tab_name] = creature_image_paths[name]
+
+#             # Wait for a short period before switching to the next tab
+#             time.sleep(0.2)
+
+#             # NEW: Update to the next tab, looping back to the first tab if necessary
+#             st.session_state.current_tab = (st.session_state.current_tab + 1) % len(tab_names)
+
+#             # Break if stopped
+#             if not st.session_state.start:
+#                 break
+# else:
+#     # Show the last image displayed for each tab after stopping
+#     for idx, tab_name in enumerate(tab_names):
+#         with tabs[idx]:
+#             placeholder = st.empty()
+#             if tab_name in st.session_state.last_images:
+#                 placeholder.image(st.session_state.last_images[tab_name], use_column_width='auto')
+#                 st.markdown(f"{tab_name.upper()}")
+                
+# # Loop through each tab, displaying images if "Start" is active
+# for idx, tab_name in enumerate(tab_names):
+#     with tabs[idx]:
+#         with col2:
+#             placeholder = st.empty()  # Placeholder for the image
+#             if st.session_state.start:
+#                 for name in image_names:
+#                     # Display image and name in the current tab
+#                     placeholder.image(creature_image_paths[name], use_column_width='auto')
+#                     st.markdown(f"{name.upper()}")
+                    
+#                     # Store the last displayed image for each tab in session state
+#                     st.session_state.last_images[tab_name] = creature_image_paths[name]
+                    
+#                     time.sleep(0.2)  # Control the speed of spinning
+#                     if not st.session_state.start:
+#                         break
+#             else:
+#                 # Show the last image displayed when spinning stopped
+#                 if tab_name in st.session_state.last_images:
+#                     placeholder.image(st.session_state.last_images[tab_name], use_column_width='auto')
+#                     st.markdown(f"{tab_name.upper()}")
 
 
 
@@ -147,7 +223,7 @@ with col2:
 
 
 # Call the function to cache the data
-data, monthly_stats_data = load_and_process_data() 
+# data, monthly_stats_data = load_and_process_data() 
 
 
 
