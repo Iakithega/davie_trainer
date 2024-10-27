@@ -57,16 +57,16 @@ if start_button:
 if stop_button:
     st.session_state.start = False
 
-# Random order of images
-image_names = list(creature_image_paths.keys())
-random.shuffle(image_names)
 
 # Display area
 placeholder = st.empty()  # Placeholder for the image display
 
-# Spinning through images
+# Spinning through random images
 if st.session_state.start:
-    for name in image_names:
+    while st.session_state.start:
+        # Pick a random image name
+        name = random.choice(list(creature_image_paths.keys()))
+        
         # Display image and name in the placeholder
         placeholder.image(creature_image_paths[name], use_column_width='auto')
         st.markdown(f"{name.upper()}")
@@ -80,6 +80,7 @@ if st.session_state.start:
         # Stop spinning if "Stop" button is pressed
         if not st.session_state.start:
             break
+
 
 # Display the last image shown when stopped
 if not st.session_state.start and st.session_state.last_image:
