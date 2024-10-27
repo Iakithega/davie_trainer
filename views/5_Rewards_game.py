@@ -33,6 +33,8 @@ if 'last_image' not in st.session_state:
     st.session_state.last_image = creature_question_mark_image_path  # Set question mark as the default initial image
 if 'last_image_name' not in st.session_state:
     st.session_state.last_image_name = "???"  # Default name for question mark
+if 'selected_images' not in st.session_state:
+    st.session_state.selected_images = []  # Track already selected images
 
 
 @st.cache_data
@@ -48,14 +50,15 @@ def load_image_paths(creature_images_path):
 
 # Load and cache image paths
 creature_image_paths = load_image_paths(creature_images_path)
+# Available images list (excluding selected ones)
+available_images = {k: v for k, v in creature_image_paths.items() if k not in st.session_state.selected_images}
 
 
-col_start_button, col_image, col_stop_button = st.columns([1,2,1], gap="large", vertical_alignment="center")
 
+gap1_img_firstline, col_image, gap2_img_firstline = st.columns([1,2,1], gap="large", vertical_alignment="center")
 with col_image:
     # placeholder_image_text = st.empty()
     col_inside_img_start, col_inside_img_gap, col_inside_img_stop = st.columns([15, 70, 10], gap="large", vertical_alignment="center")
-    
     # Start and Stop buttons
     with col_inside_img_start:
         start_button = st.button("Start")
@@ -63,6 +66,13 @@ with col_image:
         stop_button = st.button("Stop")
     placeholder_image = st.empty()  # Placeholder for the image display
     placeholder_image_text = st.empty()
+
+with gap1_img_firstline:
+    placeholder_available = st.empty()
+
+with gap2_img_firstline:
+    placeholder_selected = st.empty()
+
         
 
 # Update session state based on button clicks
@@ -71,20 +81,21 @@ if start_button:
 if stop_button:
     st.session_state.start = False
 
+############################################################################################
 
 
 
 # Spinning through random images
-if st.session_state.start:
+if st.session_state.start and available_images:
     while st.session_state.start:
-        # Pick a random image name
-        name = random.choice(list(creature_image_paths.keys()))
+        # Pick a random image name from available images
+        name = random.choice(list(available_images.keys()))
         
         # Display image and name in the placeholder
-        placeholder_image.image(creature_image_paths[name], use_column_width='auto')
+        placeholder_image.image(available_images[name], use_column_width='auto')
         
         # Store the last displayed image in session state
-        st.session_state.last_image = creature_image_paths[name]
+        st.session_state.last_image = available_images[name]
         st.session_state.last_image_name = name
         
         time.sleep(0.1)  # Control the speed of spinning
@@ -93,45 +104,24 @@ if st.session_state.start:
         if not st.session_state.start:
             break
 
-
-# Display the question mark image if the game has not started, or show the last image when stopped
+# Display the last selected image and update selected list
 if not st.session_state.start:
     placeholder_image.image(st.session_state.last_image, use_column_width='auto')
-    placeholder_image_text.markdown(f"## {st.session_state.last_image_name.upper()}")
+    placeholder_image_text.markdown(
+        f"<h2 style='text-align: center;'>{st.session_state.last_image_name.upper()}</h2>", 
+        unsafe_allow_html=True
+                                    )    
+    # Add the selected image to the list of already chosen images if not already there
+    if st.session_state.last_image_name not in st.session_state.selected_images:
+        st.session_state.selected_images.append(st.session_state.last_image_name)
+        # placeholder_available.write(available_images)
+        # placeholder_selected.write(st.session_state.selected_images)
 
+    # Update available images to exclude already selected ones
+    available_images = {k: v for k, v in creature_image_paths.items() if k not in st.session_state.selected_images}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Call the function to cache the data
-# data, monthly_stats_data = load_and_process_data() 
-
-
-
-
-# # overview of the datas in a dataframe after Data Wrangeling 
-# with st.expander("Raw Table monthly stats"): 
-#     st.dataframe(monthly_stats_data)
-# v_spacer(height=7, sb=False)
-
+    # Notify user when all images are selected
+    if not available_images:
+        st.write("All images have been selected! Click 'Reset Game' to play again.")
 
 
