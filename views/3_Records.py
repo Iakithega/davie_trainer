@@ -11,7 +11,7 @@ hide_st_style ="""
     """
 st.markdown(hide_st_style, unsafe_allow_html=True)  
 
-st.write("# Prices")
+st.write("# Records")
 
 @st.cache_data
 def load_and_process_data():
