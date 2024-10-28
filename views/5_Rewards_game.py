@@ -57,7 +57,6 @@ available_images = {k: v for k, v in creature_image_paths.items() if k not in st
 
 gap1_img_firstline, col_image, gap2_img_firstline = st.columns([1,2,1], gap="large", vertical_alignment="center")
 with col_image:
-    # placeholder_image_text = st.empty()
     col_inside_img_start, col_inside_img_gap, col_inside_img_stop = st.columns([15, 70, 10], gap="large", vertical_alignment="center")
     # Start and Stop buttons
     with col_inside_img_start:
@@ -67,7 +66,7 @@ with col_image:
         stop_button = st.button("Stop")
     placeholder_image = st.empty()  # Placeholder for the image display
     placeholder_image_text = st.empty()
-    placeholder_image_audio = st.empty()
+    placeholder_image_audio_expander = st.empty()
 
 # with gap1_img_firstline:
 #     # placeholder_available = st.empty()
@@ -88,7 +87,8 @@ if stop_button:
 
 # Spinning through random images
 if st.session_state.start and available_images:
-    placeholder_image_audio.audio(path_audio, format="audio/mpeg", loop=True, autoplay=True)
+    with placeholder_image_audio_expander.expander("Audio"):
+        st.audio(path_audio, format="audio/mpeg", loop=True, autoplay=True)
     while st.session_state.start:
         # Pick a random image name from available images
         name = random.choice(list(available_images.keys()))
@@ -109,6 +109,7 @@ if st.session_state.start and available_images:
 # Display the last selected image and update selected list
 if not st.session_state.start:
     placeholder_image.image(st.session_state.last_image, use_column_width='auto')
+    
     placeholder_image_text.markdown(
         f"<h2 style='text-align: center;'>{st.session_state.last_image_name.upper()}</h2>", 
         unsafe_allow_html=True
