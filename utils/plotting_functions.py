@@ -9,6 +9,8 @@ import matplotlib.dates as mdates
 from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
 import matplotlib.image as mpimg
 import seaborn as sns
+from mpl_interactions import interactive_plot
+
 
 from PIL import Image
 

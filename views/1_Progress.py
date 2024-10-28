@@ -85,11 +85,14 @@ with st.expander("Raw Table monthly stats"):
 v_spacer(height=5, sb=False)
 
 
-# picking starting date for the plots
-date_col1, date_col2 = st.columns([1, 10])
-with date_col1:
-    start_date = st.date_input(label="Start Date", value=last_50_days, min_value=min_date)
-    v_spacer(height=2, sb=False)
+with st.expander("Adjust time periods"):
+    # picking starting date for the plots
+    date_col1, date_col2 = st.columns([1, 10])
+    with date_col1:
+        start_date = st.date_input(label="Start Date for Training Plots", value=last_50_days, min_value=min_date)
+        v_spacer(height=2, sb=False)
+    with date_col2:
+        st.write("TOGGLE for syncing boxplots from Alltime to defined starting time. ALSO CHANGE THE TITLE in BOOXPLOTS FROM ALL TIME TO Selected Time period so it would be clear")
 
 
 
