@@ -24,7 +24,7 @@ config_path = os.path.join("utils", "paths.ini")
 creature_images_path = os.path.join("media", "pics_of_creatures")
 creature_already_won_images_path = os.path.join("media", "pics_of_creatures", "already_won_creatures")
 creature_question_mark_image_path = os.path.join("media", "pics_of_creatures", "backup", "creature_question_mark.png")
-
+path_audio = os.path.join("media", "music", "action_epic.mp3")
 
 # Initialize session state for controlling the game and storing last images
 if 'start' not in st.session_state:
@@ -62,16 +62,17 @@ with col_image:
     # Start and Stop buttons
     with col_inside_img_start:
         start_button = st.button("Start")
+        
     with col_inside_img_stop:
         stop_button = st.button("Stop")
     placeholder_image = st.empty()  # Placeholder for the image display
     placeholder_image_text = st.empty()
+    placeholder_image_audio = st.empty()
 
-with gap1_img_firstline:
-    placeholder_available = st.empty()
-
-with gap2_img_firstline:
-    placeholder_selected = st.empty()
+# with gap1_img_firstline:
+#     # placeholder_available = st.empty()
+# with gap2_img_firstline:
+#     # placeholder_selected = st.empty()
 
         
 
@@ -87,6 +88,7 @@ if stop_button:
 
 # Spinning through random images
 if st.session_state.start and available_images:
+    placeholder_image_audio.audio(path_audio, format="audio/mpeg", loop=True, autoplay=True)
     while st.session_state.start:
         # Pick a random image name from available images
         name = random.choice(list(available_images.keys()))
