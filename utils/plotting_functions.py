@@ -230,6 +230,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
 
     axs['LGSTZ_BX'].set_title(f"Push Ups Stats", size=7)
     axs['LGSTZ_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+    
 
     axs['LGSTZ_BX'].set_xlabel(' ', size=8)
     axs['LGSTZ_BX'].yaxis.set_label_position("right")
