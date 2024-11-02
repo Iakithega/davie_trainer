@@ -36,7 +36,6 @@ today_clean = today.strftime("%d%m%Y_%H_%M")
 
 # OTHER PARAMS AND OPENAI
 cwd = os.getcwd()
-
 client = OpenAI(api_key=st.secrets.openai_credentials.api_key)
 
 client_elabs = ElevenLabs(api_key=st.secrets.elevenlabs_credentials.api_key)
@@ -369,22 +368,22 @@ if st.session_state['person_chosen'] != 'Select':
 
 
 
-v_spacer(4, sb=False)
+# v_spacer(4, sb=False)
 
 
-papath = os.path.join("media", "wallpaper", "transformers1.png")
+# papath = os.path.join("media", "wallpaper", "transformers1.png")
 
-#Path to your local folder containing images
-image_folder = r'media\wallpaper'
+# #Path to your local folder containing images
+# image_folder = r'media\wallpaper'
 
-# Get the list of image files from the folder
-image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(('png', 'jpg', 'jpeg'))]
+# # Get the list of image files from the folder
+# image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(('png', 'jpg', 'jpeg'))]
 
-# Select a random image from the folder
-def get_random_image():
-    return random.choice(image_paths)
+# # Select a random image from the folder
+# def get_random_image():
+#     return random.choice(image_paths)
 
-image_path = random.choice(image_paths)
+# image_path = random.choice(image_paths)
 
 # col1, col2, col3 = st.columns([1,2,1], gap="large")
 
