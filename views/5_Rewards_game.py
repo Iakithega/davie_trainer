@@ -21,7 +21,6 @@ st.write("# The Game")
 
 cwd = os.getcwd()
 
-config_path = os.path.join(cwd, "utils", "paths.ini")
 creature_images_path = os.path.join(cwd, "media", "pics_of_creatures")
 creature_already_won_images_path = os.path.join(cwd, "media", "pics_of_creatures", "already_won_creatures")
 creature_question_mark_image_path = os.path.join(cwd, "media", "pics_of_creatures", "backup", "creature_question_mark.png")
@@ -52,7 +51,7 @@ if 'selected_images' not in st.session_state:
 @st.cache_data
 def load_image_paths(creature_images_path):
     # Join the base directory with the creature images path to create an absolute path
-    absolute_creature_images_path = os.path.join(cwd, creature_images_path)
+    absolute_creature_images_path = os.path.join(creature_images_path)
 
     # Dictionary to store the image paths
     image_paths = {}
