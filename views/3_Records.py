@@ -2,6 +2,7 @@ import streamlit as st
 from utils.utils import *
 from utils.data_engineering import complete_data_wrangeling
 from utils.plotting_functions import rec_overview_plot
+import os
 
 # hides the header - also possible to hide the footer: footer {visibility: hidden;}  /* Hides the footer */
 hide_st_style ="""
@@ -12,6 +13,11 @@ hide_st_style ="""
 st.markdown(hide_st_style, unsafe_allow_html=True)  
 
 st.write("# Records")
+
+config = configparser.ConfigParser()
+config.read("utils/paths.ini")
+cwd = os.getcwd()
+path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
 
 @st.cache_data
 def load_and_process_data():

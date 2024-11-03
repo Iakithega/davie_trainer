@@ -14,10 +14,10 @@ def v_spacer(height, sb=False) -> None:
         else:
             st.write('\n')
 
-path_to_excel = "data\davie trainingsplan 2014.xlsx"
+# path_to_excel = "data\davie_trainingsplan_2014.xlsx"
 
 def load_raw_excel(path: str):
-    data = pd.read_excel(path_to_excel, 
+    data = pd.read_excel(path, 
                          header=0, 
                          index_col="Datum", 
                          parse_dates=True)

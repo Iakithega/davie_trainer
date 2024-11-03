@@ -19,12 +19,13 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 st.write("# The Game")
 # v_spacer(height=5, sb=False)
 
+cwd = os.getcwd()
 
-config_path = os.path.join("utils", "paths.ini")
-creature_images_path = os.path.join("media", "pics_of_creatures")
-creature_already_won_images_path = os.path.join("media", "pics_of_creatures", "already_won_creatures")
-creature_question_mark_image_path = os.path.join("media", "pics_of_creatures", "backup", "creature_question_mark.png")
-path_audio = os.path.join("media", "music", "action_epic.mp3")
+config_path = os.path.join(cwd, "utils", "paths.ini")
+creature_images_path = os.path.join(cwd, "media", "pics_of_creatures")
+creature_already_won_images_path = os.path.join(cwd, "media", "pics_of_creatures", "already_won_creatures")
+creature_question_mark_image_path = os.path.join(cwd, "media", "pics_of_creatures", "backup", "creature_question_mark.png")
+path_audio = os.path.join(cwd, "media", "music", "action_epic.mp3")
 
 # Initialize session state for controlling the game and storing last images
 if 'start' not in st.session_state:
