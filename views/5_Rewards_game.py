@@ -38,14 +38,28 @@ if 'selected_images' not in st.session_state:
     st.session_state.selected_images = []  # Track already selected images
 
 
+# @st.cache_data
+# def load_image_paths(creature_images_path):
+#     # Get all image files in the media folder (assuming .jpg and .png formats)
+#     image_paths = {}
+#     for filename in os.listdir(creature_images_path):
+#         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+#             key = os.path.splitext(filename)[0]
+#             full_path = os.path.join(creature_images_path, filename)
+#             image_paths[key] = full_path
+#     return image_paths
+
 @st.cache_data
 def load_image_paths(creature_images_path):
-    # Get all image files in the media folder (assuming .jpg and .png formats)
+    # Join the base directory with the creature images path to create an absolute path
+    absolute_creature_images_path = os.path.join(cwd, creature_images_path)
+
+    # Dictionary to store the image paths
     image_paths = {}
-    for filename in os.listdir(creature_images_path):
+    for filename in os.listdir(absolute_creature_images_path):
         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
             key = os.path.splitext(filename)[0]
-            full_path = os.path.join(creature_images_path, filename)
+            full_path = os.path.join(absolute_creature_images_path, filename)
             image_paths[key] = full_path
     return image_paths
 

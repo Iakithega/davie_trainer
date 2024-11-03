@@ -15,8 +15,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 st.write("# Records")
 
 config = configparser.ConfigParser()
-config.read("utils/paths.ini")
 cwd = os.getcwd()
+config.read("utils/paths.ini")
 path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
 
 @st.cache_data
