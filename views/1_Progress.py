@@ -13,6 +13,10 @@ from utils.plotting_functions import *
 
 papath = os.path.join("..", "media", "wallpaper", "transformers1.png")
 
+config = configparser.ConfigParser()
+config.read("utils/paths.ini")
+cwd = os.getcwd()
+path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
 
 # Path to your local folder containing images
 # image_folder = r'media\wallpaper'

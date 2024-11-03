@@ -16,12 +16,12 @@ st.set_page_config(
 
 cwd = os.getcwd()
 path_to_logo = os.path.join(cwd, "media", "veeery_lomng.png")
-path_to_page_progress = os.path.join(cwd, "media", "views\1_Progress.py")
-path_to_page_records = os.path.join(cwd, "media", "views\3_Records.py")
-path_to_page_stories = os.path.join(cwd, "media", "views\2_Stories.py")
-path_to_page_rewards_game = os.path.join(cwd, "media", "views\5_Rewards_game.py")
-path_to_page_dialogue_with_the_master = os.path.join(cwd, "media", "views\3_dialogue_with_the_master.py")
-path_to_page_css_stuff = os.path.join(cwd, "media", "views\zz_css_stuff.py")
+path_to_page_progress = os.path.join(cwd, "views", "1_Progress.py")
+path_to_page_records = os.path.join(cwd, "views", "3_Records.py")
+path_to_page_stories = os.path.join(cwd, "views", "2_Stories.py")
+path_to_page_rewards_game = os.path.join(cwd, "views", "5_Rewards_game.py")
+path_to_page_dialogue_with_the_master = os.path.join(cwd, "views", "3_dialogue_with_the_master.py")
+path_to_page_css_stuff = os.path.join(cwd, "views", "zz_css_stuff.py")
 
 
 # Set the background image

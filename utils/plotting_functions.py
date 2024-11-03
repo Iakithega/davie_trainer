@@ -47,13 +47,20 @@ def load_all_images(config_file=config_path):
     if 'img_paths' not in config:
         raise ValueError("Section 'img_paths' not found in the config file.")
     
+    # Define base directory (current working directory)
+    cwd = os.getcwd()
+    
     # Dictionary to store the images
     images = {}
-    for key, path in config['img_paths'].items():
+    for key, relative_path  in config['img_paths'].items():
+
+        # Create the full path by joining with the current working directory
+        full_path = os.path.join(cwd, relative_path)
+
         try:
-            images[key] = Image.open(path)  # Load the image and store it in the dictionary
+            images[key] = Image.open(full_path)  # Load the image and store it in the dictionary
         except FileNotFoundError:
-            raise FileNotFoundError(f"Image at path '{path}' not found.")
+            raise FileNotFoundError(f"Image at path '{full_path}' not found.")
     
     return images
 
