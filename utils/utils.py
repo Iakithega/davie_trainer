@@ -2,6 +2,9 @@ import streamlit as st
 import json
 import configparser
 import pandas as pd
+import os
+
+cwd = os.getcwd()
 
 # from streamlit_lottie import st_lottie
 # import requests
@@ -14,10 +17,10 @@ def v_spacer(height, sb=False) -> None:
         else:
             st.write('\n')
 
-# path_to_excel = "data\davie_trainingsplan_2014.xlsx"
+path_to_excel = os.path.join(cwd, "data", "davie_trainingsplan_2014.xlsx")
 
 def load_raw_excel(path: str):
-    data = pd.read_excel(path, 
+    data = pd.read_excel(path_to_excel, 
                          header=0, 
                          index_col="Datum", 
                          parse_dates=True)
