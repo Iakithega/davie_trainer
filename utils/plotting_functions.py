@@ -35,7 +35,9 @@ from utils.utils import *
 from utils.data_engineering import *
 
 
-config_path = os.path.join("utils", "paths.ini")
+
+cwd = os.getcwd()
+config_path = os.path.join(cwd, "utils", "paths.ini")
 
 @st.cache_data
 def load_all_images(config_file=config_path):
