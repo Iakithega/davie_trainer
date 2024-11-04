@@ -69,7 +69,7 @@ current_date = current_date.strftime('%Y-%m-%d')
 
 
 
-@st.cache_data
+# @st.cache_data
 def load_and_process_data():
     initial_data = load_raw_excel(path_to_excel)
     data, monthly_stats_data = complete_data_wrangeling(initial_data)

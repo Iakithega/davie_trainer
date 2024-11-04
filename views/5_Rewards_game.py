@@ -22,31 +22,20 @@ st.write("# The Game")
 cwd = os.getcwd()
 
 creature_images_path = os.path.join(cwd, "media", "pics_of_creatures")
-creature_already_won_images_path = os.path.join(cwd, "media", "pics_of_creatures", "already_won_creatures")
 creature_question_mark_image_path = os.path.join(cwd, "media", "pics_of_creatures", "backup", "creature_question_mark.png")
 path_audio = os.path.join(cwd, "media", "music", "action_epic.mp3")
+# creature_already_won_images_path = os.path.join(cwd, "media", "pics_of_creatures", "already_won_creatures")
 
 # Initialize session state for controlling the game and storing last images
 if 'start' not in st.session_state:
     st.session_state.start = False
-if 'last_image' not in st.session_state:
-    st.session_state.last_image = creature_question_mark_image_path  # Set question mark as the default initial image
-if 'last_image_name' not in st.session_state:
-    st.session_state.last_image_name = "???"  # Default name for question mark
+if 'selected_image' not in st.session_state:
+    st.session_state.selected_image = creature_question_mark_image_path  
+if 'selected_image_name' not in st.session_state:
+    st.session_state.selected_image_name = "???"  
 if 'selected_images' not in st.session_state:
     st.session_state.selected_images = []  # Track already selected images
 
-
-# @st.cache_data
-# def load_image_paths(creature_images_path):
-#     # Get all image files in the media folder (assuming .jpg and .png formats)
-#     image_paths = {}
-#     for filename in os.listdir(creature_images_path):
-#         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-#             key = os.path.splitext(filename)[0]
-#             full_path = os.path.join(creature_images_path, filename)
-#             image_paths[key] = full_path
-#     return image_paths
 
 @st.cache_data
 def load_image_paths(creature_images_path):
@@ -57,10 +46,12 @@ def load_image_paths(creature_images_path):
     image_paths = {}
     for filename in os.listdir(absolute_creature_images_path):
         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-            key = os.path.splitext(filename)[0]
+            image_name = os.path.splitext(filename)[0]
             full_path = os.path.join(absolute_creature_images_path, filename)
-            image_paths[key] = full_path
+            image_paths[image_name] = full_path
     return image_paths
+
+
 
 # Load and cache image paths
 creature_image_paths = load_image_paths(creature_images_path)
@@ -69,13 +60,13 @@ available_images = {k: v for k, v in creature_image_paths.items() if k not in st
 
 
 
+
 gap1_img_firstline, col_image, gap2_img_firstline = st.columns([1,2,1], gap="large", vertical_alignment="center")
 with col_image:
     col_inside_img_start, col_inside_img_gap, col_inside_img_stop = st.columns([15, 70, 10], gap="large", vertical_alignment="center")
     # Start and Stop buttons
     with col_inside_img_start:
-        start_button = st.button("Start")
-        
+        start_button = st.button("Start")     
     with col_inside_img_stop:
         stop_button = st.button("Stop")
     placeholder_image = st.empty()  # Placeholder for the image display
@@ -87,7 +78,7 @@ with col_image:
 # with gap2_img_firstline:
 #     # placeholder_selected = st.empty()
 
-        
+    
 
 # Update session state based on button clicks
 if start_button:
@@ -96,7 +87,6 @@ if stop_button:
     st.session_state.start = False
 
 ############################################################################################
-
 
 
 # Spinning through random images
@@ -111,8 +101,8 @@ if st.session_state.start and available_images:
         placeholder_image.image(available_images[name], use_column_width='auto')
         
         # Store the last displayed image in session state
-        st.session_state.last_image = available_images[name]
-        st.session_state.last_image_name = name
+        st.session_state.selected_image = available_images[name]
+        st.session_state.selected_image_name = name
         
         time.sleep(0.1)  # Control the speed of spinning
         
@@ -122,23 +112,53 @@ if st.session_state.start and available_images:
 
 # Display the last selected image and update selected list
 if not st.session_state.start:
-    placeholder_image.image(st.session_state.last_image, use_column_width='auto')
-    
+    placeholder_image.image(st.session_state.selected_image, use_column_width='auto')
     placeholder_image_text.markdown(
-        f"<h2 style='text-align: center;'>{st.session_state.last_image_name.upper()}</h2>", 
+        f"<h2 style='text-align: center;'>{st.session_state.selected_image_name.upper()}</h2>", 
         unsafe_allow_html=True
                                     )    
+    
     # Add the selected image to the list of already chosen images if not already there
-    if st.session_state.last_image_name not in st.session_state.selected_images:
-        st.session_state.selected_images.append(st.session_state.last_image_name)
+    if st.session_state.selected_image_name not in st.session_state.selected_images:
+        st.session_state.selected_images.append(st.session_state.selected_image_name)
         # placeholder_available.write(available_images)
         # placeholder_selected.write(st.session_state.selected_images)
 
     # Update available images to exclude already selected ones
-    available_images = {k: v for k, v in creature_image_paths.items() if k not in st.session_state.selected_images}
+    available_images = {name: path for name, path in creature_image_paths.items() if name not in st.session_state.selected_images}
+
+
 
     # Notify user when all images are selected
     if not available_images:
         st.write("All images have been selected! Click 'Reset Game' to play again.")
 
 
+
+
+
+
+
+
+
+# @st.cache_data
+# def load_images(creature_images_path):
+#     # Dictionary to store loaded images by name
+#     image_data = {}
+#     for filename in os.listdir(creature_images_path):
+#         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+#             key = os.path.splitext(filename)[0]
+#             full_path = os.path.join(creature_images_path, filename)
+#             # Load the image and store it in the dictionary
+#             image_data[key] = Image.open(full_path)
+#     return image_data
+
+
+
+# # CHANGED: Load and cache images, not just paths
+# creature_images = load_images(creature_images_path)
+# # Available images list (excluding selected ones)
+# available_images = {k: v for k, v in creature_images.items() if k not in st.session_state.selected_images}
+
+    # # Update available images to exclude already selected ones
+    # available_images = {k: v for k, v in creature_images.items() if k not in st.session_state.selected_images}
