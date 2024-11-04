@@ -98,7 +98,7 @@ def moving_average_plot(ax, data, name, window=3):
 
     
     
-def pushup_plot(data, monthly_stats_data, start_date, current_date):
+def pushup_plot(data, monthly_stats_data, start_date, current_date, boxplot_filter_toggle):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_RECS'],
@@ -258,8 +258,35 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     # axs['LGSTZ_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
  
+    # # boxplot all sets
+    # if boxplot_filter_toggle == True:
+    #     # Filter data to include only rows from start_date onward
+    #     filtered_boxplot_data = lgstz_all_sets[lgstz_all_sets.index >= pd.to_datetime(start_date)]
+    #     sns.boxplot(data=filtered_boxplot_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
+    # else: 
+    #     sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey") 
+
     # boxplot all sets
-    sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey") 
+    # if boxplot_filter_toggle == True:
+    #     # Add a date column to `lgstz_all_sets` based on the `data` index
+    #     lgstz_all_sets['Date'] = data.index.repeat(len(sets_columns))
+    #     # Filter data to include only rows from start_date onward
+    #     filtered_data = lgstz_all_sets[lgstz_all_sets['Date'] >= pd.to_datetime(start_date)]
+    #     sns.boxplot(data=filtered_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
+    # else:
+    #     sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
+    # Repeat the dates for each set and add as a column
+    # lgstz_all_sets['Date'] = np.repeat(data.index, len(sets_columns))
+
+    # Boxplot with optional filtering
+    if boxplot_filter_toggle == True:
+        # Filter data to include only rows from start_date onward
+        # filtered_data = lgstz_all_sets[lgstz_all_sets['Date'] >= pd.to_datetime(start_date)]
+        # sns.boxplot(data=filtered_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
+        sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="blue")
+    else:
+        sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
+
 
     # Swarmplot with dodge
     sns.swarmplot(

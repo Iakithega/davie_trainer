@@ -222,7 +222,8 @@ if st.session_state['person_chosen'] != 'Select':
                 v_spacer(height=4, sb=False) 
                 col1_image_row, col2_image_row, col3_image_row = st.columns(3)
                 with col2_image_row:
-                    st.image(r"media\wallpaper\transformers4.png", use_column_width=True) # width=400
+                    tranformer_image_path = os.path.join(cwd, "media", "wallpaper", "transformers4.png")
+                    st.image(tranformer_image_path, use_column_width=True) # width=400
     
 
 
