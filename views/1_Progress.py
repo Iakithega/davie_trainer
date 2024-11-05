@@ -73,7 +73,7 @@ current_date = current_date.strftime('%Y-%m-%d')
 
 
 
-# @st.cache_data
+@st.cache_data
 def load_and_process_data():
     initial_data = load_raw_excel(path_to_excel)
     data, monthly_stats_data = complete_data_wrangeling(initial_data)
@@ -104,10 +104,12 @@ with st.expander("Adjust time periods"):
         boxplot_filter_toggle = st.toggle(label="Boxplot for Selected Timeperiod", value=False)
         if boxplot_filter_toggle:
             st.session_state["boxplot_filter"] = True
+        else:
+            st.session_state["boxplot_filter"] = False
 
 
-
-fig_pushup = pushup_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date, boxplot_filter_toggle=st.session_state["boxplot_filter"])
+#  boxplot_filter_toggle=st.session_state["boxplot_filter"]
+fig_pushup = pushup_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_pushup)
 v_spacer(height=2, sb=False)
 

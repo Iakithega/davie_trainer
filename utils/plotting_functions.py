@@ -10,6 +10,7 @@ from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
 import matplotlib.image as mpimg
 import seaborn as sns
 from mpl_interactions import interactive_plot
+import pprint
 
 
 from PIL import Image
@@ -98,7 +99,7 @@ def moving_average_plot(ax, data, name, window=3):
 
     
     
-def pushup_plot(data, monthly_stats_data, start_date, current_date, boxplot_filter_toggle):
+def pushup_plot(data, monthly_stats_data, start_date, current_date):
     plt.style.use('seaborn-v0_8')
     fig, axs = plt.subplot_mosaic([
                                 ['LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_REC', 'LGSTZ_RECS'],
@@ -224,17 +225,22 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date, boxplot_filt
 
 
     # Statistics Plot
-    # Reshape the data using pd.melt
+    # Reshape the data using pd.melt for the boxplot
     sets_columns = ["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"]
-    lgstz_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
 
-    # Clean up the 'Set' labels
+    # Step 1: Reset the index of `data` so that dates become a column
+    data_with_dates = data[sets_columns].copy()
+    data_with_dates = data_with_dates.reset_index()  # This will move the index (dates) to a column called 'index'
+    data_with_dates = data_with_dates.rename(columns={'index': 'Date'})  # Rename 'index' to 'Date' for clarity
+
+    # Step 2: Melt the data, retaining the 'Date' column
+    lgstz_all_sets = data_with_dates.melt(id_vars='Date', var_name='Set', value_name='Reps').dropna()
     lgstz_all_sets['Set'] = lgstz_all_sets['Set'].str.replace('Liegestütz set ', 'Set ')
+    lgstz_all_sets['All Sets'] = 'All Sets'  # Add column for x-axis grouping
 
-    # Add a constant column for x-axis grouping
-    lgstz_all_sets['All Sets'] = 'All Sets'
-    
-    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+    # Step 3: Filter by start_date and current_date
+    filtered_lgstz_all_sets = lgstz_all_sets[(lgstz_all_sets['Date'] >= pd.to_datetime(start_date)) &
+                                            (lgstz_all_sets['Date'] <= pd.to_datetime(current_date))]
 
 
     axs['LGSTZ_BX'].set_title(f"Push Ups Stats", size=7)
@@ -247,50 +253,22 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date, boxplot_filt
     # axs['LGSTZ_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['LGSTZ_BX'].set_ylim([0, 30])
 
-    
     # Set font size for major and minor ticks
     axs['LGSTZ_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
     axs['LGSTZ_BX'].tick_params(axis='x', which='minor', labelsize=6) 
     axs['LGSTZ_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+    
 
-    # Set major ticks and thick lines to be placed on the first of every month
-    # axs['LGSTZ_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
-    # axs['LGSTZ_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
-
- 
-    # # boxplot all sets
-    # if boxplot_filter_toggle == True:
-    #     # Filter data to include only rows from start_date onward
-    #     filtered_boxplot_data = lgstz_all_sets[lgstz_all_sets.index >= pd.to_datetime(start_date)]
-    #     sns.boxplot(data=filtered_boxplot_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
-    # else: 
-    #     sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey") 
-
-    # boxplot all sets
-    # if boxplot_filter_toggle == True:
-    #     # Add a date column to `lgstz_all_sets` based on the `data` index
-    #     lgstz_all_sets['Date'] = data.index.repeat(len(sets_columns))
-    #     # Filter data to include only rows from start_date onward
-    #     filtered_data = lgstz_all_sets[lgstz_all_sets['Date'] >= pd.to_datetime(start_date)]
-    #     sns.boxplot(data=filtered_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
-    # else:
-    #     sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
-    # Repeat the dates for each set and add as a column
-    # lgstz_all_sets['Date'] = np.repeat(data.index, len(sets_columns))
-
-    # Boxplot with optional filtering
-    if boxplot_filter_toggle == True:
-        # Filter data to include only rows from start_date onward
-        # filtered_data = lgstz_all_sets[lgstz_all_sets['Date'] >= pd.to_datetime(start_date)]
-        # sns.boxplot(data=filtered_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
-        sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="blue")
+    if st.session_state["boxplot_filter"] == True:
+        boxplot_data = filtered_lgstz_all_sets
     else:
-        sns.boxplot(data=lgstz_all_sets, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
-
-
-    # Swarmplot with dodge
+        boxplot_data = lgstz_all_sets
+        
+    # boxplot and Swarmplot with dodge
+    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="grey")
     sns.swarmplot(
-        data=lgstz_all_sets,
+        data=boxplot_data,
         x='All Sets',
         y='Reps',
         hue='Set',
@@ -355,8 +333,6 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date, boxplot_filt
     axs['LGSTZ_RECS'].grid(visible=True, which='major', axis='y', linestyle='--', linewidth=0.5)
     axs['LGSTZ_RECS'].grid(visible=True, which='major', axis='x', linestyle='-', linewidth=0.3, alpha=0.3)
 
-
-   
 
     return fig
 
