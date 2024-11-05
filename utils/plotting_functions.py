@@ -259,10 +259,10 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     axs['LGSTZ_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
     
 
-    if st.session_state["boxplot_filter"] == True:
-        boxplot_data = filtered_lgstz_all_sets
-    else:
+    if st.session_state["boxplot_all_data"] == True:
         boxplot_data = lgstz_all_sets
+    else:
+        boxplot_data = filtered_lgstz_all_sets
         
     # boxplot and Swarmplot with dodge
     set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}

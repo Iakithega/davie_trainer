@@ -59,8 +59,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 st.title("David Titan")
 
 
-if "boxplot_filter" not in st.session_state:
-    st.session_state["boxplot_filter"] = False
+if "boxplot_all_data" not in st.session_state:
+    st.session_state["boxplot_all_data"] = False
 
 
 # calculate the current date for plots
@@ -100,15 +100,13 @@ with st.expander("Adjust time periods"):
         start_date = st.date_input(label="Start Date for Training Plots", value=last_50_days, min_value=min_date)
         v_spacer(height=2, sb=False)
     with date_col2:
-        st.write("TOGGLE for syncing boxplots from Alltime to defined starting time. ALSO CHANGE THE TITLE in BOOXPLOTS FROM ALL TIME TO Selected Time period so it would be clear")
-        boxplot_filter_toggle = st.toggle(label="Boxplot for Selected Timeperiod", value=False)
+        boxplot_filter_toggle = st.toggle(label="Boxplots for all data", value=False)
         if boxplot_filter_toggle:
-            st.session_state["boxplot_filter"] = True
+            st.session_state["boxplot_all_data"] = True
         else:
-            st.session_state["boxplot_filter"] = False
+            st.session_state["boxplot_all_data"] = False
 
 
-#  boxplot_filter_toggle=st.session_state["boxplot_filter"]
 fig_pushup = pushup_plot(data=data, monthly_stats_data=monthly_stats_data, start_date=start_date, current_date=current_date)
 st.pyplot(fig_pushup)
 v_spacer(height=2, sb=False)
