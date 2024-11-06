@@ -224,10 +224,23 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
 
 
 
-    # Statistics Plot
+    # STATISTIS PLOT
+    axs['LGSTZ_BX'].set_title(f"Push Ups Stats", size=7)
+    axs['LGSTZ_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
+
+    axs['LGSTZ_BX'].set_xlabel(' ', size=8)
+    axs['LGSTZ_BX'].yaxis.set_label_position("right")
+    axs['LGSTZ_BX'].set_ylabel('Reps', size=8, labelpad=5)
+    # axs['LGSTZ_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
+    axs['LGSTZ_BX'].set_ylim([0, 30])
+
+    # Set font size for major and minor ticks
+    axs['LGSTZ_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
+    axs['LGSTZ_BX'].tick_params(axis='x', which='minor', labelsize=6) 
+    axs['LGSTZ_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
+
     # Reshape the data using pd.melt for the boxplot
     sets_columns = ["Liegestütz set 1", "Liegestütz set 2", "Liegestütz set 3"]
-
     # Step 1: Reset the index of `data` so that dates become a column
     data_with_dates = data[sets_columns].copy()
     data_with_dates = data_with_dates.reset_index()  # This will move the index (dates) to a column called 'index'
@@ -242,23 +255,6 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
     filtered_lgstz_all_sets = lgstz_all_sets[(lgstz_all_sets['Date'] >= pd.to_datetime(start_date)) &
                                             (lgstz_all_sets['Date'] <= pd.to_datetime(current_date))]
 
-
-    axs['LGSTZ_BX'].set_title(f"Push Ups Stats", size=7)
-    axs['LGSTZ_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
-    
-
-    axs['LGSTZ_BX'].set_xlabel(' ', size=8)
-    axs['LGSTZ_BX'].yaxis.set_label_position("right")
-    axs['LGSTZ_BX'].set_ylabel('Reps', size=8, labelpad=5)
-    # axs['LGSTZ_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
-    axs['LGSTZ_BX'].set_ylim([0, 30])
-
-    # Set font size for major and minor ticks
-    axs['LGSTZ_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
-    axs['LGSTZ_BX'].tick_params(axis='x', which='minor', labelsize=6) 
-    axs['LGSTZ_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
-    
-
     if st.session_state["boxplot_all_data"] == True:
         boxplot_data = lgstz_all_sets
     else:
@@ -266,7 +262,7 @@ def pushup_plot(data, monthly_stats_data, start_date, current_date):
         
     # boxplot and Swarmplot with dodge
     set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
-    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="grey")
+    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['LGSTZ_BX'], color="lightgrey")
     sns.swarmplot(
         data=boxplot_data,
         x='All Sets',
@@ -462,19 +458,7 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
 
 
 
-    # Statistics Plot
-    # Reshape the data using pd.melt
-    sets_columns = ["Planke set 1", "Planke set 2", "Planke set 3"]
-    plk_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
-
-    # Clean up the 'Set' labels
-    plk_all_sets['Set'] = plk_all_sets['Set'].str.replace('Planke set ', 'Set ')
-
-    # Add a constant column for x-axis grouping
-    plk_all_sets['All Sets'] = 'All Sets'
-    
-    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
-
+    # STATISTICS PLOT
 
     axs['PLK_BX'].set_title(f"Planke Stats", size=7)
     axs['PLK_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
@@ -485,23 +469,37 @@ def plank_plot(data, monthly_stats_data, start_date, current_date):
     # axs['PLK_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['PLK_BX'].set_ylim([0, 160])
 
-    
     # Set font size for major and minor ticks
     axs['PLK_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
     axs['PLK_BX'].tick_params(axis='x', which='minor', labelsize=6) 
     axs['PLK_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
 
-    # Set major ticks and thick lines to be placed on the first of every month
-    # axs['PLK_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
-    # axs['PLK_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+    # Reshape the data using pd.melt
+    sets_columns = ["Planke set 1", "Planke set 2", "Planke set 3"]
+    # Step 1: Reset the index of `data` so that dates become a column
+    data_with_dates = data[sets_columns].copy()
+    data_with_dates = data_with_dates.reset_index()  # This will move the index (dates) to a column called 'index'
+    data_with_dates = data_with_dates.rename(columns={'index': 'Date'})  # Rename 'index' to 'Date' for clarity
 
- 
-    # boxplot all sets
-    sns.boxplot(data=plk_all_sets, x='All Sets', y='Reps', ax=axs['PLK_BX'], color="lightgrey") 
+    # Step 2: Melt the data, retaining the 'Date' column
+    plk_all_sets = data_with_dates.melt(id_vars='Date', var_name='Set', value_name='Reps').dropna()
+    plk_all_sets['Set'] = plk_all_sets['Set'].str.replace('Planke set ', 'Set ')
+    plk_all_sets['All Sets'] = 'All Sets'  # Add column for x-axis grouping
 
-    # Swarmplot with dodge
+    # Step 3: Filter by start_date and current_date
+    filtered_plk_all_sets = plk_all_sets[(plk_all_sets['Date'] >= pd.to_datetime(start_date)) &
+                                            (plk_all_sets['Date'] <= pd.to_datetime(current_date))]
+    
+    if st.session_state["boxplot_all_data"] == True:
+        boxplot_data = plk_all_sets
+    else:
+        boxplot_data = filtered_plk_all_sets
+
+    # Swarmplot and Boxplot with dodge
+    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['PLK_BX'], color="lightgrey", fliersize=0) 
     sns.swarmplot(
-        data=plk_all_sets,
+        data=boxplot_data,
         x='All Sets',
         y='Reps',
         hue='Set',
