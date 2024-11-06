@@ -690,20 +690,7 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
 
     
     
-    # Statistics Plot
-    # Reshape the data using pd.melt
-    sets_columns = ["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"]
-    knbg_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
-
-    # Clean up the 'Set' labels
-    knbg_all_sets['Set'] = knbg_all_sets['Set'].str.replace('Kniebeugen set ', 'Set ')
-
-    # Add a constant column for x-axis grouping
-    knbg_all_sets['All Sets'] = 'All Sets'
-    
-    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
-
-
+    # STATISTICS PLOT
     axs['KNBG_BX'].set_title(f"Kniebeugen Stats", size=7)
     axs['KNBG_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -713,22 +700,38 @@ def kniebeuge_plot(data, monthly_stats_data, start_date, current_date):
     # axs['KNBG_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['KNBG_BX'].set_ylim([0, 50])
 
-    
     # Set font size for major and minor ticks
     axs['KNBG_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
     axs['KNBG_BX'].tick_params(axis='x', which='minor', labelsize=6) 
     axs['KNBG_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
 
-    # Set major ticks and thick lines to be placed on the first of every month
-    # axs['KNBG_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
-    # axs['KNBG_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
+    
+    # Reshape the data using pd.melt
+    sets_columns = ["Kniebeugen set 1", "Kniebeugen set 2", "Kniebeugen set 3"]
+    # Step 1: Reset the index of `data` so that dates become a column
+    data_with_dates = data[sets_columns].copy()
+    data_with_dates = data_with_dates.reset_index()  # This will move the index (dates) to a column called 'index'
+    data_with_dates = data_with_dates.rename(columns={'index': 'Date'})  # Rename 'index' to 'Date' for clarity
 
-    # boxplot all sets
-    sns.boxplot(data=knbg_all_sets, x='All Sets', y='Reps', ax=axs['KNBG_BX'], color="lightgrey") 
+    # Step 2: Melt the data, retaining the 'Date' column
+    knbg_all_sets = data_with_dates.melt(id_vars='Date', var_name='Set', value_name='Reps').dropna()
+    knbg_all_sets['Set'] = knbg_all_sets['Set'].str.replace('Kniebeugen set ', 'Set ')
+    knbg_all_sets['All Sets'] = 'All Sets'  # Add column for x-axis grouping
 
-    # Swarmplot with dodge
+    # Step 3: Filter by start_date and current_date
+    filtered_knbg_all_sets = knbg_all_sets[(knbg_all_sets['Date'] >= pd.to_datetime(start_date)) &
+                                            (knbg_all_sets['Date'] <= pd.to_datetime(current_date))]
+
+    if st.session_state["boxplot_all_data"] == True:
+        boxplot_data = knbg_all_sets
+    else:
+        boxplot_data = filtered_knbg_all_sets  
+
+    # Swarmplot with dodge and boxplot all sets
+    set_hue_palette = {'Set 1': 'limegreen', 'Set 2': 'dodgerblue', 'Set 3': 'darkviolet'}
+    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['KNBG_BX'], color="lightgrey", fliersize=0) 
     sns.swarmplot(
-        data=knbg_all_sets,
+        data=boxplot_data,
         x='All Sets',
         y='Reps',
         hue='Set',
@@ -944,20 +947,7 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
     axs['HMCRL_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3) 
 
 
-    # Statistics Plot
-    # Reshape the data using pd.melt
-    sets_columns = ["Weighted Hammer Curls set 1 reps", "Weighted Hammer Curls set 2 reps", "Weighted Hammer Curls set 3 reps"]
-    hmcrl_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
-
-    # Clean up the 'Set' labels
-    hmcrl_all_sets['Set'] = hmcrl_all_sets['Set'].str.replace('Weighted Hammer Curls set ', 'Set ')
-
-    # Add a constant column for x-axis grouping
-    hmcrl_all_sets['All Sets'] = 'All Sets'
-    
-    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
-
-
+    # STATISTICS PLOT
     axs['HMCRL_BX'].set_title(f"Hammer Curls Stats", size=7)
     axs['HMCRL_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -967,22 +957,42 @@ def hamcurls_plot(data, monthly_stats_data, start_date, current_date):
     # axs['HMCRL_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['HMCRL_BX'].set_ylim([0, 30])
 
-    
     # Set font size for major and minor ticks
     axs['HMCRL_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
     axs['HMCRL_BX'].tick_params(axis='x', which='minor', labelsize=6) 
     axs['HMCRL_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
 
-    # Set major ticks and thick lines to be placed on the first of every month
-    # axs['HMCRL_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
-    # axs['HMCRL_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
-    # boxplot all sets
-    sns.boxplot(data=hmcrl_all_sets, x='All Sets', y='Reps', ax=axs['HMCRL_BX'], color="lightgrey") 
 
-    # Swarmplot with dodge
+
+    # Reshape the data using pd.melt
+    sets_columns = ["Weighted Hammer Curls set 1 reps", "Weighted Hammer Curls set 2 reps", "Weighted Hammer Curls set 3 reps"]
+    # Step 1: Reset the index of `data` so that dates become a column
+    data_with_dates = data[sets_columns].copy()
+    data_with_dates = data_with_dates.reset_index()  # This will move the index (dates) to a column called 'index'
+    data_with_dates = data_with_dates.rename(columns={'index': 'Date'})  # Rename 'index' to 'Date' for clarity
+
+    # Step 2: Melt the data, retaining the 'Date' column
+    hmcrl_all_sets = data_with_dates.melt(id_vars='Date', var_name='Set', value_name='Reps').dropna()
+    hmcrl_all_sets['Set'] = hmcrl_all_sets['Set'].str.replace('Weighted Hammer Curls set ', 'Set ')
+    hmcrl_all_sets['All Sets'] = 'All Sets'  # Add column for x-axis grouping
+
+    # Step 3: Filter by start_date and current_date
+    filtered_hmcrl_all_sets = hmcrl_all_sets[(hmcrl_all_sets['Date'] >= pd.to_datetime(start_date)) &
+                                            (hmcrl_all_sets['Date'] <= pd.to_datetime(current_date))]
+    
+    if st.session_state["boxplot_all_data"] == True:
+        boxplot_data = hmcrl_all_sets
+    else:
+        boxplot_data = filtered_hmcrl_all_sets
+    
+    
+
+    # boxplot all sets and Swarmplot with dodge
+    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
+    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['HMCRL_BX'], color="lightgrey", fliersize=0) 
     sns.swarmplot(
-        data=hmcrl_all_sets,
+        data=boxplot_data,
         x='All Sets',
         y='Reps',
         hue='Set',
@@ -1223,20 +1233,7 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
     axs['TRMRD_REC'].legend(loc='upper right', borderaxespad=0.1, fontsize=5, ncol=3)
 
 
-    # Statistics Plot
-    # Reshape the data using pd.melt
-    sets_columns = ["Weighted Turm Rudern set 1 reps", "Weighted Turm Rudern set 2 reps", "Weighted Turm Rudern set 3 reps"]
-    trmrd_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
-
-    # Clean up the 'Set' labels
-    trmrd_all_sets['Set'] = trmrd_all_sets['Set'].str.replace('Weighted Turm Rudern set ', 'Set ')
-
-    # Add a constant column for x-axis grouping
-    trmrd_all_sets['All Sets'] = 'All Sets'
-    
-    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
-
-
+    # STATISTICS PLOT
     axs['TRMRD_BX'].set_title(f"Turm Rudern Stats", size=7)
     axs['TRMRD_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -1245,23 +1242,39 @@ def turmrud_plot(data, monthly_stats_data, start_date, current_date):
     axs['TRMRD_BX'].set_ylabel('Reps', size=8, labelpad=5)
     # axs['TRMRD_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['TRMRD_BX'].set_ylim([0, 40])
-
     
     # Set font size for major and minor ticks
     axs['TRMRD_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
     axs['TRMRD_BX'].tick_params(axis='x', which='minor', labelsize=6) 
     axs['TRMRD_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
 
-    # Set major ticks and thick lines to be placed on the first of every month
-    # axs['TRMRD_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
-    # axs['TRMRD_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
-    # boxplot all sets
-    sns.boxplot(data=trmrd_all_sets, x='All Sets', y='Reps', ax=axs['TRMRD_BX'], color="lightgrey") 
+    # Reshape the data using pd.melt
+    sets_columns = ["Weighted Turm Rudern set 1 reps", "Weighted Turm Rudern set 2 reps", "Weighted Turm Rudern set 3 reps"]
+    # Step 1: Reset the index of `data` so that dates become a column
+    data_with_dates = data[sets_columns].copy()
+    data_with_dates = data_with_dates.reset_index()  # This will move the index (dates) to a column called 'index'
+    data_with_dates = data_with_dates.rename(columns={'index': 'Date'})  # Rename 'index' to 'Date' for clarity
 
-    # Swarmplot with dodge
+    # Step 2: Melt the data, retaining the 'Date' column
+    trmrd_all_sets = data_with_dates.melt(id_vars='Date', var_name='Set', value_name='Reps').dropna()
+    trmrd_all_sets['Set'] = trmrd_all_sets['Set'].str.replace('Weighted Turm Rudern set ', 'Set ')
+    trmrd_all_sets['All Sets'] = 'All Sets'  # Add column for x-axis grouping
+
+    # Step 3: Filter by start_date and current_date
+    filtered_trmrd_all_sets = trmrd_all_sets[(trmrd_all_sets['Date'] >= pd.to_datetime(start_date)) &
+                                            (trmrd_all_sets['Date'] <= pd.to_datetime(current_date))]
+    
+    if st.session_state["boxplot_all_data"] == True:
+        boxplot_data = trmrd_all_sets
+    else:
+        boxplot_data = filtered_trmrd_all_sets 
+
+    # Swarmplot with dodge and boxplot all sets
+    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
+    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['TRMRD_BX'], color="lightgrey", fliersize=0) 
     sns.swarmplot(
-        data=trmrd_all_sets,
+        data=boxplot_data,
         x='All Sets',
         y='Reps',
         hue='Set',
@@ -1475,20 +1488,7 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
 
 
 
-    # Statistics Plot
-    # Reshape the data using pd.melt
-    sets_columns = ["Weighted Turm Zug set 1 reps", "Weighted Turm Zug set 2 reps", "Weighted Turm Zug set 3 reps"]
-    trmzg_all_sets = data[sets_columns].melt(var_name='Set', value_name='Reps').dropna()
-
-    # Clean up the 'Set' labels
-    trmzg_all_sets['Set'] = trmzg_all_sets['Set'].str.replace('Weighted Turm Zug set ', 'Set ')
-
-    # Add a constant column for x-axis grouping
-    trmzg_all_sets['All Sets'] = 'All Sets'
-    
-    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
-
-
+    # STATISTICS PLOTS
     axs['TRMZG_BX'].set_title(f"Turm Zug Stats", size=7)
     axs['TRMZG_BX'].set_facecolor((1, 1, 1, 0.5))  # Set the axes background to white with 50% transparency
 
@@ -1497,23 +1497,42 @@ def turmzg_plot(data, monthly_stats_data, start_date, current_date):
     axs['TRMZG_BX'].set_ylabel('Reps', size=8, labelpad=5)
     # axs['TRMZG_BX'].set_xlim([pd.to_datetime(start_date), pd.to_datetime(current_date)]), 
     axs['TRMZG_BX'].set_ylim([0, 35])
-
     
     # Set font size for major and minor ticks
     axs['TRMZG_BX'].tick_params(axis='x', which='major', labelsize=6, rotation=360)  
     axs['TRMZG_BX'].tick_params(axis='x', which='minor', labelsize=6) 
     axs['TRMZG_BX'].tick_params(axis='y', labelright=True, labelleft=False, which='major', labelsize=6, grid_alpha=0.3)
 
-    # Set major ticks and thick lines to be placed on the first of every month
-    # axs['TRMZG_BX'].grid(visible=True, which='major', color='black', axis='x', linestyle='--', linewidth=0.5)  
-    # axs['TRMZG_BX'].grid(visible=True, which='minor', color='gray', axis='x', linestyle='--', linewidth=0.3)
 
-    # boxplot all sets
-    sns.boxplot(data=trmzg_all_sets, x='All Sets', y='Reps', ax=axs['TRMZG_BX'], color="lightgrey") 
 
-    # Swarmplot with dodge
+    # Reshape the data using pd.melt
+    sets_columns = ["Weighted Turm Zug set 1 reps", "Weighted Turm Zug set 2 reps", "Weighted Turm Zug set 3 reps"]
+    # Step 1: Reset the index of `data` so that dates become a column
+    data_with_dates = data[sets_columns].copy()
+    data_with_dates = data_with_dates.reset_index()  # This will move the index (dates) to a column called 'index'
+    data_with_dates = data_with_dates.rename(columns={'index': 'Date'})  # Rename 'index' to 'Date' for clarity
+
+    # Step 2: Melt the data, retaining the 'Date' column
+    trmzg_all_sets = data_with_dates.melt(id_vars='Date', var_name='Set', value_name='Reps').dropna()
+    trmzg_all_sets['Set'] = trmzg_all_sets['Set'].str.replace('Weighted Turm Zug set ', 'Set ')
+    trmzg_all_sets['All Sets'] = 'All Sets'  # Add column for x-axis grouping
+
+
+    # Step 3: Filter by start_date and current_date
+    filtered_trmzg_all_sets = trmzg_all_sets[(trmzg_all_sets['Date'] >= pd.to_datetime(start_date)) &
+                                            (trmzg_all_sets['Date'] <= pd.to_datetime(current_date))]
+    
+    if st.session_state["boxplot_all_data"] == True:
+        boxplot_data = trmzg_all_sets
+    else:
+        boxplot_data = filtered_trmzg_all_sets
+
+
+    # Swarmplot with dodge and boxplot all sets
+    set_hue_palette = {'Set 1 reps': 'limegreen', 'Set 2 reps': 'dodgerblue', 'Set 3 reps': 'darkviolet'}
+    sns.boxplot(data=boxplot_data, x='All Sets', y='Reps', ax=axs['TRMZG_BX'], color="lightgrey", fliersize=0) 
     sns.swarmplot(
-        data=trmzg_all_sets,
+        data=boxplot_data,
         x='All Sets',
         y='Reps',
         hue='Set',
