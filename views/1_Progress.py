@@ -16,74 +16,23 @@ import mimetypes
 from streamlit import runtime
 from streamlit.runtime import caching
 
-
+# paths and configs
 cwd = os.getcwd()
 config = configparser.ConfigParser()
 config.read("utils/paths.ini")
-
 path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
-
-
 path_to_wallpaper = os.path.join(cwd, "static", "backaragraunda.jpg")
-# Path to your local folder containing images
-# image_folder = r'media\wallpaper'
 
-# # Get the list of image files from the folder
-# image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(('png', 'jpg', 'jpeg'))]
+# css funca from utils
+set_background_css(path_to_wallpaper)
+hide_header_css()
 
-# # Select a random image from the folder
-# def get_random_image():
-#     return random.choice(image_paths)
-
-# image_path = random.choice(image_paths)
-
-
-
-
-
-image = path_to_wallpaper
-
-def get_base64(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_background(png_file):
-    bin_str = get_base64(png_file)
-    page_bg_img = '''
-    <style>
-    [data-testid="stMain"] {
-    background-image: url("data:image/png;base64,%s");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    }
-    </style>
-    ''' % bin_str
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-set_background(path_to_wallpaper)
-
-
-
-
-
-
-# hides the header - also possible to hide the footer: footer {visibility: hidden;}  /* Hides the footer */
-hide_st_style ="""
-    <style>
-        header.st-emotion-cache-1n4a2v9 {visibility: hidden;}  /* Hides the Streamlit header element identified in the console */ 
-    </style>
-    """
-st.markdown(hide_st_style, unsafe_allow_html=True)  
-
+if "boxplot_all_data" not in st.session_state:
+    st.session_state["boxplot_all_data"] = False
 
 
 st.title("David Titan")
 
-
-if "boxplot_all_data" not in st.session_state:
-    st.session_state["boxplot_all_data"] = False
 
 
 # calculate the current date for plots
