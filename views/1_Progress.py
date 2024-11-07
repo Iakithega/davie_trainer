@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import os
+import base64
 
 import matplotlib.dates as mdates
 from datetime import datetime
@@ -11,6 +12,10 @@ from utils.utils import *
 from utils.data_engineering import *
 from utils.plotting_functions import *
 
+import mimetypes
+from streamlit import runtime
+from streamlit.runtime import caching
+
 
 cwd = os.getcwd()
 config = configparser.ConfigParser()
@@ -18,6 +23,8 @@ config.read("utils/paths.ini")
 
 path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
 
+
+path_to_wallpaper = os.path.join(cwd, "static", "backaragraunda.jpg")
 # Path to your local folder containing images
 # image_folder = r'media\wallpaper'
 
@@ -31,18 +38,34 @@ path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
 # image_path = random.choice(image_paths)
 
 
-# Set the background image  ###https://images.unsplash.com/photo-1542281286-9e0a16bb7366
-background_image = """
-<style>
-[data-testid="stAppViewContainer"] > .main {
-    background-image: url("https://images.unsplash.com/photo-1542281286-9e0a16bb7366");
-    background-size: 100vw 100vh;  # This sets the size to cover 100% of the viewport width and height
-    background-position: center;  
+
+
+
+image = path_to_wallpaper
+
+def get_base64(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+def set_background(png_file):
+    bin_str = get_base64(png_file)
+    page_bg_img = '''
+    <style>
+    [data-testid="stMain"] {
+    background-image: url("data:image/png;base64,%s");
+    background-size: cover;
     background-repeat: no-repeat;
-}
-</style>
-"""
-st.markdown(background_image, unsafe_allow_html=True)
+    background-attachment: fixed;
+    }
+    </style>
+    ''' % bin_str
+    st.markdown(page_bg_img, unsafe_allow_html=True)
+
+set_background(path_to_wallpaper)
+
+
+
 
 
 
