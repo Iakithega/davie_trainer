@@ -4,8 +4,7 @@ import os.path
 import random
 import time
 
-# css funcs
-hide_header_css() 
+
 
 st.write("# The Game")
 # v_spacer(height=5, sb=False)
@@ -14,7 +13,13 @@ cwd = os.getcwd()
 creature_images_path = os.path.join(cwd, "media", "pics_of_creatures")
 creature_question_mark_image_path = os.path.join(cwd, "media", "pics_of_creatures", "backup", "creature_question_mark.png")
 path_audio = os.path.join(cwd, "media", "music", "action_epic.mp3")
-# creature_already_won_images_path = os.path.join(cwd, "media", "pics_of_creatures", "already_won_creatures")
+path_to_style = os.path.join(cwd, "assets", "style.css")
+
+
+# css funcs
+hide_header_css() 
+with open(path_to_style) as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Initialize session state for controlling the game and storing last images
 if 'start' not in st.session_state:
@@ -40,7 +45,7 @@ def load_image_paths(creature_images_path):
             full_path = os.path.join(absolute_creature_images_path, filename)
             image_paths[image_name] = full_path
     return image_paths
-
+ 
 
 
 # Load and cache image paths
@@ -48,17 +53,17 @@ creature_image_paths = load_image_paths(creature_images_path)
 # Available images list (excluding selected ones)
 available_images = {k: v for k, v in creature_image_paths.items() if k not in st.session_state.selected_images}
 
-
-
+  
+ 
 
 gap1_img_firstline, col_image, gap2_img_firstline = st.columns([1,2,1], gap="large", vertical_alignment="center")
 with col_image:
-    col_inside_img_start, col_inside_img_gap, col_inside_img_stop = st.columns([15, 70, 10], gap="large", vertical_alignment="center")
+    col_inside_img_start, col_inside_img_gap, col_inside_img_stop = st.columns([1, 2, 1], gap="large", vertical_alignment="center")
     # Start and Stop buttons
     with col_inside_img_start:
-        start_button = st.button("Start")     
+        start_button = st.button("Start", key="start_button")     
     with col_inside_img_stop:
-        stop_button = st.button("Stop")
+        stop_button = st.button("Stop", key="stop_button")
     placeholder_image = st.empty()  # Placeholder for the image display
     placeholder_image_text = st.empty()
     placeholder_image_audio_expander = st.empty()
@@ -88,7 +93,7 @@ if st.session_state.start and available_images:
         name = random.choice(list(available_images.keys()))
         
         # Display image and name in the placeholder
-        placeholder_image.image(available_images[name], use_column_width='auto')
+        placeholder_image.image(available_images[name], use_container_width='auto')
         
         # Store the last displayed image in session state
         st.session_state.selected_image = available_images[name]
@@ -102,7 +107,7 @@ if st.session_state.start and available_images:
 
 # Display the last selected image and update selected list
 if not st.session_state.start:
-    placeholder_image.image(st.session_state.selected_image, use_column_width='auto')
+    placeholder_image.image(st.session_state.selected_image, use_container_width='auto')
     placeholder_image_text.markdown(
         f"<h2 style='text-align: center;'>{st.session_state.selected_image_name.upper()}</h2>", 
         unsafe_allow_html=True

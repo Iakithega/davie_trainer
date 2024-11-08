@@ -1,0 +1,25 @@
+.st-key-start_button button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.st-key-stop_button button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+
+.stImage img {
+    border-radius: 70px;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5), 0 0 20px rgba(0, 123, 255, 0.5); /* Blue glow */
+    transition: box-shadow 0.3s ease;
+}
+
+.stImage img:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 30px rgba(0, 123, 255, 0.8); /* Stronger glow on hover */
+}
+
