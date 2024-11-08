@@ -23,7 +23,7 @@ config.read("utils/paths.ini")
 path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
 path_to_wallpaper = os.path.join(cwd, "static", "backaragraunda.jpg")
 
-# css funca from utils
+# css funcs from utils
 set_background_css(path_to_wallpaper)
 hide_header_css()
 
@@ -35,12 +35,11 @@ st.title("David Titan")
 
 
 
-# calculate the current date for plots
+# min date for restricting the calendar for chosing dates
 min_date = datetime.strptime("2024.08.10", "%Y.%m.%d")
 # Get the current date
 current_date = datetime.today() + timedelta(days=3)
 last_50_days = datetime.today() - timedelta(days=50)
-# Format the date as 'YYYY-MM-DD'
 current_date = current_date.strftime('%Y-%m-%d')
 
 

@@ -8,19 +8,13 @@ import configparser
 import random
 import time
 
-# hides the header - also possible to hide the footer: footer {visibility: hidden;}  /* Hides the footer */
-hide_st_style ="""
-    <style>
-        header.st-emotion-cache-1n4a2v9 {visibility: hidden;}  /* Hides the Streamlit header element identified in the console */ 
-    </style>
-    """
-st.markdown(hide_st_style, unsafe_allow_html=True)  
+# css funcs
+hide_header_css() 
 
 st.write("# The Game")
 # v_spacer(height=5, sb=False)
 
 cwd = os.getcwd()
-
 creature_images_path = os.path.join(cwd, "media", "pics_of_creatures")
 creature_question_mark_image_path = os.path.join(cwd, "media", "pics_of_creatures", "backup", "creature_question_mark.png")
 path_audio = os.path.join(cwd, "media", "music", "action_epic.mp3")

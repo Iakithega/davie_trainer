@@ -62,13 +62,14 @@ path_to_wallpaper = os.path.join(cwd, "media","wallpaper", "backaragraunda.jpg")
 
 st.logo(
     path_to_logo,
-    link="https://streamlit.io/gallery", # size="large"
+    link="https://streamlit.io/gallery", 
+    size="large",
     icon_image=None
 )
 
 
 # Define the main navigation
-pg0 = st.Page(r"streamlit_app.py", title="TITAN", default=False, icon=None, url_path=None) # icon=":material/home:" url_path=None, default=False # DAVID THE TITAN
+pg0 = st.Page(r"streamlit_app.py", title="_____", default=False, icon=None, url_path=None) # icon=":material/home:" url_path=None, default=False # DAVID THE TITAN
 pg1 = st.Page(path_to_page_progress, title="Progress", default=True, icon=":material/bar_chart_4_bars:")
 pg2 = st.Page(path_to_page_records, title="Records", icon=":material/emoji_events:")
 pg3 = st.Page(path_to_page_stories, title="Strories", icon=":material/sword_rose:")
