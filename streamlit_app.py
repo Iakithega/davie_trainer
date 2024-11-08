@@ -1,7 +1,5 @@
 import streamlit as st
 import os
-import random
-import base64
 from utils.utils import set_streamlit_page_config_once
 
 set_streamlit_page_config_once()

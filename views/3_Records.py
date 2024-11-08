@@ -3,12 +3,12 @@ from utils.utils import *
 from utils.data_engineering import complete_data_wrangeling
 from utils.plotting_functions import rec_overview_plot
 import os
+from configparser import ConfigParser
 
 
 
 
-
-config = configparser.ConfigParser()
+config = ConfigParser()
 cwd = os.getcwd()
 config.read("utils/paths.ini")
 path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])

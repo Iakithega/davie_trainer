@@ -1,26 +1,18 @@
 import streamlit as st
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 import os
-import base64
-
-import matplotlib.dates as mdates
+from configparser import ConfigParser
 from datetime import datetime
 
 from utils.utils import *
-from utils.data_engineering import *
+from utils.data_engineering import complete_data_wrangeling
 from utils.plotting_functions import *
 
-import mimetypes
-from streamlit import runtime
-from streamlit.runtime import caching
 
 
 
 # paths and configs
 cwd = os.getcwd()
-config = configparser.ConfigParser()
+config = ConfigParser()
 config.read("utils/paths.ini")
 path_to_excel = os.path.join(cwd, config["paths"]["path_to_excel"])
 path_to_wallpaper = os.path.join(cwd, "static", "backaragraunda.jpg")

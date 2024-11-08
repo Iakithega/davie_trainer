@@ -11,11 +11,11 @@ import pandas as pd
 import numpy as np
 
 import os.path
-import configparser
+from configparser import ConfigParser
 
 from datetime import datetime
 from datetime import timedelta
-import time
+
 
 
 from utils.data_engineering import find_max_recsum_of_all_exersices
@@ -28,7 +28,7 @@ config_path = os.path.join(cwd, "utils", "paths.ini")
 @st.cache_data
 def load_all_images(config_file=config_path):
     # Read paths from the ini file
-    config = configparser.ConfigParser()
+    config = ConfigParser()
     config.read(config_file)
 
         # Ensure the section [img_paths] exists
