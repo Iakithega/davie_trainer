@@ -9,14 +9,20 @@ from openai import OpenAI
 # import openai
 from utils.llm_utils import *
 
-# css funcs from utils
-hide_header_css()
-
-st.write("# Story")
 
 # OTHER PARAMS AND OPENAI
 cwd = os.getcwd()
 client = OpenAI(api_key=st.secrets.openai_credentials.api_key)
+path_to_wallpaper = os.path.join(cwd, "static", "backaragraunda.jpg")
+
+
+# css funcs from utils
+set_background_css(path_to_wallpaper)
+hide_header_css()
+
+
+
+st.write("# Story")
 
 # initialization of chat history
 if "openai_model" not in st.session_state:

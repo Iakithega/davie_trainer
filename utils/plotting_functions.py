@@ -1,22 +1,11 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from matplotlib.patches import Rectangle
-from matplotlib.patches import Polygon
-from matplotlib.patches import PathPatch
-from matplotlib.path import Path
-import matplotlib.path as mpath
 import matplotlib.dates as mdates
-from matplotlib.dates import MO, TU, WE, TH, FR, SA, SU
-import matplotlib.image as mpimg
 import seaborn as sns
-from mpl_interactions import interactive_plot
-import pprint
-
 
 from PIL import Image
 
 import streamlit as st
-from streamlit_extras.mandatory_date_range import date_range_picker 
 
 import pandas as pd 
 import numpy as np
@@ -28,12 +17,8 @@ from datetime import datetime
 from datetime import timedelta
 import time
 
-import calendar
-import yaml
-import json
 
-from utils.utils import *
-from utils.data_engineering import *
+from utils.data_engineering import find_max_recsum_of_all_exersices
 
 
 
