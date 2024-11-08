@@ -1,6 +1,9 @@
 [server]
 runOnSave = true
 
+[client]
+showErrorDetails = true
+toolbarMode = "developer"
 
 [theme]
 base="dark"

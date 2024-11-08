@@ -54,3 +54,24 @@ def hide_header_css():
     </style>
     """
     st.markdown(hide_st_style, unsafe_allow_html=True)  
+
+
+
+def set_wide_layout_config():
+    st.set_page_config(
+        #  page_title="RHEALIZER!",
+        #  page_icon="🤖", 
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+
+def set_streamlit_page_config_once():
+    try:
+        st.set_page_config(layout="wide",
+                           initial_sidebar_state="expanded",
+                           )
+    except st.errors.StreamlitAPIException as e:
+        if "can only be called once per app" in e.__str__():
+            # ignore this error
+            return
+        raise e
