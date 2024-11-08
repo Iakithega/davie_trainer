@@ -75,10 +75,10 @@ if prompt := st.chat_input(placeholder="What do you want to know?"):
 v_spacer(4, sb=False)
 
 
-papath = os.path.join(cwd, "media", "wallpaper", "transformers1.png")
+papath = os.path.join(cwd, "media", "exercise_pictures", "turmzug_spacy_2.png") 
 
 #Path to your local folder containing images
-image_folder = os.path.join(cwd, "media", "wallpaper")
+image_folder = os.path.join(cwd, "media", "exercise_pictures")
 
 # Get the list of image files from the folder
 image_paths = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(('png', 'jpg', 'jpeg'))]
